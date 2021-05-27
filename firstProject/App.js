@@ -120,6 +120,7 @@ import LoginScreen from './screens/LoginScreen.js';
 import WelcomeScreen from './screens/WelcomeScreen.js';
 import RegistrationScreen from './screens/RegistrationScreen.js';
 import MainScreen from './screens/MainScreen.js';
+import MyProfileScreen from './screens/MyProfileScreen.js';
 
 
 const Stack = createStackNavigator();
@@ -147,6 +148,11 @@ function App() {
                    <Stack.Screen
                     name="MainScreen"
                     component={MainScreen}
+                    options={{headerShown: false}}
+                  />
+                    <Stack.Screen
+                    name="MyProfileScreen"
+                    component={MyProfileScreen}
                     options={{headerShown: false}}
                   />
                 </>

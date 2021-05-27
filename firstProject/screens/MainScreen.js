@@ -20,7 +20,7 @@ export default class MainScreen extends React.Component {
     this.startData = this.startData.bind(this);
   }
 
- /* handleGetUserResponse(response) {
+  handleGetUserResponse(response) {
     response.json().then(data => this.setState({user: data, loading: false}));
   }
 
@@ -49,7 +49,7 @@ export default class MainScreen extends React.Component {
   componentWillUnmount() {
     this._unsubscribe();
   }
-*/
+
   startData() {
     return (
       <View style={styles.background}>

@@ -16,7 +16,7 @@ export default class MyProfileScreen extends Component {
     };
   }
 
-  /*handleGetUserResponse(response) {
+  handleGetUserResponse(response) {
     response.json().then(data => this.setState({user: data, loading: false}));
   }
 
@@ -39,7 +39,7 @@ export default class MyProfileScreen extends Component {
   componentWillUnmount() {
     this._unsubscribe();
   }
-*/
+
   render() {
     if (this.state.loading) {
       return <LoadingIndicator />;
