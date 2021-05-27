@@ -50,6 +50,7 @@ export default class RegistrationScreen extends React.Component {
   }
 }
 
+
 const styles = StyleSheet.create({
   registrationScreen: {
     flex: 1,
@@ -61,6 +62,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#F3F3F3',
   },
+  header:{
+    color:'#F5C401'
+  },
   label: {
     color: '#525252',
   },
@@ -70,6 +74,6 @@ const styles = StyleSheet.create({
   },
   link: {
     fontWeight: 'bold',
-    color: '#15abe7',
+    color: '#A7E009',
   },
 });

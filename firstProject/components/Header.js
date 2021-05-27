@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   header: {
     fontFamily: 'OpenSans-Bold',
     fontSize: 26,
-    color: '#15abe7',
+    color: '#F5C401',
     paddingVertical: 14,
   },
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {TextInput, Button, HelperText} from 'react-native-paper';
+import PasswordInput from './PasswordInput';
 var validate = require('validate.js');
 const validation = {
   email: {
@@ -24,13 +25,12 @@ export default class RegistrationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      phone:'',
       email: '',
-      role: 0,
-      lastname: '',
+      role: 'ROLE_USER',
+      lastnames: '',
       name: '',
       password: '',
-      phone:'',
       username: '',
       passwordRepeat: '',
     };
@@ -41,7 +41,7 @@ export default class RegistrationForm extends React.Component {
     return (
       validate(this.state, validation) !== undefined ||
       !this.state.name ||
-      !this.state.lastname ||
+      !this.state.lastnames ||
       !this.state.password ||
       !this.state.passwordRepeat
     );
@@ -54,12 +54,11 @@ export default class RegistrationForm extends React.Component {
     });
   };
 
-
   renderHelperText(fieldName) {
     if (this.state[fieldName].length > 0) {
       let validationResult = validate.single(
         this.state[fieldName],
-        validation[fieldName]
+        validation[fieldName],
       );
       if (validationResult !== undefined) {
         return (
@@ -80,7 +79,8 @@ export default class RegistrationForm extends React.Component {
             fieldName: 'username',
           },
           {label: 'Nombre', fieldName: 'name'},
-          {label: 'Apellidos', fieldName: 'lastname'},
+          {label: 'Apellidos', fieldName: 'lastnames'},
+          {label: 'Teléfono', fieldName: 'phone'},
           {
             label: 'Email',
             fieldName: 'email',
@@ -109,7 +109,8 @@ export default class RegistrationForm extends React.Component {
             {this.renderHelperText(x.fieldName)}
           </View>
         ))}
-       
+        <PasswordInput onChange={this.setPassword} mode="outlined" />
+
         <Button
           style={styles.button}
           mode="contained"

@@ -16,20 +16,20 @@ export default class WelcomeScreen extends React.Component {
           <Text
             style={{
               fontFamily: 'Pacifico-Regular',
-              color: '#15abe7',
+              color: '#F5C401',
               fontSize: 70,
             }}>
-            Uni
+            Save
             <Text
               style={{
-                color: '#69e000',
+                color: '#A7E009',
               }}>
-              moove
+              Pet
             </Text>
           </Text>
           <Button
             style={styles.button}
-            color="#15abe7"
+            color="#F5C401"
             mode="contained"
             dark={true}
             onPress={() => {
@@ -44,7 +44,7 @@ export default class WelcomeScreen extends React.Component {
             onPress={() => {
               this.props.navigation.navigate('LoginScreen');
             }}
-            color="#69e000">
+            color="#A7E009">
             Iniciar Sesión
           </Button>
         </View>

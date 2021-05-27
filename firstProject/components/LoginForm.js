@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
+import { red100 } from 'react-native-paper/lib/typescript/styles/colors';
 
 export default class LoginForm extends React.Component {
   constructor(props) {
@@ -41,7 +42,7 @@ export default class LoginForm extends React.Component {
           style={styles.button}
           mode="contained"
           dark={true}
-          color="#69e000"
+          color="#A7E009"
           onPress={() => {
             this.props.handlePress(this.state);
           }}>

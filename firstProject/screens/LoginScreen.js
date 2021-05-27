@@ -37,7 +37,7 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.loginScreen} behavior="padding">
-        <Header>¡Hola de nuevo!</Header>
+       <Header>¡Hola de nuevo!</Header>
         {this.state.isErrorVisible ? (
           <ErrorText>Usuario o contraseña incorrectos</ErrorText>
         ) : (
@@ -78,12 +78,13 @@ const styles = StyleSheet.create({
   },
   link: {
     fontWeight: 'bold',
-    color: '#69e000',
+    color: '#A7E009',
   },
   text: {
     fontFamily: 'OpenSans-Bold',
-    color: '#69e000',
+    color: '#DE740B',
     fontSize: 20,
     marginTop: 5,
   },
+
 });
