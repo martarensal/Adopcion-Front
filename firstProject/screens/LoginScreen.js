@@ -17,24 +17,23 @@ export default class LoginScreen extends React.Component {
   handleUserLoginResponse(response) {
     if (response.ok) {
       console.log('Inicio de sesión correcto');
-      this.props.navigation.navigate('MainScreen');
       response.json().then(async data => {
         try {
+          console.log()
           await AsyncStorage.setItem('ApiKeyAuth', data.apiKey);
-          const apiKey = await AsyncStorage.getItem('ApiKeyAuth');
-          console.log(apiKey);
         } catch (error) {
           console.error(error);
         }
-        console.log(data.apiKey);
       });    
     } 
     else {
+      console.log(response);
       this.setState({isErrorVisible: true});
     }
   }
 
   loginUser(loginRequest) {
+    console.log(loginRequest);
     userLogin(loginRequest)
       .then(this.handleUserLoginResponse.bind(this))
       .catch(error => console.log(error));

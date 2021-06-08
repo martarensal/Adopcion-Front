@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 async function getToken() {
   try {
     const token = await AsyncStorage.getItem('ApiKeyAuth');
+    //console.log('Estoy en getToken ' + token);
     return token;
   } catch (error) {
     console.error(error);

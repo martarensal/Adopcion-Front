@@ -1,12 +1,15 @@
 import React from 'react';
 import {Appbar, Button} from 'react-native-paper';
 import {getUser} from '../client/UsersApi';
-import {Text, View, StyleSheet, Image} from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import MyProfileScreen from './MyProfileScreen.js';
+import {Text, View, StyleSheet, Alert} from 'react-native';
+import {createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList} from '@react-navigation/drawer';
 import { DrawerActions } from '@react-navigation/native';
 import LoadingIndicator from '../components/LoadingIndicator';
 import LoginScreen from './LoginScreen';
+import MyProfileScreen from './MyProfileScreen';
+import MyAnimalsScreen from './MyAnimalsScreen';
+import AsyncStorage from '@react-native-community/async-storage';
+
 var SecurityUtils = require('../utils/SecurityUtils.js');
 const Drawer = createDrawerNavigator();
 
@@ -18,9 +21,36 @@ export default class MainScreen extends React.Component {
       loading: true,
     };
     this.startData = this.startData.bind(this);
+    this.customDrawer = this.customDrawer.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
-  handleGetUserResponse(response) {
+  handleLogout = () => {
+    Alert.alert('Cerrar Sesión', '¿Está seguro que quiere cerrar sesión?', [
+      {
+        text: 'Sí', 
+        onPress: () =>  {
+          SecurityUtils.deleteToken(); 
+        }
+      },
+      {
+        text: 'No'
+      }
+
+    ])
+
+  }
+
+  customDrawer(cositas){
+    return(
+      <DrawerContentScrollView{...cositas}>
+        <DrawerItemList{...cositas}/>
+        <DrawerItem label = "Cerrar Sesión" onPress={this.handleLogout}  />
+      </DrawerContentScrollView>
+    )
+  }
+ 
+   handleGetUserResponse(response) {
     response.json().then(data => this.setState({user: data, loading: false}));
   }
 
@@ -54,8 +84,10 @@ export default class MainScreen extends React.Component {
     return (
       <View style={styles.background}>
         <Appbar.Header dark={true}> 
-        <Appbar.Action icon="menu" onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} />
-          <Text style={styles.logo}>Unimoove</Text>
+        <Appbar.Action icon = "menu" onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} />
+          <Text style={styles.logo}>
+            SavePet
+          </Text>
         </Appbar.Header>
         <View style={styles.container}>
           <Text style={styles.helloText}> ¡Hola, {this.state.user.name}!</Text>
@@ -76,6 +108,10 @@ export default class MainScreen extends React.Component {
             onPress={() => this.props.navigation.navigate('LoginScreen')}>
             Estoy buscando un viaje
           </Button>
+          <Button
+           onPress={this.handleLogout}>
+          Cerrar Sesión
+          </Button>
         </View>
       </View>
     );
@@ -86,15 +122,19 @@ export default class MainScreen extends React.Component {
       return <LoadingIndicator />;
     } else {
       return (
-        <Drawer.Navigator edgeWidth={60}>
+        <Drawer.Navigator edgeWidth={60} drawerContent={cositas => <this.customDrawer {...cositas} />}>
           <Drawer.Screen name="Inicio" component={this.startData} />
           <Drawer.Screen name="Mi perfil" component={MyProfileScreen} />
-          <Drawer.Screen name="Mis coches" component={LoginScreen} />
-          <Drawer.Screen name="Mis reservas" component={LoginScreen} />
-          <Drawer.Screen name="Mis viajes" component={LoginScreen} />
+          <Drawer.Screen name="Mis animales" component={MyAnimalsScreen} />
+          <Drawer.Screen name="Mis solicitudes" component={MainScreen} />
+          <Drawer.Screen name="Animales solicitados por mi" component={MainScreen} />
+         
         </Drawer.Navigator>
+
       );
-    }
+      }
+    
+
   }
 }
 

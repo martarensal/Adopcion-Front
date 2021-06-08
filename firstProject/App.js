@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
 });
 
 export default App;*/
-
+/*
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 
@@ -162,3 +162,80 @@ function App() {
 }
 
 export default App;
+
+*/
+import 'react-native-gesture-handler';
+import React, {Component} from 'react';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import LoginScreen from './screens/LoginScreen.js';
+import WelcomeScreen from './screens/WelcomeScreen.js';
+import RegistrationScreen from './screens/RegistrationScreen.js';
+import MainScreen from './screens/MainScreen.js';
+import SplashScreen from './screens/SplashScreen';
+import SecurityUtils from './utils/SecurityUtils';
+
+
+const Stack = createStackNavigator();
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isUserSignedIn: null,
+      isLoading: true,
+    };
+  }
+
+  async findExistingToken() {
+    /*SecurityUtils.clearAll().then(
+      SecurityUtils.getToken().then(this.handleRecieveToken.bind(this)),
+    );*/
+    SecurityUtils.getToken().then(token =>
+      this.setState({isUserSignedIn: token, isLoading: false}),
+    );
+  }
+  render() {
+    this.findExistingToken();
+    if (this.state.isLoading) {
+      return <SplashScreen />;
+    } else {
+      return (
+          <NavigationContainer>
+            <Stack.Navigator>
+              {this.state.isUserSignedIn == null ? (
+                <>
+                  <Stack.Screen
+                    name="WelcomeScreen"
+                    component={WelcomeScreen}
+                    options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                    name="LoginScreen"
+                    component={LoginScreen}
+                    options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                    name="RegistrationScreen"
+                    component={RegistrationScreen}
+                    options={{headerShown: false}}
+                  />
+                </>
+              ) : (
+                <>
+                  <Stack.Screen
+                    name="MainScreen"
+                    component={MainScreen}
+                    options={{headerShown: false}}
+                  />
+                </>
+              )}
+            </Stack.Navigator>
+          </NavigationContainer>
+      );
+
+
+      }
+    
+  }
+}

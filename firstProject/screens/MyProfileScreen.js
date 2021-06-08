@@ -12,7 +12,7 @@ export default class MyProfileScreen extends Component {
     super(props);
     this.state = {
       user: {},
-      loading: true,
+      loading: false,
     };
   }
 
@@ -41,14 +41,14 @@ export default class MyProfileScreen extends Component {
   }
 
   render() {
-    if (this.state.loading) {
+    /*if (this.state.loading) {
       return <LoadingIndicator />;
-    } else {
+    } else {*/
       return (
         <>
           <Appbar.Header dark={true}>
           <Appbar.Action icon="menu" onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} />
-            <Text style={styles.logo}>Unimoove</Text>
+            <Text style={styles.logo}>SavePet</Text>
           </Appbar.Header>
           <ScrollView style={styles.background}>
             <View style={styles.container}>
@@ -59,7 +59,7 @@ export default class MyProfileScreen extends Component {
               title="Nombre de usuario"
               description={this.state.user.username}
               onPress={() => {
-                this.props.navigation.navigate('UsernameChangeScreen', {
+                this.props.navigation.navigate('LoginScreen', {
                   username: this.state.user.username,
                 });
               }}
@@ -68,7 +68,7 @@ export default class MyProfileScreen extends Component {
               title="Nombre"
               description={this.state.user.name}
               onPress={() => {
-                this.props.navigation.navigate('NameChangeScreen', {
+                this.props.navigation.navigate('LoginScreen', {
                   name: this.state.user.name,
                 });
               }}
@@ -77,7 +77,7 @@ export default class MyProfileScreen extends Component {
               title="Apellidos"
               description={this.state.user.lastname}
               onPress={() => {
-                this.props.navigation.navigate('LastnameChangeScreen', {
+                this.props.navigation.navigate('LoginScreen', {
                   lastname: this.state.user.lastname,
                 });
               }}
@@ -86,7 +86,7 @@ export default class MyProfileScreen extends Component {
               title="Email"
               description={this.state.user.email}
               onPress={() => {
-                this.props.navigation.navigate('EmailChangeScreen', {
+                this.props.navigation.navigate('LoginScreen', {
                   email: this.state.user.email,
                 });
               }}
@@ -95,26 +95,27 @@ export default class MyProfileScreen extends Component {
               title="Contraseña"
               description="***********"
               onPress={() => {
-                this.props.navigation.navigate('PasswordChangeScreen');
+                this.props.navigation.navigate('LoginScreen');
               }}
             />
             <Text style={styles.informativeText}>Otros</Text>
-            <Button
-              color="#69e000"
-              caretHidden={true}
-              style={styles.button}
-              onPress={() => SecurityUtils.deleteToken()}>
-              Cerrar Sesión
-            </Button>
+            
           </ScrollView>
         </>
       );
     }
-  }
 }
 const styles = StyleSheet.create({
+  prueba1: {
+    fontFamily:'LEMONMILK-Bold',
+  },
+  prueba2: {
+    fontFamily: '',
+    fontSize: 20,
+  },
+
   logo: {
-    fontFamily: 'Pacifico-Regular',
+    fontFamily: 'Nesans Semi Bold',
     color: 'white',
     fontSize: 25,
     marginLeft: 14,
