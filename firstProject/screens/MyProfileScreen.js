@@ -59,7 +59,7 @@ export default class MyProfileScreen extends Component {
               title="Nombre de usuario"
               description={this.state.user.username}
               onPress={() => {
-                this.props.navigation.navigate('LoginScreen', {
+                this.props.navigation.navigate('UsernameChangeScreen', {
                   username: this.state.user.username,
                 });
               }}
@@ -68,16 +68,16 @@ export default class MyProfileScreen extends Component {
               title="Nombre"
               description={this.state.user.name}
               onPress={() => {
-                this.props.navigation.navigate('LoginScreen', {
+                this.props.navigation.navigate('NameChangeScreen', {
                   name: this.state.user.name,
                 });
               }}
             />
             <List.Item
               title="Apellidos"
-              description={this.state.user.lastname}
+              description={this.state.user.lastnames}
               onPress={() => {
-                this.props.navigation.navigate('LoginScreen', {
+                this.props.navigation.navigate('LastnamesChangeScreen', {
                   lastname: this.state.user.lastname,
                 });
               }}
@@ -86,8 +86,17 @@ export default class MyProfileScreen extends Component {
               title="Email"
               description={this.state.user.email}
               onPress={() => {
-                this.props.navigation.navigate('LoginScreen', {
+                this.props.navigation.navigate('EmailChangeScreen', {
                   email: this.state.user.email,
+                });
+              }}
+            />
+            <List.Item
+              title="Teléfono"
+              description={this.state.user.phone}
+              onPress={() => {
+                this.props.navigation.navigate('PhoneChangeScreen', {
+                  phone: this.state.user.phone,
                 });
               }}
             />
@@ -95,7 +104,7 @@ export default class MyProfileScreen extends Component {
               title="Contraseña"
               description="***********"
               onPress={() => {
-                this.props.navigation.navigate('LoginScreen');
+                this.props.navigation.navigate('PasswordChangeScreen');
               }}
             />
             <Text style={styles.informativeText}>Otros</Text>

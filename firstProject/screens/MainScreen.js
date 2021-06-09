@@ -8,7 +8,6 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import LoginScreen from './LoginScreen';
 import MyProfileScreen from './MyProfileScreen';
 import MyAnimalsScreen from './MyAnimalsScreen';
-import AsyncStorage from '@react-native-community/async-storage';
 
 var SecurityUtils = require('../utils/SecurityUtils.js');
 const Drawer = createDrawerNavigator();
@@ -91,14 +90,13 @@ export default class MainScreen extends React.Component {
         </Appbar.Header>
         <View style={styles.container}>
           <Text style={styles.helloText}> ¡Hola, {this.state.user.name}!</Text>
-          <Text style={styles.underText}>¿Cómo vas hoy a clase?</Text>
           <Button
             style={styles.button}
             color="#15abe7"
             mode="contained"
             dark={true}
             onPress={() => this.props.navigation.navigate('LoginScreen')}>
-            ¡Quiero publicar un viaje!
+            Añadir publicación de animal
           </Button>
           <Button
             style={styles.button}
@@ -106,12 +104,9 @@ export default class MainScreen extends React.Component {
             dark={true}
             color="#69e000"
             onPress={() => this.props.navigation.navigate('LoginScreen')}>
-            Estoy buscando un viaje
+            Añadir animal perdido
           </Button>
-          <Button
-           onPress={this.handleLogout}>
-          Cerrar Sesión
-          </Button>
+        
         </View>
       </View>
     );
