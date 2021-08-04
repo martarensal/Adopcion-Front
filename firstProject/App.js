@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
+import {StatusBar} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -15,7 +16,8 @@ import UsernameChangeScreen from './screens/UsernameChangeScreen.js';
 import EmailChangeScreen from './screens/EmailChangeScreen.js';
 import PasswordChangeScreen from './screens/PasswordChangeScreen.js';
 import PhoneChangeScreen from './screens/PhoneChangeScreen.js';
-
+import MyAnimalsScreen from './screens/MyAnimalsScreen.js';
+import CreateAnimalScreen from './screens/CreateAnimalScreen.js';
 
 const Stack = createStackNavigator();
 export default class App extends Component {
@@ -98,6 +100,17 @@ export default class App extends Component {
                   component={PhoneChangeScreen}
                   options={{headerShown: false}}
                   />
+                  <Stack.Screen
+                  name="MyAnimalScreen"
+                  component={MyAnimalsScreen}
+                  options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                  name="CreateAnimalScreen"
+                  component={CreateAnimalScreen}
+                  options={{headerShown: false}}
+                  />
+                   
                 </>
               )}
             </Stack.Navigator>

@@ -1,5 +1,4 @@
-const PORT = '8080';
-const BASE_URL = `http://192.168.0.14:${PORT}`;
+import { BASE_URL } from "./ApiConfiguration";
 
 export function addUser(userRegistrationRequest) {
   return fetch(`${BASE_URL}/users`, {
@@ -91,4 +90,16 @@ export function modifyUserPassword(userPasswordChangeRequest, username, token) {
       }),
       body: JSON.stringify(userPhoneChangeRequest),
     });
+}
+
+export function addAnimal(animalCreationRequest, username, token) {
+  return fetch(`${BASE_URL}/users/${username}/animals`, {
+    method: 'POST',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+    body: JSON.stringify(animalCreationRequest),
+  });
 }

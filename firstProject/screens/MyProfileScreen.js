@@ -12,7 +12,7 @@ export default class MyProfileScreen extends Component {
     super(props);
     this.state = {
       user: {},
-      loading: false,
+      loading: true,
     };
   }
 
@@ -41,90 +41,92 @@ export default class MyProfileScreen extends Component {
   }
 
   render() {
-    /*if (this.state.loading) {
+    if (this.state.loading) {
       return <LoadingIndicator />;
-    } else {*/
+    } else {
       return (
         <>
-          <Appbar.Header dark={true}>
+        <Appbar style={styles.barra}>
           <Appbar.Action icon="menu" onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} />
             <Text style={styles.logo}>SavePet</Text>
-          </Appbar.Header>
+        </Appbar>
           <ScrollView style={styles.background}>
-            <View style={styles.container}>
-              <Text style={styles.text}>Mi Perfil</Text>
-            </View>
-            <Text style={styles.informativeText}>Información de mi cuenta</Text>
-            <List.Item
-              title="Nombre de usuario"
-              description={this.state.user.username}
-              onPress={() => {
-                this.props.navigation.navigate('UsernameChangeScreen', {
-                  username: this.state.user.username,
-                });
-              }}
-            />
-            <List.Item
-              title="Nombre"
-              description={this.state.user.name}
-              onPress={() => {
-                this.props.navigation.navigate('NameChangeScreen', {
-                  name: this.state.user.name,
-                });
-              }}
-            />
-            <List.Item
-              title="Apellidos"
-              description={this.state.user.lastnames}
-              onPress={() => {
-                this.props.navigation.navigate('LastnamesChangeScreen', {
-                  lastname: this.state.user.lastname,
-                });
-              }}
-            />
-            <List.Item
-              title="Email"
-              description={this.state.user.email}
-              onPress={() => {
-                this.props.navigation.navigate('EmailChangeScreen', {
-                  email: this.state.user.email,
-                });
-              }}
-            />
-            <List.Item
-              title="Teléfono"
-              description={this.state.user.phone}
-              onPress={() => {
-                this.props.navigation.navigate('PhoneChangeScreen', {
-                  phone: this.state.user.phone,
-                });
-              }}
-            />
-            <List.Item
-              title="Contraseña"
-              description="***********"
-              onPress={() => {
-                this.props.navigation.navigate('PasswordChangeScreen');
-              }}
-            />
-            <Text style={styles.informativeText}>Otros</Text>
-            
+
+          <Text style={styles.text}h3>
+                Mi Perfil
+                </Text>
+            <View style={styles.middle}>
+
+              <Text style={styles.informativeText}>Información de mi cuenta</Text>
+              <List.Item 
+                title="Nombre de usuario"
+                description={this.state.user.username}
+                onPress={() => {
+                  this.props.navigation.navigate('UsernameChangeScreen', {
+                    username: this.state.user.username,
+                  });
+                }}
+              />
+              <List.Item
+                title="Nombre"
+                description={this.state.user.name}
+                onPress={() => {
+                  this.props.navigation.navigate('NameChangeScreen', {
+                    name: this.state.user.name,
+                  });
+                }}
+              />
+              <List.Item
+                title="Apellidos"
+                description={this.state.user.lastnames}
+                onPress={() => {
+                  this.props.navigation.navigate('LastnamesChangeScreen', {
+                    lastname: this.state.user.lastname,
+                  });
+                }}
+              />
+              <List.Item
+                title="Email"
+                description={this.state.user.email}
+                onPress={() => {
+                  this.props.navigation.navigate('EmailChangeScreen', {
+                    email: this.state.user.email,
+                  });
+                }}
+              />
+              <List.Item
+                title="Teléfono"
+                description={this.state.user.phone}
+                onPress={() => {
+                  this.props.navigation.navigate('PhoneChangeScreen', {
+                    phone: this.state.user.phone,
+                  });
+                }}
+              />
+              <List.Item
+                title="Contraseña"
+                description="***********"
+                onPress={() => {
+                  this.props.navigation.navigate('PasswordChangeScreen');
+                }}
+              />                     
+            </View>       
           </ScrollView>
         </>
       );
     }
+    }
 }
 const styles = StyleSheet.create({
-  prueba1: {
-    fontFamily:'LEMONMILK-Bold',
+  middle:
+  {
+    marginLeft: '7%',
   },
-  prueba2: {
-    fontFamily: '',
-    fontSize: 20,
+  barra:{
+    backgroundColor:'#E67E00',
   },
-
   logo: {
-    fontFamily: 'Nesans Semi Bold',
+    fontFamily: 'Butler-Light',
     color: 'white',
     fontSize: 25,
     marginLeft: 14,
@@ -146,9 +148,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'OpenSans-Bold',
-    color: '#69e000',
+    color: '#ABE009',
     fontSize: 20,
-    marginTop: 10,
+    marginTop: 15,
+    marginLeft: '9%',
   },
   informativeText: {
     fontFamily: 'OpenSans-Bold',

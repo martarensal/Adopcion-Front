@@ -24,11 +24,11 @@ export default class SplashScreen extends React.Component {
 
 const styles = StyleSheet.create({
   primaryText: {
-    fontFamily: 'Pacifico-Regular',
-    color: '#15abe7',
+    fontFamily: 'Butler_Light',
+    color: '#DEB74E',
     fontSize: 70,
   },
   secondaryText: {
-    color: '#69e000',
+    color: '#80E094',
   },
 });

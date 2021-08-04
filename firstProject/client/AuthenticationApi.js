@@ -1,5 +1,4 @@
-const PORT = '8080';
-const BASE_URL = `http://192.168.0.14:${PORT}`;
+import { BASE_URL } from "./ApiConfiguration";
 
 export function userLogin(loginRequest) {
   return fetch(`${BASE_URL}/authentication/login`, {

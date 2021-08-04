@@ -27,16 +27,7 @@ export default class WelcomeScreen extends React.Component {
               Pet
             </Text>
           </Text>
-          <Button
-            style={styles.button}
-            color="#F5C401"
-            mode="contained"
-            dark={true}
-            onPress={() => {
-              this.props.navigation.navigate('RegistrationScreen');
-            }}>
-            Registrarse
-          </Button>
+       
           <Button
             style={styles.button}
             mode="contained"
@@ -46,6 +37,16 @@ export default class WelcomeScreen extends React.Component {
             }}
             color="#A7E009">
             Iniciar Sesión
+          </Button>
+          <Button
+            style={styles.button}
+            color="#F5C401"
+            mode="contained"
+            dark={true}
+            onPress={() => {
+              this.props.navigation.navigate('RegistrationScreen');
+            }}>
+            Registrarse
           </Button>
         </View>
       </View>
