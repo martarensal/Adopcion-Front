@@ -4,27 +4,32 @@ import ChangeForm from '../components/ChangeForm';
 import {modifyUserLastnames} from '../client/UsersApi';
 var SecurityUtils = require('../utils/SecurityUtils');
 
-export default class LastnamesChangeScreen extends React.Component {
+export default class NameChangeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.changeUserLastnames = this.changeUserLastnames.bind(this);
   }
+  componentDidMount(){
+        console.log(this.props.route.params.lastnames)
 
-  handleChangelastnameResponse(response) {
-    console.log('Apellidos modificados');
+  }
+
+  handleChangeLastnamesResponse(response) {
+    console.log('Apellidos modificado');
     console.log(JSON.stringify(response));
+
     this.props.navigation.goBack();
   }
 
-  changeUserLastnames(userLastnameChangeRequest) {
+  changeUserLastnames(userLastnamesChangeRequest) {
     let body = {
-      newLastname: userLastnameChangeRequest.newValue,
+      newLastames: userLastnamesChangeRequest.newValue,
     };
     SecurityUtils.tokenInfo().then(info => {
         console.log(body);
         console.log(info);
       SecurityUtils.authorizeApi([body, info.sub], modifyUserLastnames).then(
-        this.handleChangelastnameResponse.bind(this),
+        this.handleChangelastnamesResponse.bind(this),
       );
     });
   }

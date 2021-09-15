@@ -92,14 +92,25 @@ export function modifyUserPassword(userPasswordChangeRequest, username, token) {
     });
 }
 
-export function addAnimal(animalCreationRequest, username, token) {
-  return fetch(`${BASE_URL}/users/${username}/animals`, {
-    method: 'POST',
+export function deleteAnimal(id, token) {
+  return fetch(`${BASE_URL}/animals/${id}`, {
+    method: 'DELETE',
     headers: new Headers({
       'content-type': 'application/json',
       Accept: 'application/json',
       'X-API-KEY': token,
     }),
-    body: JSON.stringify(animalCreationRequest),
   });
+}
+
+export function getAnimalsFromUser( username, token) {
+  return fetch(`${BASE_URL}/users/${username}/animals`, {
+    method: 'GET',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+  });
+
 }

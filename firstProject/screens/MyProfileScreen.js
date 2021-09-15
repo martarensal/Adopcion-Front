@@ -17,16 +17,22 @@ export default class MyProfileScreen extends Component {
   }
 
   handleGetUserResponse(response) {
-    response.json().then(data => this.setState({user: data, loading: false}));
+    response.json().then(data => {
+      console.log(data)
+      this.setState({user: data, loading: false})
+    
+    } );
   }
 
   fetchUserData() {
     this.setState({loading: true});
     SecurityUtils.tokenInfo().then(info => {
+         console.log(info)
       SecurityUtils.authorizeApi([info.sub], getUser).then(
         this.handleGetUserResponse.bind(this),
       );
     });
+ 
   }
 
   componentDidMount() {
@@ -37,7 +43,7 @@ export default class MyProfileScreen extends Component {
   }
 
   componentWillUnmount() {
-    this._unsubscribe();
+    //this._unsubscribe();
   }
 
   render() {
@@ -81,7 +87,7 @@ export default class MyProfileScreen extends Component {
                 description={this.state.user.lastnames}
                 onPress={() => {
                   this.props.navigation.navigate('LastnamesChangeScreen', {
-                    lastname: this.state.user.lastname,
+                    lastnames: this.state.user.lastnames,
                   });
                 }}
               />

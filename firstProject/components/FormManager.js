@@ -12,10 +12,10 @@ export default class FormManager
       size: '',
       colour: '',
       status: '',
-      city: '',
-      types: [],
-      test: 0,
-      value: ''
+      cityId: '',
+      typeId: '',
+      value: '',
+      username:'',
     };
 
     static getFormManager()
@@ -24,22 +24,6 @@ export default class FormManager
             this.instance = new FormManager();
 
         return this.instance;
-    }
-
-    validateField(field)
-    {
-        let value = this.formFields[field] 
-        switch (field) {
-            case 'name':
-                return value != ''
-                break;
-            case 'age':
-                intNumber = parseInt(value)
-                return !isNaN(intNumber) && intNumber >= 0 && intNumber <= 344;
-        
-            default:
-                break;
-        }
     }
 
     getField(field) {return this.formFields[field]};

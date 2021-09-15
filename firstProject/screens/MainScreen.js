@@ -89,7 +89,9 @@ export default class MainScreen extends React.Component {
             color="#ABE009"
             mode="contained"
             dark={true}
-            onPress={() => this.props.navigation.navigate('CreateAnimalScreen')}>
+            onPress={() => this.props.navigation.navigate('CreateAnimalScreen', {
+                        username: this.state.user.username,
+                      })}>
             Añadir publicación de animal
           </Button>
           <Button

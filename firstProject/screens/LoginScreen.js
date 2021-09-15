@@ -27,7 +27,7 @@ export default class LoginScreen extends React.Component {
       });    
     } 
     else {
-      console.log(response);
+      //console.log(response);
       this.setState({isErrorVisible: true});
     }
   }

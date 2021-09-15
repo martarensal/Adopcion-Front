@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Image} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TextInput, Button, HelperText } from 'react-native-paper';
 import FormManager from "./FormManager";
+import {getTypes} from '../client/TypeApi';
 import { sexOption, colourOption, sizeOption } from '../constants/DropdownOption';
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
@@ -17,37 +18,66 @@ export default class Step1 extends React.Component {
     this.state = {
       sex:'',
       colour:'',
-      size:''
+      size:'',
+      types: [],
+      type:'',
+      typeId: -1,
     }
   }
-   updateSize = (size) => {
+
+  async handleGetTypeResponse(response) {
+    var types = []
+    const jsonResponse = await response.json();
+    for (const i in jsonResponse.pages)
+    {
+      types.push( 
+        {
+          name: jsonResponse.pages[i].name,
+          id: jsonResponse.pages[i].id
+        })
+    }
+    this.setState({types: types});
+  }
+  
+  getTypesCall() {
+    SecurityUtils.authorizeApi([], getTypes).then(this.handleGetTypeResponse.bind(this))
+  }
+
+  updateType = (type, indexType) => {
+      this.setState({ type: type })
+      FormManager.getFormManager().setField('typeId', this.state.types[indexType].id);
+  }
+   
+  updateSize = (size) => {
       this.setState({ size: size })
       this.formManager.setField('size', size)
-   }
+      console.log(this.formManager.getField(size))
+  }
 
-   updateColour = (colour) => {
+  updateColour = (colour) => {
       this.setState({colour: colour})
       this.formManager.setField('colour', colour)
+  }
 
-   }
-
-   updateSex = (sex) => {
+  updateSex = (sex) => {
       this.setState({sex: sex})
       this.formManager.setField('sex', sex)
-
-   }
+  }
 
   componentDidMount() {
+    this.getTypesCall();
     this.setState({sex: FormManager.getFormManager().getField('sex')})
     this.setState({colour: FormManager.getFormManager().getField('colour')})
     this.setState({size: FormManager.getFormManager().getField('size')})
+    FormManager.getFormManager().setField('typeId', this.state.typeId)
 
   }
 
   render(){
       return (
       <View style={styles.container}>
-      
+        <Text style={styles.text}>Sexo :  </Text>
+
          <Picker selectedValue = {this.state.sex} onValueChange = {this.updateSex}>
          
          {
@@ -56,6 +86,8 @@ export default class Step1 extends React.Component {
            })
          }
         </Picker>
+        <Text style={styles.text}>Color :  </Text>
+
         <Picker selectedValue = {this.state.colour} onValueChange = {this.updateColour}>
          {
            colourOption.map(colour => {
@@ -63,12 +95,24 @@ export default class Step1 extends React.Component {
            })
          }
         </Picker>
+      
+
+        <Text style={styles.text}>Tamaño :  </Text>
          <Picker selectedValue = {this.state.size} onValueChange = {this.updateSize}>
          {
            sizeOption.map(size => {
              return ( <Picker.Item key={size.back_name+'_picker'} label={size.name} value={size.back_name}/>)
            })
 
+         }
+        </Picker>
+        
+        <Text style={styles.text}>Tipo de animal :  </Text>
+        <Picker selectedValue = {this.state.type} onValueChange = {this.updateType}>
+         {
+           this.state.types.map(type => {
+             return ( <Picker.Item key={type.name+'_picker'} label={type.name} value={type.name}/>)
+           })
          }
         </Picker>
           
@@ -81,6 +125,13 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     marginVertical: 12,
+  },
+  text: {
+    fontFamily: 'OpenSans-Bold',
+    color: '#F05524',
+    fontSize: 15,
+    marginTop: 5,
+    paddingLeft:10,
   },
   button: {
     marginTop: 24,

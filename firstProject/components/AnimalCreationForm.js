@@ -2,15 +2,15 @@ import React, { Fragment, useState } from 'react';
 import { StyleSheet, View, Text, Image, Alert } from 'react-native';
 import { TextInput, Button, HelperText } from 'react-native-paper';
 var SecurityUtils = require('../utils/SecurityUtils.js');
-import SearchableDropdown from 'react-native-searchable-dropdown';
 import { sexOption, sizeOption, statusOption, colorOption } from '../constants/DropdownOption';
 import {getTypes} from '../client/TypeApi';
+import {addAnimal} from '../client/AnimalApi';
+import {getUser} from '../client/UsersApi';
 import Stepper from 'react-native-stepper-ui';
 import Step1 from '../components/Step1.js';
 import Step2 from '../components/Step2.js';
 import Step3 from '../components/Step3.js';
-
-
+import FinalStep from '../components/FinalStep.js';
 import FormManager from "./FormManager";
 
 var validate = require('validate.js');
@@ -27,7 +27,9 @@ export default class AnimalCreationForm extends React.Component {
 
     this.state = 
     {
-      active: 0
+      active: 0, 
+      loading: false,
+      user:{},
     }
   }
 
@@ -44,12 +46,47 @@ export default class AnimalCreationForm extends React.Component {
     this.setState({types: types});
   }
 
+  handleGetUserResponse(response) {
+    response.json().then(data => {
+      console.log(data)
+      this.setState({user: data, loading: false})
+    
+    } );
+  }
+
+  fetchUserData() {
+    this.setState({loading: true});
+    SecurityUtils.tokenInfo().then(info => {
+         console.log(info)
+      SecurityUtils.authorizeApi([info.sub], getUser).then(
+        this.handleGetUserResponse.bind(this),
+      );
+    });
+ 
+  }
+
   getTypesCall() {
     SecurityUtils.authorizeApi([], getTypes).then(this.handleGetTypeResponse.bind(this))
   }
 
+  addAnimalCall(name, sex, age, colour, size, city, type, image) {
+    console.log('nombre'+ name)
+    console.log('sex'+ sex)
+    console.log('age'+ age)
+    console.log('colour'+ colour)
+    console.log('tamaño'+ size)
+    console.log('city'+ city)
+    console.log('type'+ type)
+
+
+    
+    SecurityUtils.authorizeApi([this.props.username, name, sex, age, size, colour, city, type, image], addAnimal).then(console.log('Animal añadido con éxito'))
+  }
+
   componentDidMount() {
     this.getTypesCall();
+    this.fetchUserData.bind(this)
+    console.log(this.props.username)
   }
 
   isFormIncompleteOrIncorrect() {
@@ -79,195 +116,7 @@ export default class AnimalCreationForm extends React.Component {
       }
     }
   }
-  /*render() {
-    return (
-      <View style={styles.container}>
-        {[
-          { label: 'Nombre', fieldName: 'name' },
-          { label: 'Edad', fieldName: 'age' },
-          { label: 'Ciudad', fieldName: 'city' }
-
-        ].map(x => (
-          <View key={x.label}>
-            <TextInput
-              mode="outlined"
-              autoCorrect={false}
-              label={x.label}
-              error={
-                validate.single(
-                  this.state[x.fieldName],
-                )
-              }
-              value={this.state[x.fieldName]}
-              autoCompleteType={x.autoCompleteType}
-              onChangeText={value => this.setState({ [x.fieldName]: value })}
-            />
-            {this.renderHelperText(x.fieldName)}
-          </View>
-        ))}
-
-        <Button style = {styles.cameraButton}
-                    color="#ABE009"
-                    mode="contained"
-                    dark={true}
-                    onPress={() => launchCamera(null,(response) => this.setState({image: response.assets[0].base64}))}>
-                    Camara
-                </Button>
-                  <Button style = {styles.cameraButton}
-                    color="#ABE009"
-                    mode="contained"
-                    dark={true}
-                    onPress={() => launchImageLibrary(launchCameraOptions,(response) => this.setState({image: response.assets[0].base64}))}>
-                    Galería
-        </Button>
-
-        <Fragment >
-          <SearchableDropdown
-            onItemSelect={(sex) => {
-              console.log(sex)
-              this.setState({ sex: sex });
-              console.log(this.state.sex)
-            }}
-            mode="outlined"
-            underlineColor="transparent"
-            itemStyle={styles.searchableDropdown}
-            items={sexOption}
-            defaultIndex={2}
-            resetValue={false}
-            textInputProps={
-              {
-                placeholder: "Sexo",
-                value: this.state.sex.name,
-                underlineColorAndroid: "transparent",
-                style: styles.textInputSearchable
-              }
-            }
-            listProps={
-              {
-                nestedScrollEnabled: true,
-              }
-            }
-          />
-
-          <SearchableDropdown
-            onItemSelect={(colour) => {
-              this.setState({ colour: colour });
-            }}
-            itemStyle={styles.searchableDropdown}
-            items={colorOption}
-            defaultIndex={2}
-            resetValue={false}
-            textInputProps={
-              {
-                placeholder: "Color",
-                value: this.state.colour.name,
-                underlineColorAndroid: "transparent",
-                style: styles.textInputSearchable
-              }
-            }
-            listProps={
-              {
-                nestedScrollEnabled: true,
-              }
-            }
-          />
-
-          <SearchableDropdown
-            onItemSelect={(size) => {
-              this.setState({ size: size });
-            }}
-            onRemoveItem={(size, index) => {
-              const sizeOption = this.state.selectedItems.filter((ssize) => ssize.id !== size.id);
-              this.setState({ selectedItems: sizeOption });
-            }}
-            itemStyle={styles.searchableDropdown}
-            items={sizeOption}
-            defaultIndex={2}
-            resetValue={false}
-            textInputProps={
-              {
-                placeholder: "Tamaño",
-                value: this.state.size.name,
-                underlineColorAndroid: "transparent",
-                style: styles.textInputSearchable,
-              }
-            }
-            listProps={
-              {
-                nestedScrollEnabled: true,
-              }
-            }
-          />
-          <SearchableDropdown
-            onItemSelect={(status) => {
-              this.setState({ status: status });
-            }}
-            onRemoveItem={(status, index) => {
-              const statusOption = this.state.selectedItems.filter((sstatus) => sstatus.id !== status.id);
-              this.setState({ selectedItems: statusOption });
-            }}
-            itemStyle={styles.searchableDropdown}
-            items={statusOption}
-            defaultIndex={2}
-            resetValue={false}
-            textInputProps={
-              {
-                placeholder: "Estado",
-                value: this.state.status.name,
-                underlineColorAndroid: "transparent",
-                style: styles.textInputSearchable
-              }
-            }
-            listProps={
-              {
-                nestedScrollEnabled: true,
-              }
-            }
-          />
-           <SearchableDropdown
-            onItemSelect={(types) => {
-              this.setState({ types: types });
-            }}
-            onRemoveItem={(types, index) => {
-              this.state.types = this.state.selectedItems.filter((stypes) => stypes.id !== types.id);
-              this.setState({ selectedItems: this.state.types });
-            }}
-            itemStyle={styles.searchableDropdown}
-            items={this.state.types}
-            defaultIndex={2}
-            resetValue={false}
-            textInputProps={
-              {
-                placeholder: "Tipo",
-                value: this.state.types.name,
-                underlineColorAndroid: "transparent",
-                style: styles.textInputSearchable
-              }
-            }
-            listProps={
-              {
-                nestedScrollEnabled: true,
-              }
-            }
-          />
-        </Fragment>
-
-
-        <Button
-          style={styles.button}
-          mode="contained"
-          dark={true}
-          disabled={this.isFormIncompleteOrIncorrect()}
-          color="#69e000"
-          onPress={() => {
-            this.props.handlePress(this.state);
-          }}>
-          Añadir animal
-        </Button>
-      </View>
-    );
-  }*/
-
+  
   render(){
     return( 
       <View style={styles.container} >
@@ -276,7 +125,7 @@ export default class AnimalCreationForm extends React.Component {
           content={this.content}
           onNext={() => this.nextHandler()}
           onBack={() => this.setState({ active: this.state.active - 1 })}
-          onFinish={() => Alert.alert("Finish")}
+          onFinish={() => this.nextHandler()}
         />
 
       </View>
@@ -287,6 +136,7 @@ export default class AnimalCreationForm extends React.Component {
     <Step1/>,
     <Step2/>,
     <Step3/>,
+    <FinalStep/>
   ];
 
   isValidNumber(number){
@@ -313,26 +163,46 @@ export default class AnimalCreationForm extends React.Component {
         }
       break;
       case 1:
-      {
+      
         this.setState({ active: this.state.active + 1})
 
-      }
+      break;
+      case 2: 
+      
+        this.setState({ active: this.state.active + 1})
+      
+      break;
+      case 3:
+        let cityId = FormManager.getFormManager().getField('cityId'); 
+        console.log(cityId)
+        if(cityId == -1)
+        {
+          Alert.alert("Error", "Debe rellenar todos los campos")
 
-    
+        }else
+          {
+            let formManager = FormManager.getFormManager()
+             	let name = formManager.getField('name')
+              let age = formManager.getField('age')
+              let sex = formManager.getField('sex')
+              let image = formManager.getField('image')
+              let size = formManager.getField('size')
+              let colour = formManager.getField('colour')
+              let status = formManager.getField('status')
+              let cityId = formManager.getField('cityId')
+              let typeId = formManager.getField('typeId')
+              let value = formManager.getField('value')
+
+              this.addAnimalCall(name, sex, age, colour, size, cityId, typeId, image)
+
+          }        
+        break;
       default:
         break;
     }
 
   }
 }
-
-const MyComponent = (props) => {
-  return (
-    <View>
-      <Text>{props.title}</Text>
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {

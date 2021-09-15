@@ -4,7 +4,8 @@ import AnimalCreationForm from '../components/AnimalCreationForm';
 import {addAnimal} from '../client/UsersApi';
 var SecurityUtils = require('../utils/SecurityUtils');
 import {ScrollView} from 'react-native-gesture-handler';
-
+import {Appbar} from 'react-native-paper';
+import { DrawerActions } from '@react-navigation/native';
 
 export default class CreateAnimalScreen extends React.Component {
   constructor(props) {
@@ -12,7 +13,6 @@ export default class CreateAnimalScreen extends React.Component {
     this.state = {
       isErrorVisible: false,
     };
-    this.createNewAnimal = this.createNewAnimal.bind(this);
   }
 
   handleCreateNewAnimalResponse(response) {
@@ -25,25 +25,36 @@ export default class CreateAnimalScreen extends React.Component {
     }
   }
 
-  createNewAnimal(animalCreationRequest) {
-    SecurityUtils.authorizeApi(
-      [animalCreationRequest, this.props.route.params.username],
-      addAnimal,
-    ).then(this.handleCreateNewAnimalResponse.bind(this));
-  }
-
   render() {
     return (
+      <View style={styles.background}>
+          <Appbar style={styles.barra}>
+              <Text style={styles.logo}>
+                SavePet
+              </Text>
+          </Appbar>
         <View style={styles.container} behavior="padding">
           <Text style={styles.text}>Nuevo animal</Text>
-          <AnimalCreationForm handlePress={this.createNewAnimal} />
+          <AnimalCreationForm 
+          username={this.props.route.params.username}/>
         </View>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  background: {
+  barra: {
+    backgroundColor: '#E67E00',
+  },
+  logo: {
+    fontFamily: 'Butler_Light',
+    color: 'white',
+    fontSize: 25,
+    marginLeft: 14,
+    alignSelf: 'center',
+  },
+  background:{
     flex: 1,
     backgroundColor: '#fafafa',
   },
@@ -55,11 +66,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F3F3F3',
+    backgroundColor: '#fafafa',
   },
   text: {
     fontFamily: 'OpenSans-Bold',
-    color: '#69e000',
     fontSize: 20,
     marginTop: 5,
   },

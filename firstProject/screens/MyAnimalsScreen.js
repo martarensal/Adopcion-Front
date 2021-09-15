@@ -37,10 +37,10 @@ export default class MyAnimalsScreen extends Component {
     }
   }
 
-  deleteAnimal(plate) {
+  deleteAnimal(id) {
     this.setState({loading: true});
     SecurityUtils.authorizeApi(
-      [plate, this.state.user.username],
+      [id],
       deleteAnimal,
     ).then(this.handleDeteleAnimalResponse);
   }
@@ -48,7 +48,7 @@ export default class MyAnimalsScreen extends Component {
   handleGetUserResponse(response) {
     response.json().then(data => {
       this.setState({user: data});
-      SecurityUtils.authorizeApi([data.username], getAnimalsFromUser).then(
+      SecurityUtils.authorizeApi([info.sub], getAnimalsFromUser).then(
         this.handleGetAnimalsResponse.bind(this),
       );
     });
@@ -71,6 +71,7 @@ export default class MyAnimalsScreen extends Component {
       'focus',
       this.fetchUserDataWithAnimals.bind(this),
     );
+
   }
 
   componentWillUnmount() {
@@ -82,11 +83,13 @@ export default class MyAnimalsScreen extends Component {
       return <LoadingIndicator />;
     } else {
       return (
-        <>
-          <Appbar.Header dark={true}>
-          <Appbar.Action icon="menu" onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} />
-            <Text style={styles.logo}>SavePet</Text>
-          </Appbar.Header>
+        <View style={styles.background}>
+          <Appbar style={styles.barra}>
+            <Appbar.Action icon="menu" onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} />
+              <Text style={styles.logo}>
+                SavePet
+              </Text>
+          </Appbar>
           <ScrollView style={styles.background}>
             <View style={styles.container}>
               <Text style={styles.text}>Mis animales</Text>
@@ -110,7 +113,7 @@ export default class MyAnimalsScreen extends Component {
                 </View>
               </>
             ) : (
-              this.state.animals.map(car => {
+              this.state.animals.map(animal => {
                 return (
                   <Card key={animal.name}>
                     <Card.Title
@@ -120,7 +123,7 @@ export default class MyAnimalsScreen extends Component {
                     <Card.Actions>
                       <Button
                         onPress={() =>
-                          this.props.navigation.navigate('EditCarScreen', {
+                          this.props.navigation.navigate('EditAnimalScreen', {
                             animal: animal,
                           })
                         }>
@@ -158,20 +161,23 @@ export default class MyAnimalsScreen extends Component {
             style={styles.fab}
             icon="plus"
             onPress={() => {
-                this.props.navigation.navigate('CreateCarScreen', {
+                this.props.navigation.navigate('CreateAnimalScreen', {
                   username: this.state.user.username,
                 });
               }
             }
           />
-        </>
+        </View>
       );
     }
   }
 }
 const styles = StyleSheet.create({
+  barra: {
+    backgroundColor: '#E67E00',
+  },
   logo: {
-    fontFamily: 'Pacifico-Regular',
+    fontFamily: 'Butler_Light',
     color: 'white',
     fontSize: 25,
     marginLeft: 14,
@@ -186,6 +192,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignItems: 'center',
     backgroundColor: '#fafafa',
+  },
+  logo: {
+    fontFamily: 'Butler_Light',
+    color: 'white',
+    fontSize: 25,
+    marginLeft: 14,
+    alignSelf: 'center',
   },
   text: {
     fontFamily: 'OpenSans-Bold',

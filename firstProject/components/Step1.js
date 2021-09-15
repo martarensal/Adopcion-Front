@@ -21,14 +21,11 @@ export default class Step1 extends React.Component {
     this.setState({name: FormManager.getFormManager().getField('name')})
     this.setState({age: FormManager.getFormManager().getField('age')})
 
-    //DEBUG
-    FormManager.getFormManager().setField('age', '6')
-    FormManager.getFormManager().setField('name', 'Tetesitabebelean')
-
   }
 
   render(){
       return (
+        
       <View style={styles.container}>
         {[
           { label: 'Nombre', fieldName: 'name'},

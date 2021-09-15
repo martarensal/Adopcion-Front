@@ -1,13 +1,37 @@
 import { BASE_URL } from "./ApiConfiguration";
 
-export function getCities(cityPaginatedResponse, token) {
-    return fetch(`${BASE_URL}/cities`, {
-      method: 'POST',
+export function getAC(token) {
+   
+    return fetch(`${BASE_URL}/cities/autonomousCommunity`, {
+      method: 'GET',
       headers: new Headers({
         'content-type': 'application/json',
         Accept: 'application/json',
         'X-API-KEY': token,
       }),
-      body: JSON.stringify(cityPaginatedResponse),
+    });
+  }
+
+export function getProvincesFromAC(autonomous_community, token) {
+    return fetch(`${BASE_URL}/cities/${autonomous_community}/provinces`, {
+      method: 'GET',
+      headers: new Headers({
+        'content-type': 'application/json',
+        Accept: 'application/json',
+        'X-API-KEY': token,
+      }),
+    });
+  }
+
+
+export function getCityFromProvince(province, token) {
+  console.log(province)
+    return fetch(`${BASE_URL}/cities/${province}/names`, {
+      method: 'GET',
+      headers: new Headers({
+        'content-type': 'application/json',
+        Accept: 'application/json',
+        'X-API-KEY': token,
+      }),
     });
   }

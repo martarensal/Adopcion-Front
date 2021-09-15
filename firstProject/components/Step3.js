@@ -12,33 +12,26 @@ const launchCameraOptions = {
 }
 
 export default class Step3 extends React.Component {
-  formManager = FormManager.getFormManager()
   
   constructor(props) {
     super(props);
-   
-    this.state = {
-    };
-  }
-
-  componentDidMount() {
-    this.setState({name: FormManager.getFormManager().getField('name')})
-    this.setState({age: FormManager.getFormManager().getField('age')})
-
-    //DEBUG
-    FormManager.getFormManager().setField('age', '6')
-    FormManager.getFormManager().setField('name', 'Tetesitabebelean')
-
   }
 
   render(){
       return (
         <View style ={ styles.container}>
+            <Text style={styles.text}>Añade una foto del animal :  </Text>
+
             <TouchableOpacity style = {styles.cameraButton}
                     mode="contained"
                     dark={true}
                     onPress={() =>{
-                        launchCamera(null,(response) => this.setState({image: response.assets[0].base64}))
+                        launchCamera(launchCameraOptions,(response) => 
+                        {
+                          if(!response.didCancel){
+                             FormManager.getFormManager().setField('image', response.assets[0].base64)
+                          }
+                        })
                     }
                      }>
                    <Text style={styles.textStyle}> Camara</Text>
@@ -46,13 +39,20 @@ export default class Step3 extends React.Component {
                 <TouchableOpacity style = {styles.cameraButton}
                     mode="contained"
                     dark={true}
-                    onPress={() => launchImageLibrary(launchCameraOptions,(response) => this.setState({image: response.assets[0].base64}))}>
+                    onPress={() =>{
+                       launchImageLibrary(launchCameraOptions,(response) => 
+                       {
+                         if(!response.didCancel){
+                           FormManager.getFormManager().setField('image', response.assets[0].base64)
+                         }
+                       })
+                    }
+                    }>
                     <Text style={styles.textStyle}> Galería </Text>
-            </TouchableOpacity>
+                </TouchableOpacity>
         </View>
       )
     }
-
 }
 
 const styles = StyleSheet.create({
@@ -64,6 +64,13 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 24,
+  },
+  text: {
+    fontFamily: 'OpenSans-Bold',
+    color: '#F05524',
+    fontSize: 18,
+    marginTop: 5,
+    paddingLeft:10,
   },
   searchableDropdown: {
     padding: 10,
@@ -78,7 +85,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   cameraButton: {
-    backgroundColor: '#A7E009',
+    backgroundColor: '#ABE009',
     marginVertical: '5%',
     height: 40,
     width: '80%',

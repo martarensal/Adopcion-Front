@@ -19,6 +19,7 @@ import PhoneChangeScreen from './screens/PhoneChangeScreen.js';
 import MyAnimalsScreen from './screens/MyAnimalsScreen.js';
 import CreateAnimalScreen from './screens/CreateAnimalScreen.js';
 
+
 const Stack = createStackNavigator();
 export default class App extends Component {
   constructor(props) {
