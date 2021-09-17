@@ -7,10 +7,10 @@ export default class FormManager
     formFields = {
       name: '',
       age: '',
-      sex: '',
+      sex: 'male',
       image: '',
-      size: '',
-      colour: '',
+      size: 'small',
+      colour: 'white',
       status: '',
       cityId: '',
       typeId: '',

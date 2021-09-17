@@ -23,6 +23,7 @@ export default class Step1 extends React.Component {
       type:'',
       typeId: -1,
     }
+    this.render = this.render.bind(this)
   }
 
   async handleGetTypeResponse(response) {
@@ -50,18 +51,17 @@ export default class Step1 extends React.Component {
    
   updateSize = (size) => {
       this.setState({ size: size })
-      this.formManager.setField('size', size)
-      console.log(this.formManager.getField(size))
+      FormManager.getFormManager().setField('size', size);
   }
 
   updateColour = (colour) => {
       this.setState({colour: colour})
-      this.formManager.setField('colour', colour)
+      FormManager.getFormManager().setField('colour', colour)
   }
 
   updateSex = (sex) => {
       this.setState({sex: sex})
-      this.formManager.setField('sex', sex)
+      FormManager.getFormManager().setField('sex', sex)
   }
 
   componentDidMount() {

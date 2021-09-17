@@ -69,6 +69,17 @@ export default class AnimalCreationForm extends React.Component {
     SecurityUtils.authorizeApi([], getTypes).then(this.handleGetTypeResponse.bind(this))
   }
 
+  handleCreateNewAnimalResponse(response) {
+    if (response.ok) {
+      console.log(JSON.stringify(response));
+      console.log('Animal creado');
+      //this.props.navigation.goBack();
+    } else {
+      console.log(JSON.stringify(response));
+      this.setState({isErrorVisible: true});
+    }
+  }
+
   addAnimalCall(name, sex, age, colour, size, city, type, image) {
     console.log('nombre'+ name)
     console.log('sex'+ sex)
@@ -77,10 +88,19 @@ export default class AnimalCreationForm extends React.Component {
     console.log('tamaño'+ size)
     console.log('city'+ city)
     console.log('type'+ type)
+    let body = {
+          age: age,
+          city_id: city,
+          colour: colour,
+          image: image,
+          name: name,
+          sex: sex,
+          size: size,
+          status:'homeless',
+          type_id: type,
+    }
 
-
-    
-    SecurityUtils.authorizeApi([this.props.username, name, sex, age, size, colour, city, type, image], addAnimal).then(console.log('Animal añadido con éxito'))
+    SecurityUtils.authorizeApi([body, this.props.username], addAnimal).then(this.handleCreateNewAnimalResponse.bind(this));
   }
 
   componentDidMount() {
