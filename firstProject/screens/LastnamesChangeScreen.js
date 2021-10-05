@@ -10,7 +10,7 @@ export default class NameChangeScreen extends React.Component {
     this.changeUserLastnames = this.changeUserLastnames.bind(this);
   }
   componentDidMount(){
-        console.log(this.props.route.params.lastnames)
+    console.log(this.props.route.params.lastnames)
 
   }
 

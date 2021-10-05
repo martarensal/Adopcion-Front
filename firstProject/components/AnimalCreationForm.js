@@ -22,8 +22,9 @@ var validate = require('validate.js');
 export default class AnimalCreationForm extends React.Component {
   formManager = FormManager.getFormManager()
 
-  constructor(props) {
+  constructor(props){
     super(props);
+    this.addAnimalCall = this.addAnimalCall.bind(this)
 
     this.state = 
     {
@@ -48,7 +49,7 @@ export default class AnimalCreationForm extends React.Component {
 
   handleGetUserResponse(response) {
     response.json().then(data => {
-      console.log(data)
+      //console.log(data)
       this.setState({user: data, loading: false})
     
     } );
@@ -57,7 +58,6 @@ export default class AnimalCreationForm extends React.Component {
   fetchUserData() {
     this.setState({loading: true});
     SecurityUtils.tokenInfo().then(info => {
-         console.log(info)
       SecurityUtils.authorizeApi([info.sub], getUser).then(
         this.handleGetUserResponse.bind(this),
       );
@@ -73,7 +73,7 @@ export default class AnimalCreationForm extends React.Component {
     if (response.ok) {
       console.log(JSON.stringify(response));
       console.log('Animal creado');
-      //this.props.navigation.goBack();
+
     } else {
       console.log(JSON.stringify(response));
       this.setState({isErrorVisible: true});
@@ -81,13 +81,7 @@ export default class AnimalCreationForm extends React.Component {
   }
 
   addAnimalCall(name, sex, age, colour, size, city, type, image) {
-    console.log('nombre'+ name)
-    console.log('sex'+ sex)
-    console.log('age'+ age)
-    console.log('colour'+ colour)
-    console.log('tamaño'+ size)
-    console.log('city'+ city)
-    console.log('type'+ type)
+
     let body = {
           age: age,
           city_id: city,
@@ -106,7 +100,7 @@ export default class AnimalCreationForm extends React.Component {
   componentDidMount() {
     this.getTypesCall();
     this.fetchUserData.bind(this)
-    console.log(this.props.username)
+    //console.log(this.props.username)
   }
 
   isFormIncompleteOrIncorrect() {
@@ -145,7 +139,14 @@ export default class AnimalCreationForm extends React.Component {
           content={this.content}
           onNext={() => this.nextHandler()}
           onBack={() => this.setState({ active: this.state.active - 1 })}
-          onFinish={() => this.nextHandler()}
+          onFinish={() => {
+            Alert.alert(
+              "Animal creado",
+              "Tu animal ha sido añadido con éxito",
+            );
+            this.nextHandler()
+            }
+          }
         />
 
       </View>

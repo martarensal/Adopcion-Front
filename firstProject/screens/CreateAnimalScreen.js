@@ -15,16 +15,6 @@ export default class CreateAnimalScreen extends React.Component {
     };
   }
 
-  handleCreateNewAnimalResponse(response) {
-    if (response.ok) {
-      console.log(JSON.stringify(response));
-      console.log('Animal creado');
-      this.props.navigation.goBack();
-    } else {
-      this.setState({isErrorVisible: true});
-    }
-  }
-
   render() {
     return (
       <View style={styles.background}>
