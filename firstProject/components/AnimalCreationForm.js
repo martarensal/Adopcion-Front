@@ -145,6 +145,7 @@ export default class AnimalCreationForm extends React.Component {
               "Tu animal ha sido añadido con éxito",
             );
             this.nextHandler()
+            this.props.navigation.navigate('MainScreen')
             }
           }
         />

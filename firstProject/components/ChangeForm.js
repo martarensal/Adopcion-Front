@@ -11,9 +11,10 @@ export default class ChangeForm extends React.Component {
   }
 
   render() {
+    let actualValue = this.props.value.toString();
     return (
       <>
-        <TextInput label="Actual" value={this.props.value} disabled={true} />
+        <TextInput label="Actual" value={actualValue} disabled={true} />
         <TextInput
           label="Introduzca aqui el nuevo valor"
           value={this.state.newValue}
