@@ -25,7 +25,6 @@ export default class AnimalCreationForm extends React.Component {
   constructor(props){
     super(props);
     this.addAnimalCall = this.addAnimalCall.bind(this)
-
     this.state = 
     {
       active: 0, 
@@ -95,6 +94,7 @@ export default class AnimalCreationForm extends React.Component {
     }
 
     SecurityUtils.authorizeApi([body, this.props.username], addAnimal).then(this.handleCreateNewAnimalResponse.bind(this));
+
   }
 
   componentDidMount() {

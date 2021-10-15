@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
 import LoginScreen from './screens/LoginScreen.js';
 import WelcomeScreen from './screens/WelcomeScreen.js';
 import RegistrationScreen from './screens/RegistrationScreen.js';
@@ -108,6 +107,7 @@ export default class App extends Component {
                   />
                   <Stack.Screen
                   name="MyAnimalsScreen"
+
                   component={MyAnimalsScreen}
                   options={{headerShown: false}}
                   />
@@ -136,6 +136,7 @@ export default class App extends Component {
                   component={AnimalSexChangeScreen}
                   options={{headerShown: false}}
                   />
+
                    
                 </>
               )}

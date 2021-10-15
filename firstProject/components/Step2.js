@@ -24,6 +24,7 @@ export default class Step1 extends React.Component {
       typeId: -1,
     }
     this.render = this.render.bind(this)
+
   }
 
   async handleGetTypeResponse(response) {

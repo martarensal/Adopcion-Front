@@ -2,6 +2,7 @@ import { BASE_URL } from "./ApiConfiguration";
 
 export function addAnimal( animalCreationRequest, username, token) {
   return fetch(`${BASE_URL}/users/${username}/animals`, {
+
     method: 'POST',
     headers: new Headers({
       'content-type': 'application/json',
@@ -84,5 +85,6 @@ export function deleteAnimal(idAnimal, token) {
       Accept: 'application/json',
       'X-API-KEY': token,
     }),
+
   });
 }

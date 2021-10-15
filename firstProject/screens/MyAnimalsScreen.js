@@ -206,8 +206,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 5,
   },
+
   image: {
     width: 100,
     height: 100,
   },
 });
+
