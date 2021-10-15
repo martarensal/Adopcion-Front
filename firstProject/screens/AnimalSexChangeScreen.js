@@ -14,7 +14,8 @@ export default class AnimalSexChangeScreen extends React.Component {
     this.state = {
         sex:'',
     }
-    this.changeAnimalSex = this.changeAnimalSex.bind(this);
+   // this.updateSex = this.updateSex.bind(this);
+    this.render = this.render.bind(this)
   }
 
   handleChangeAnimalSexResponse(response) {
@@ -23,33 +24,42 @@ export default class AnimalSexChangeScreen extends React.Component {
     this.props.navigation.navigate('MyAnimalsScreen');
   }
 
-  changeAnimalSex(animalSexChangeRequest) {
-      console.log(animalSexChangeRequest)
+    updateSex = (sex) => {
+          this.setState({sex: sex})
+          console.log(this.state.sex)
+    }
 
-    let body = {
-      newAnimalSex: animalSexChangeRequest,
-    };
-    console.log(body)
+  submitchangeAnimalSex(){
     SecurityUtils.tokenInfo().then(info => {
-      SecurityUtils.authorizeApi([body, this.props.route.params.id], modifyAnimalSex).then(
+      SecurityUtils.authorizeApi([this.state.sex, this.props.route.params.id], modifyAnimalSex).then(
           this.handleChangeAnimalSexResponse.bind(this));
     });
   }
 
-  render()
-    {
-      return (
+  componentDidMount(){
+    console.log(this.state.sex + ' component did mount')
+  }
 
+  render(){
+      return (
         <View style={styles.container}>
             <Text style={styles.text}>Sexo :  </Text>
 
-            <Picker selectedValue = {this.props.route.params.sex} onValueChange = {this.changeAnimalSex}>
+            <Picker selectedValue = {this.props.route.params.sex} onValueChange = {this.updateSex}>
             {
             sexOption.map(sex => {
                 return ( <Picker.Item key={sex.back_name+'_picker'} label={sex.name}  value={sex.back_name} />)
             })
             }
             </Picker>
+            <Button
+            color="#15abe7"
+            mode="contained"
+            disabled={!this.state.sex}
+            dark={true}
+            onPress={() => this.submitchangeAnimalSex}>
+            Enviar
+          </Button>
 
 
         </View>
