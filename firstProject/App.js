@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
 import React, {Component} from 'react';
 import {StatusBar} from 'react-native';
-
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import LoginScreen from './screens/LoginScreen.js';
@@ -18,7 +17,12 @@ import PasswordChangeScreen from './screens/PasswordChangeScreen.js';
 import PhoneChangeScreen from './screens/PhoneChangeScreen.js';
 import MyAnimalsScreen from './screens/MyAnimalsScreen.js';
 import CreateAnimalScreen from './screens/CreateAnimalScreen.js';
-
+import EditAnimalScreen from './screens/EditAnimalScreen.js';
+//import ColourChangeScreen from './screens/ColourChangeScreen.js';
+import AnimalNameChangeScreen from './screens/AnimalNameChangeScreen.js';
+import AnimalAgeChangeScreen from './screens/AnimalAgeChangeScreen.js';
+import AnimalSexChangeScreen from './screens/AnimalSexChangeScreen.js';
+//import StatusChangeScreen from './screens/StatusChangeScreen.js';*/
 
 const Stack = createStackNavigator();
 export default class App extends Component {
@@ -102,7 +106,8 @@ export default class App extends Component {
                   options={{headerShown: false}}
                   />
                   <Stack.Screen
-                  name="MyAnimalScreen"
+                  name="MyAnimalsScreen"
+
                   component={MyAnimalsScreen}
                   options={{headerShown: false}}
                   />
@@ -111,6 +116,27 @@ export default class App extends Component {
                   component={CreateAnimalScreen}
                   options={{headerShown: false}}
                   />
+                  <Stack.Screen
+                  name="EditAnimalScreen"
+                  component={EditAnimalScreen}
+                  options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                  name="AnimalNameChangeScreen"
+                  component={AnimalNameChangeScreen}
+                  options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                  name="AnimalAgeChangeScreen"
+                  component={AnimalAgeChangeScreen}
+                  options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                  name="AnimalSexChangeScreen"
+                  component={AnimalSexChangeScreen}
+                  options={{headerShown: false}}
+                  />
+
                    
                 </>
               )}

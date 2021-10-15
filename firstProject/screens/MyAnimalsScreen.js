@@ -1,4 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {getUser} from '../client/UsersApi';
+import {getPaginatedAnimalsFromUser, deleteAnimal} from '../client/AnimalApi';
 import {
   Text,
   View,
@@ -8,57 +10,74 @@ import {
   Alert,
 } from 'react-native';
 import {Appbar, FAB, Card, Button} from 'react-native-paper';
-import {getUser, getAnimalsFromUser, deleteAnimal} from '../client/UsersApi';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import { DrawerActions } from '@react-navigation/native';
 var SecurityUtils = require('../utils/SecurityUtils');
 
-export default class MyAnimalsScreen extends Component {
+export default class MyAnimalsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      animals: [],
+      paginationInfo: {},
+      loading: true,
+      page: 0,
       user: {},
-      animals: {},
-      loading: false,
-    };
-    this.deleteAnimal = this.deleteAnimal.bind(this);
-    this.handleDeteleAnimalResponse = this.handleDeteleAnimalResponse.bind(this);
-    this.fetchUserDataWithAnimals = this.fetchUserDataWithAnimals.bind(this);
-  }
+    }
 
-  handleDeteleAnimalResponse(response) {
+    this.deleteAnimal = this.deleteAnimal.bind(this)
+    this.fetchUserDataWithAnimals = this.fetchUserDataWithAnimals.bind(this)
+  }
+   handleDeteleAnimalResponse(response) {
     if (response.ok) {
-      console.log('Animal eliminado');
-      this.setState({animals: {}});
+      console.log('Animal borrado');
       this.fetchUserDataWithAnimals();
     } else {
       console.log('Error');
     }
   }
-
-  deleteAnimal(id) {
-    this.setState({loading: true});
+  deleteAnimal(idAnimal) {
+    //this.setState({loading: true});
     SecurityUtils.authorizeApi(
-      [id],
+      [idAnimal],
       deleteAnimal,
     ).then(this.handleDeteleAnimalResponse);
+  }
+  showMoreAnimals() {
+    this.setState({page: this.state.page + 1}, () =>
+      this.fetchUserDataWithAnimals(),
+    );
+  }
+
+   handleGetAnimalsResponse(response) {
+    response.json().then(data =>
+    
+      this.setState({
+        animals: this.state.animals.concat(data.pages),
+        paginationInfo: data.paginationInfo,
+        loading: false,
+      }),
+      //console.log(data)
+      //console.log(this.state.animals)
+    );
   }
 
   handleGetUserResponse(response) {
     response.json().then(data => {
       this.setState({user: data});
-      SecurityUtils.authorizeApi([info.sub], getAnimalsFromUser).then(
-        this.handleGetAnimalsResponse.bind(this),
-      );
+      SecurityUtils.authorizeApi(
+        [this.state.page, 5, data.username],
+        getPaginatedAnimalsFromUser,
+      ).then(this.handleGetAnimalsResponse.bind(this));
     });
   }
 
-  handleGetAnimalsResponse(response) {
-    response.json().then(data => this.setState({animals: data, loading: false}));
-  }
+   fetchUserDataWithAnimals() {
+    //if (this.state.page === 0) this.setState({loading: true});
 
-  fetchUserDataWithAnimals() {
+    this.setState({animals: []});
+
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi([info.sub], getUser).then(
         this.handleGetUserResponse.bind(this),
@@ -67,30 +86,21 @@ export default class MyAnimalsScreen extends Component {
   }
 
   componentDidMount() {
-    this._unsubscribe = this.props.navigation.addListener(
-      'focus',
-      this.fetchUserDataWithAnimals.bind(this),
+    this.fetchUserDataWithAnimals();
+   this._outOfFocus = this.props.navigation.addListener('blur', () =>
+      this.setState({animals: [], page: 0}),
     );
-
   }
 
-  componentWillUnmount() {
-    this._unsubscribe();
-  }
-
-  render() {
-    if (this.state.loading) {
-      return <LoadingIndicator />;
-    } else {
-      return (
-        <View style={styles.background}>
+  render(){
+    return (
+      <View style={styles.background}>
           <Appbar style={styles.barra}>
-            <Appbar.Action icon="menu" onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} />
               <Text style={styles.logo}>
                 SavePet
               </Text>
           </Appbar>
-          <ScrollView style={styles.background}>
+            <ScrollView style={styles.background}>
             <View style={styles.container}>
               <Text style={styles.text}>Mis animales</Text>
             </View>
@@ -117,8 +127,9 @@ export default class MyAnimalsScreen extends Component {
                 return (
                   <Card key={animal.name}>
                     <Card.Title
-                      title={animal.age + ' ' + animal.sex}
-                      subtitle={animal.name}
+                      title={animal.name}
+                      subtitle={'Sexo: '+ animal.sex +  '\n' + ' Edad: '+ animal.age
+                              }
                     />
                     <Card.Actions>
                       <Button
@@ -157,76 +168,48 @@ export default class MyAnimalsScreen extends Component {
               })
             )}
           </ScrollView>
-          <FAB
-            style={styles.fab}
-            icon="plus"
-            onPress={() => {
-                this.props.navigation.navigate('CreateAnimalScreen', {
-                  username: this.state.user.username,
-                });
-              }
-            }
-          />
-        </View>
-      );
-    }
+          
+      </View>
+  );
   }
 }
+
 const styles = StyleSheet.create({
   barra: {
     backgroundColor: '#E67E00',
   },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
   logo: {
     fontFamily: 'Butler_Light',
     color: 'white',
     fontSize: 25,
     marginLeft: 14,
     alignSelf: 'center',
+  },
+  background:{
+    flex: 1,
+    backgroundColor: '#fafafa',
   },
   container: {
     flex: 1,
-    padding: 20,
+    padding: 10,
     width: '100%',
-    maxWidth: 400,
-    marginBottom: 10,
-    alignSelf: 'center',
-    alignItems: 'center',
+    maxWidth: 340,
     backgroundColor: '#fafafa',
-  },
-  logo: {
-    fontFamily: 'Butler_Light',
-    color: 'white',
-    fontSize: 25,
-    marginLeft: 14,
-    alignSelf: 'center',
   },
   text: {
     fontFamily: 'OpenSans-Bold',
-    color: '#69e000',
     fontSize: 20,
     marginTop: 5,
   },
-  background: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-  },
-  label: {
-    fontSize: 16,
-    color: '#525252',
-  },
-  link: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#69e000',
-  },
+
   image: {
     width: 100,
     height: 100,
   },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0,
-  },
 });
+

@@ -91,26 +91,3 @@ export function modifyUserPassword(userPasswordChangeRequest, username, token) {
       body: JSON.stringify(userPhoneChangeRequest),
     });
 }
-
-export function deleteAnimal(id, token) {
-  return fetch(`${BASE_URL}/animals/${id}`, {
-    method: 'DELETE',
-    headers: new Headers({
-      'content-type': 'application/json',
-      Accept: 'application/json',
-      'X-API-KEY': token,
-    }),
-  });
-}
-
-export function getAnimalsFromUser( username, token) {
-  return fetch(`${BASE_URL}/users/${username}/animals`, {
-    method: 'GET',
-    headers: new Headers({
-      'content-type': 'application/json',
-      Accept: 'application/json',
-      'X-API-KEY': token,
-    }),
-  });
-
-}
