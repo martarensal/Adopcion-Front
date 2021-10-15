@@ -25,6 +25,8 @@ export default class AnimalSexChangeScreen extends React.Component {
 
   changeAnimalSex(animalSexChangeRequest) {
       console.log(animalSexChangeRequest)
+            console.log(animalSexChangeRequest)
+
 
     let body = {
       newAnimalSex: animalSexChangeRequest,
