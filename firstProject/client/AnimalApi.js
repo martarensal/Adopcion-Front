@@ -27,9 +27,7 @@ export function getPaginatedAnimalsFromUser(page, size, username, token) {
 }
 
 export function modifyAnimalName(AnimalNameChangeRequest, idAnimal, token) {
-      console.log('hola')
       console.log(AnimalNameChangeRequest)
-      console.log(idAnimal)
   return fetch(`${BASE_URL}/animals/${idAnimal}/name`, {
       method: 'PUT',
       headers: new Headers({
@@ -74,6 +72,30 @@ export function modifyAnimalColour(animalColourChangeRequest, idAnimal, token) {
       'X-API-KEY': token,
     }),
     body: JSON.stringify(animalColourChangeRequest),
+  });
+}
+
+export function modifyAnimalStatus(animalStatusChangeRequest, idAnimal, token) {
+  return fetch(`${BASE_URL}/animals/${idAnimal}/status`, {
+    method: 'PUT',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+    body: JSON.stringify(animalStatusChangeRequest),
+  });
+}
+
+export function modifyAnimalSize(animalSizeChangeRequest, idAnimal, token) {
+  return fetch(`${BASE_URL}/animals/${idAnimal}/size`, {
+    method: 'PUT',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+    body: JSON.stringify(animalSizeChangeRequest),
   });
 }
 

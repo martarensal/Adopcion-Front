@@ -18,11 +18,13 @@ import PhoneChangeScreen from './screens/PhoneChangeScreen.js';
 import MyAnimalsScreen from './screens/MyAnimalsScreen.js';
 import CreateAnimalScreen from './screens/CreateAnimalScreen.js';
 import EditAnimalScreen from './screens/EditAnimalScreen.js';
-//import ColourChangeScreen from './screens/ColourChangeScreen.js';
+import AnimalColourChangeScreen from './screens/AnimalColourChangeScreen.js';
 import AnimalNameChangeScreen from './screens/AnimalNameChangeScreen.js';
 import AnimalAgeChangeScreen from './screens/AnimalAgeChangeScreen.js';
 import AnimalSexChangeScreen from './screens/AnimalSexChangeScreen.js';
-//import StatusChangeScreen from './screens/StatusChangeScreen.js';*/
+import AnimalStatusChangeScreen from './screens/AnimalStatusChangeScreen.js';
+import AnimalSizeChangeScreen from './screens/AnimalSizeChangeScreen.js';
+
 
 const Stack = createStackNavigator();
 export default class App extends Component {
@@ -134,6 +136,21 @@ export default class App extends Component {
                   <Stack.Screen
                   name="AnimalSexChangeScreen"
                   component={AnimalSexChangeScreen}
+                  options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                  name="AnimalColourChangeScreen"
+                  component={AnimalColourChangeScreen}
+                  options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                  name="AnimalStatusChangeScreen"
+                  component={AnimalStatusChangeScreen}
+                  options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                  name="AnimalSizeChangeScreen"
+                  component={AnimalSizeChangeScreen}
                   options={{headerShown: false}}
                   />
 
