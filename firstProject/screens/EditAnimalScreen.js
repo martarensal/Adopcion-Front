@@ -4,18 +4,35 @@ import {List} from 'react-native-paper';
 export default class EditAnimalScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state ={
+        base64:'data:image/png;base64,'  }
   }
   componentDidMount(){
-    console.log('hola')
     console.log(this.props.route.params.animal)
   }
+        
 
   render() {
     return (
       <ScrollView style={styles.background}>
         <View style={styles.container}>
           <Text style={styles.text}>{this.props.route.params.animal.name}</Text>
+            <Image
+                   style={styles.image}
+                   source={{ uri: this.state.base64 + this.props.route.params.animal.image }}
+           />
         </View>
+        <List.Item
+          title="Foto"
+         
+          onPress={() => {
+            this.props.navigation.navigate('AnimalImageChangeScreen', {
+              id: this.props.route.params.animal.id,
+              image: this.props.route.params.animal.image,
+            });
+          }}
+        />
+        
         <List.Item
           title="Nombre"
           description={this.props.route.params.animal.name
@@ -83,7 +100,7 @@ export default class EditAnimalScreen extends React.Component {
           onPress={() => {
             this.props.navigation.navigate('AnimalCityChangeScreen', {
               id: this.props.route.params.animal.id,
-              size: this.props.route.params.animal.city,
+              city: this.props.route.params.animal.city,
             });
           }}
         />
@@ -93,10 +110,11 @@ export default class EditAnimalScreen extends React.Component {
           onPress={() => {
             this.props.navigation.navigate('AnimalTypeChangeScreen', {
               id: this.props.route.params.animal.id,
-              size: this.props.route.params.animal.type,
+              type: this.props.route.params.animal.type,
             });
           }}
         />
+         
       </ScrollView>
     );
   }
@@ -122,6 +140,11 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: '#fafafa',
+  },
+  image: {
+    paddingTop: 30,
+    width: 150,
+    height: 150,
   },
 
 });
