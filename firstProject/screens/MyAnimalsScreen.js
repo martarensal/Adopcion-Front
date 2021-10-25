@@ -19,7 +19,7 @@ export default class MyAnimalsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      animals: [],
+      animals: {},
       paginationInfo: {},
       loading: true,
       page: 0,
@@ -27,18 +27,21 @@ export default class MyAnimalsScreen extends React.Component {
     }
 
     this.deleteAnimal = this.deleteAnimal.bind(this)
+     this.handleDeteleAnimalResponse = this.handleDeteleAnimalResponse.bind(this);
     this.fetchUserDataWithAnimals = this.fetchUserDataWithAnimals.bind(this)
   }
+
    handleDeteleAnimalResponse(response) {
     if (response.ok) {
       console.log('Animal borrado');
+       this.setState({animals: {}});
       this.fetchUserDataWithAnimals();
     } else {
       console.log('Error');
     }
   }
   deleteAnimal(idAnimal) {
-    //this.setState({loading: true});
+    this.setState({loading: true});
     SecurityUtils.authorizeApi(
       [idAnimal],
       deleteAnimal,
@@ -50,7 +53,7 @@ export default class MyAnimalsScreen extends React.Component {
     );
   }
 
-   handleGetAnimalsResponse(response) {
+  handleGetAnimalsResponse(response) {
     response.json().then(data =>
     
       this.setState({
@@ -94,12 +97,12 @@ export default class MyAnimalsScreen extends React.Component {
 
   render(){
     return (
+      <>
+       <Appbar style={styles.barra}>
+          <Appbar.Action icon="menu" onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} />
+            <Text style={styles.logo}>SavePet</Text>
+        </Appbar>
       <View style={styles.background}>
-          <Appbar style={styles.barra}>
-              <Text style={styles.logo}>
-                SavePet
-              </Text>
-          </Appbar>
             <ScrollView style={styles.background}>
             <View style={styles.container}>
               <Text style={styles.text}>Mis animales</Text>
@@ -170,6 +173,7 @@ export default class MyAnimalsScreen extends React.Component {
           </ScrollView>
           
       </View>
+      </>
   );
   }
 }

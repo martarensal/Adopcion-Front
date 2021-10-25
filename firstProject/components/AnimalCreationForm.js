@@ -100,7 +100,6 @@ export default class AnimalCreationForm extends React.Component {
   componentDidMount() {
     this.getTypesCall();
     this.fetchUserData.bind(this)
-    //console.log(this.props.username)
   }
 
   isFormIncompleteOrIncorrect() {
@@ -145,7 +144,6 @@ export default class AnimalCreationForm extends React.Component {
               "Tu animal ha sido añadido con éxito",
             );
             this.nextHandler()
-            //this.props.navigation.navigate('MainScreen')
             }
           }
         />

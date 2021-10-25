@@ -9,7 +9,7 @@ import RegistrationScreen from './screens/RegistrationScreen.js';
 import MainScreen from './screens/MainScreen.js';
 import SplashScreen from './screens/SplashScreen';
 import SecurityUtils from './utils/SecurityUtils';
-import LastnameChangeScreen from './screens/LastnamesChangeScreen.js';
+import LastnamesChangeScreen from './screens/LastnamesChangeScreen.js';
 import NameChangeScreen from './screens/NameChangeScreen.js';
 import UsernameChangeScreen from './screens/UsernameChangeScreen.js';
 import EmailChangeScreen from './screens/EmailChangeScreen.js';
@@ -24,6 +24,7 @@ import AnimalAgeChangeScreen from './screens/AnimalAgeChangeScreen.js';
 import AnimalSexChangeScreen from './screens/AnimalSexChangeScreen.js';
 import AnimalStatusChangeScreen from './screens/AnimalStatusChangeScreen.js';
 import AnimalSizeChangeScreen from './screens/AnimalSizeChangeScreen.js';
+import MyProfileScreen from './screens/MyProfileScreen.js';
 
 
 const Stack = createStackNavigator();
@@ -79,7 +80,12 @@ export default class App extends Component {
                   />
                     <Stack.Screen
                     name="LastnamesChangeScreen"
-                    component={LastnameChangeScreen}
+                    component={LastnamesChangeScreen}
+                    options={{headerShown: false}}
+                  />
+                   <Stack.Screen
+                    name="MyProfileScreen"
+                    component={MyProfileScreen}
                     options={{headerShown: false}}
                   />
                   <Stack.Screen

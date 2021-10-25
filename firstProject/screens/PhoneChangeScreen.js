@@ -13,7 +13,7 @@ export default class PhoneChangeScreen extends React.Component {
   handleChangephoneResponse(response) {
     console.log('Teléfono modificado');
     console.log(JSON.stringify(response));
-    this.props.navigation.goBack();
+    this.props.navigation.navigate('MyProfileScreen');
   }
 
   changeUserPhone(userPhoneChangeRequest) {

@@ -56,7 +56,6 @@ export default class FinalStep extends React.Component {
     }
 
     this.setState({cities: cities});
-    //console.log(JSON.stringify(ACs))
   }
   
   async handlegetProvincefromAC(response) {

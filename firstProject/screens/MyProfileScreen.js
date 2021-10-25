@@ -43,7 +43,7 @@ export default class MyProfileScreen extends Component {
   }
 
   componentWillUnmount() {
-    //this._unsubscribe();
+    this._unsubscribe();
   }
 
   render() {
@@ -61,8 +61,7 @@ export default class MyProfileScreen extends Component {
           <Text style={styles.text}h3>
                 Mi Perfil
                 </Text>
-            <View style={styles.middle}>
-
+            <View >
               <Text style={styles.informativeText}>Información de mi cuenta</Text>
               <List.Item 
                 title="Nombre de usuario"
@@ -124,10 +123,7 @@ export default class MyProfileScreen extends Component {
     }
 }
 const styles = StyleSheet.create({
-  middle:
-  {
-    marginLeft: '7%',
-  },
+
   barra:{
     backgroundColor:'#E67E00',
   },

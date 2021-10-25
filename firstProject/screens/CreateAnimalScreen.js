@@ -2,11 +2,10 @@ import React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import AnimalCreationForm from '../components/AnimalCreationForm';
 import {addAnimal} from '../client/UsersApi';
+import { DrawerActions } from '@react-navigation/native';
 var SecurityUtils = require('../utils/SecurityUtils');
 import {ScrollView} from 'react-native-gesture-handler';
 import {Appbar} from 'react-native-paper';
-import { DrawerActions } from '@react-navigation/native';
-
 export default class CreateAnimalScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -14,21 +13,20 @@ export default class CreateAnimalScreen extends React.Component {
       isErrorVisible: false,
     };
   }
-
   render() {
     return (
+      <>
+       <Appbar style={styles.barra}>
+            <Text style={styles.logo}>SavePet</Text>
+        </Appbar>
       <View style={styles.background}>
-          <Appbar style={styles.barra}>
-              <Text style={styles.logo}>
-                SavePet
-              </Text>
-          </Appbar>
         <View style={styles.container} behavior="padding">
           <Text style={styles.text}>Nuevo animal</Text>
           <AnimalCreationForm 
           username={this.props.route.params.username}/>
         </View>
       </View>
+      </>
     );
   }
 }

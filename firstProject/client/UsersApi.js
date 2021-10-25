@@ -46,7 +46,7 @@ export function modifyUserName(userNameChangeRequest, username, token) {
     body: JSON.stringify(userNameChangeRequest),
   });
 }
-export function modifyUserLastnames(userLastnameChangeRequest, username, token) {
+export function modifyUserLastname(userLastnameChangeRequest, username, token) {
   return fetch(`${BASE_URL}/users/${username}/lastnames`, {
     method: 'PUT',
     headers: new Headers({

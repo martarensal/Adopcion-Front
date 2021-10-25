@@ -1,14 +1,26 @@
 import React from 'react';
-import {Text, ScrollView, View, Image, StyleSheet} from 'react-native';
+import {Text, ScrollView, View, Image, StyleSheet, Dimensions} from 'react-native';
 import {List} from 'react-native-paper';
+import {Appbar} from 'react-native-paper';
+import { DrawerActions } from '@react-navigation/native';
+
 export default class EditAnimalScreen extends React.Component {
-  constructor(props) {
+    constructor(props) {
     super(props);
     this.state ={
-        base64:'data:image/png;base64,'  }
+        base64:'data:image/png;base64,',  
+        width: 0,
+        height: 0    
+    }
   }
   componentDidMount(){
-    console.log(this.props.route.params.animal)
+    Image.getSize(this.state.base64 + this.props.route.params.animal.image, (width, height) => {
+      screen_percentage = 0.55
+      this.setState({
+        width: ((Dimensions.get("screen").width*screen_percentage/width)*width),
+        height: ((Dimensions.get("screen").height*screen_percentage/height)*height)
+      })
+     });
   }
         
 
@@ -18,7 +30,10 @@ export default class EditAnimalScreen extends React.Component {
         <View style={styles.container}>
           <Text style={styles.text}>{this.props.route.params.animal.name}</Text>
             <Image
-                   style={styles.image}
+                   style={{
+                    // width:(Dimensions.get("screen").width*0.8/this.state.width)*this.state.width, 
+                    width:this.state.width,
+                     height:this.state.height}}
                    source={{ uri: this.state.base64 + this.props.route.params.animal.image }}
            />
         </View>

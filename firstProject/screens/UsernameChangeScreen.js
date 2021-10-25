@@ -13,7 +13,7 @@ export default class UsernameChangeScreen extends React.Component {
   handleChangeusernameResponse(response) {
     console.log('Nombre de usuario modificado');
     console.log(JSON.stringify(response));
-    this.props.navigation.goBack();
+    this.props.navigation.navigate('MyProfileScreen');
   }
 
   changeUserUsername(userUsernameChangeRequest) {
