@@ -26,6 +26,7 @@ import AnimalStatusChangeScreen from './screens/AnimalStatusChangeScreen.js';
 import AnimalSizeChangeScreen from './screens/AnimalSizeChangeScreen.js';
 import AnimalTypeChangeScreen from './screens/AnimalTypeChangeScreen.js';
 import AnimalCityChangeScreen from './screens/AnimalCityChangeScreen.js';
+import AnimalImageChangeScreen from './screens/AnimalImageChangeScreen.js';
 import MyProfileScreen from './screens/MyProfileScreen.js';
 import SearchAnimalScreen from './screens/SearchAnimalScreen.js'
 
@@ -174,6 +175,12 @@ export default class App extends Component {
                   <Stack.Screen
                   name="AnimalCityChangeScreen"
                   component={AnimalCityChangeScreen}
+                  options={{headerShown: false}}
+                  />
+                  
+                  <Stack.Screen
+                  name="AnimalImageChangeScreen"
+                  component={AnimalImageChangeScreen}
                   options={{headerShown: false}}
                   />
                    

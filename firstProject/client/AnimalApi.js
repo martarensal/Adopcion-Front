@@ -125,6 +125,18 @@ export function modifyAnimalSize(animalSizeChangeRequest, idAnimal, token) {
   });
 }
 
+export function modifyAnimalImage(animalImageChangeRequest, idAnimal, token) {
+  return fetch(`${BASE_URL}/animals/${idAnimal}/image`, {
+    method: 'PUT',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+    body: JSON.stringify(animalImageChangeRequest),
+  });
+}
+
 export function deleteAnimal(idAnimal, token) {
   return fetch(`${BASE_URL}/animals/${idAnimal}`, {
     method: 'DELETE',
