@@ -24,8 +24,10 @@ import AnimalAgeChangeScreen from './screens/AnimalAgeChangeScreen.js';
 import AnimalSexChangeScreen from './screens/AnimalSexChangeScreen.js';
 import AnimalStatusChangeScreen from './screens/AnimalStatusChangeScreen.js';
 import AnimalSizeChangeScreen from './screens/AnimalSizeChangeScreen.js';
+import AnimalTypeChangeScreen from './screens/AnimalTypeChangeScreen.js';
+import AnimalCityChangeScreen from './screens/AnimalCityChangeScreen.js';
 import MyProfileScreen from './screens/MyProfileScreen.js';
-
+import SearchAnimalScreen from './screens/SearchAnimalScreen.js'
 
 const Stack = createStackNavigator();
 export default class App extends Component {
@@ -159,7 +161,21 @@ export default class App extends Component {
                   component={AnimalSizeChangeScreen}
                   options={{headerShown: false}}
                   />
-
+                  <Stack.Screen
+                  name="AnimalTypeChangeScreen"
+                  component={AnimalTypeChangeScreen}
+                  options={{headerShown: false}}
+                  />
+                   <Stack.Screen
+                  name="SearchAnimalScreen"
+                  component={SearchAnimalScreen}
+                  options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                  name="AnimalCityChangeScreen"
+                  component={AnimalCityChangeScreen}
+                  options={{headerShown: false}}
+                  />
                    
                 </>
               )}

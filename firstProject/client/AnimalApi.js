@@ -87,6 +87,32 @@ export function modifyAnimalStatus(animalStatusChangeRequest, idAnimal, token) {
   });
 }
 
+export function modifyAnimalType(animalTypeChangeRequest, idAnimal, token) {
+  console.log(animalTypeChangeRequest + " animal type change EDNPOINT")
+  return fetch(`${BASE_URL}/animals/${idAnimal}/type`, {
+    method: 'PUT',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+    body: JSON.stringify(animalTypeChangeRequest),
+  });
+}
+
+export function modifyAnimalCity(animalCityChangeRequest, idAnimal, token) {
+  console.log(animalCityChangeRequest)
+  return fetch(`${BASE_URL}/animals/${idAnimal}/city`, {
+    method: 'PUT',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+    body: JSON.stringify(animalCityChangeRequest),
+  });
+}
+
 export function modifyAnimalSize(animalSizeChangeRequest, idAnimal, token) {
   return fetch(`${BASE_URL}/animals/${idAnimal}/size`, {
     method: 'PUT',
@@ -109,4 +135,27 @@ export function deleteAnimal(idAnimal, token) {
     }),
 
   });
+}
+
+export function searchAnimals(
+  animalSize,
+  sex,
+  colour,
+  minAge,
+  maxAge,
+  idCity,
+  page,
+  size,
+  token,
+) {
+  return fetch(`${BASE_URL}/animals/filters?animalSize=${animalSize}&colour=${colour}&idCity=${idCity}&maxAge=${maxAge}&minAge=${minAge}&page=${page}&sex=${sex}&size=${size}`,
+    {
+      method: 'GET',
+      headers: new Headers({
+        'content-type': 'application/json',
+        Accept: 'application/json',
+        'X-API-KEY': token,
+      }),
+    },
+  );
 }
