@@ -214,15 +214,15 @@ const SELECTORS = [
  const CONTENT = [
   {
     title: 'Ciudad',
-    content: BACON_IPSUM,
+    content: <AnimalSexPicker/>,
   },
   {
     title: 'Tipo de animal',
-    content: BACON_IPSUM,
+    content: <AnimalSexPicker/>,
   },
   {
     title: 'Tamaño',
-    content: BACON_IPSUM,
+    content: <AnimalSexPicker/>,
   },
   {
     title: 'Sexo',
@@ -230,11 +230,11 @@ const SELECTORS = [
   },
   {
     title: 'Color',
-    content: BACON_IPSUM,
+    content: <AnimalSexPicker/>,
   },
    {
     title: 'Edad',
-    content: BACON_IPSUM,
+    content: <AnimalSexPicker/>,
   },
   ];
 
@@ -268,18 +268,15 @@ componentDidMount(){
 }
   renderContent(section, _, isActive) {
     return (
-      if(SELECTORS.map((selector) => (selector.value)) === 0){
         
-      }
       <Animatable.View
         duration={400}
         style={[styles.content, isActive ? styles.active : styles.inactive]}
         transition="backgroundColor"
-        
       >
-        <Animatable.Text animation={isActive ? 'bounceIn' : undefined}>
-        </Animatable.Text>
-        <AnimalSexPicker/>
+        <Animatable.View animation={isActive ? 'bounceIn' : undefined}>
+                {section.content}
+        </Animatable.View>
 
       </Animatable.View>
     );
