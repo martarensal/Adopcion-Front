@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import { TextInput, Button, HelperText } from 'react-native-paper';
+
 import FormManager from "./FormManager";
 
 var validate = require('validate.js');

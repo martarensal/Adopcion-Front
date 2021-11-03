@@ -15,17 +15,6 @@ export default class SearchAnimalForm extends React.Component {
     };
   }
 
-  setSex = sentSex => {
-    this.setState({sex: sentSex});
-  };
-
-  setminAge = sentminAge => {
-    this.setState({minAge: sent});
-  };
-  componentDidMount(){
-      console.log(this.state.sex)
-  }
-
   render() {
     return (
       <View style={styles.container} behavior="padding">

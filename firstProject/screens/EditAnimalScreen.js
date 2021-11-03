@@ -4,6 +4,7 @@ import {List} from 'react-native-paper';
 import {Appbar} from 'react-native-paper';
 import { DrawerActions } from '@react-navigation/native';
 
+
 export default class EditAnimalScreen extends React.Component {
     constructor(props) {
     super(props);
@@ -26,16 +27,14 @@ export default class EditAnimalScreen extends React.Component {
 
   render() {
     return (
+       <>
+        <Appbar style={styles.barra}>
+            <Text style={styles.logo}>SavePet</Text>
+        </Appbar>
       <ScrollView style={styles.background}>
         <View style={styles.container}>
           <Text style={styles.text}>{this.props.route.params.animal.name}</Text>
-            <Image
-                   style={{
-                    // width:(Dimensions.get("screen").width*0.8/this.state.width)*this.state.width, 
-                    width:this.state.width,
-                     height:this.state.height}}
-                   source={{ uri: this.state.base64 + this.props.route.params.animal.image }}
-           />
+            
         </View>
         <List.Item
           title="Foto"
@@ -47,6 +46,13 @@ export default class EditAnimalScreen extends React.Component {
             });
           }}
         />
+        <Image
+                   style={{
+                    // width:(Dimensions.get("screen").width*0.8/this.state.width)*this.state.width, 
+                    width:this.state.width,
+                     height:this.state.height}}
+                   source={{ uri: this.state.base64 + this.props.route.params.animal.image }}
+           />
         
         <List.Item
           title="Nombre"
@@ -131,11 +137,22 @@ export default class EditAnimalScreen extends React.Component {
         />
          
       </ScrollView>
+      </>
     );
   }
 }
 
 const styles = StyleSheet.create({
+   barra:{
+    backgroundColor:'#E67E00',
+  },
+  logo: {
+    fontFamily: 'Butler-Light',
+    color: 'white',
+    fontSize: 25,
+    marginLeft: 14,
+    alignSelf: 'center',
+  },
   container: {
     flex: 1,
     padding: 20,

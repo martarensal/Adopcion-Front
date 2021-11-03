@@ -156,10 +156,20 @@ export function searchAnimals(
   minAge,
   maxAge,
   idCity,
+  idType,
   page,
   size,
   token,
 ) {
+  var BASE_URL_ = BASE_URL +'/animals/filters?page=' + page + '&'
+  console.log(sex)
+
+  if(sex != null)
+  {
+    BASE_URL_ = BASE_URL_ + 'sex=' + sex
+    console.log(BASE_URL_)
+  }
+
   return fetch(`${BASE_URL}/animals/filters?animalSize=${animalSize}&colour=${colour}&idCity=${idCity}&maxAge=${maxAge}&minAge=${minAge}&page=${page}&sex=${sex}&size=${size}`,
     {
       method: 'GET',
