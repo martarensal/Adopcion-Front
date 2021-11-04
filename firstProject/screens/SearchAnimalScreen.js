@@ -1,172 +1,4 @@
 
-/*
-export default class SearchAnimalScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: {},
-      sex: '',
-      minAge: '',
-      maxAge: '',
-      colour: '',
-      animalSize:'',
-      idCity:'',
-      idType:'',
-    };
-    this.fetchUserData = this.fetchUserData.bind(this);
-    this.searchAnimals = this.searchAnimals.bind(this);
-  }
-
-  handleSearchAnimalResponse(response) {
-    if (response.ok) {
-      response.json().then(data => {
-        this.props.navigation.navigate('', {
-          animals: data.pages,
-          paginationInfo: data.paginationInfo,
-          sex: this.state.sex,
-          animalSize: this.state.animalSize,
-          colour: this.state.colour,
-          minAge: this.state.minAge,
-          maxAge: this.state.maxAge,
-          idCity: this.state.idCity,
-          idType: this.state.idType,
-
-        });
-      });
-    } else {
-      console.log(JSON.stringify(response));
-    }
-  }
-
-  searchAnimals(searchParameters) {
-    this.setState({
-      sex: searchParameters.sex,
-      animalSize: searchParameters.animalSize,
-      colour: searchParameters.colour,
-      minAge: searchParameters.minAge,
-      maxAge: searchParameters.maxAge,
-      idCity: searchParameters.idCity,
-      idType: searchParameters.idType
-    });
-    SecurityUtils.tokenInfo().then(info => {
-      SecurityUtils.authorizeApi(
-        [searchParameters.animalSize,
-            searchParameters.colour,
-            searchParameters.minAge,
-            searchParameters.maxAge,
-            searchParameters.idCity,
-            searchParameters.idType,
-           0,
-           5,
-        ],
-        searchAnimals,
-      ).then(this.handleSearchAnimalResponse.bind(this));
-    });
-  }
-
-  handleGetUserResponse(response) {
-    response.json().then(data => {
-      this.setState({user: data});
-    });
-  }
-
-  fetchUserData() {
-    this.setState({loading: true});
-    SecurityUtils.tokenInfo().then(info => {
-      SecurityUtils.authorizeApi([info.sub], getUser).then(
-        this.handleGetUserResponse.bind(this),
-      );
-    });
-  }
-
-  render() {
-    return (
-      <View style={styles.container} behavior="padding">
-        <SearchAnimalForm handlePress={this.searchAnimals} />
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    width: '100%',
-    maxWidth: 430,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F3F3F3',
-  },
-  image: {
-    width: 100,
-    height: 100,
-  },
-});*/
-/*import React from 'react';
-
-import  { Text, View, Component,StyleSheet } from 'react-native';
-import Accordion from 'react-native-collapsible/Accordion';
-
-const SECTIONS = [
-  {
-    title: 'First',
-    content: 'Lorem ipsum...',
-  },
-  {
-    title: 'Second',
-    content: 'Lorem ipsum...',
-  },
-];
-
-export default class SearchAnimalScreen extends React.Component {
-  state = {
-    activeSections: [],
-  };
-
-  _renderSectionTitle = (section) => {
-    return (
-      <View >
-        <Text>{section.content}</Text>
-      </View>
-    );
-  };
-
-  _renderHeader = (section) => {
-    return (
-      <View >
-        <Text>{section.title}</Text>
-      </View>
-    );
-  };
-
-  _renderContent = (section) => {
-    return (
-      <View >
-        <Text>{section.content}</Text>
-      </View>
-    );
-  };
-
-  _updateSections = (activeSections) => {
-    this.setState({ activeSections });
-  };
-
-  render() {
-    return (
-      <Accordion
-        sections={SECTIONS}
-        activeSections={this.state.activeSections}
-        renderSectionTitle={this._renderSectionTitle}
-        renderHeader={this._renderHeader}
-        renderContent={this._renderContent}
-        onChange={this._updateSections}
-      />
-    );
-  }
-}
-*/
 import React, { Component } from 'react';
 import {
   Switch,
@@ -180,10 +12,11 @@ import * as Animatable from 'react-native-animatable';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
 import AnimalSexPicker from '../components/AnimalSexPicker.js';
+import AnimalColourPicker from '../components/AnimalColourPicker.js';
+import AnimalSizePicker from '../components/AnimalSizePicker.js';
+import AnimalTypePicker from '../components/AnimalTypePicker.js';
+import FinalStep from '../components/FinalStep.js';
 
-
-const BACON_IPSUM =
-  'Bacon ipsum dolor amet chuck turducken landjaeger tongue spare ribs. Picanha beef prosciutto meatball turkey shoulder shank salami cupim doner jowl pork belly cow. Chicken shankle rump swine tail frankfurter meatloaf ground round flank ham hock tongue shank andouille boudin brisket. ';
 
 const SELECTORS = [
   {
@@ -214,15 +47,15 @@ const SELECTORS = [
  const CONTENT = [
   {
     title: 'Ciudad',
-    content: <AnimalSexPicker/>,
+    content: <FinalStep/>,
   },
   {
     title: 'Tipo de animal',
-    content: <AnimalSexPicker/>,
+    content: <AnimalTypePicker/>,
   },
   {
     title: 'Tamaño',
-    content: <AnimalSexPicker/>,
+    content: <AnimalSizePicker/>,
   },
   {
     title: 'Sexo',
@@ -230,7 +63,7 @@ const SELECTORS = [
   },
   {
     title: 'Color',
-    content: <AnimalSexPicker/>,
+    content: <AnimalColourPicker/>,
   },
    {
     title: 'Edad',
@@ -249,7 +82,6 @@ export default class SearchAnimalScreen extends Component {
     this.setState({
       activeSections: sections.includes(undefined) ? [] : sections,
     });
-    //console.log('EY')
   };
 
   renderHeader = (section, _, isActive) => {
@@ -264,7 +96,7 @@ export default class SearchAnimalScreen extends Component {
     );
   };
 componentDidMount(){
-  console.log(SELECTORS.map((selector) => (selector.value)))
+  //console.log(SELECTORS.map((selector) => (selector.value)))
 }
   renderContent(section, _, isActive) {
     return (
@@ -355,7 +187,7 @@ const styles = StyleSheet.create({
   },
   content: {
     //padding: 20,
-    height:300,
+    height:200,
     width:430,
     backgroundColor: '#fff',
   },

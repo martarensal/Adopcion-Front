@@ -1,23 +1,23 @@
 import React, { Fragment, useState } from 'react';
-import { sexOption} from '../constants/DropdownOption';
+import { colourOption} from '../constants/DropdownOption';
 import { StyleSheet, View, Text, Image} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { TextInput, Button, HelperText } from 'react-native-paper';
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
 
-export default class AnimalSexPicker extends React.Component {
+export default class AnimalColourPicker extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-        sex:'',
+        colour:'',
     }
     this.render = this.render.bind(this);
   }
-  updateSex = (sex) => {
-      this.setState({sex: sex})
-      console.log(sexOption)
+  updateColour = (colour) => {
+      this.setState({colour: colour})
+      console.log(colourOption)
       //FormManager.getFormManager().setField('sex', sex)
   }
   componentDidMount(){
@@ -30,11 +30,11 @@ export default class AnimalSexPicker extends React.Component {
       return (
 
         <View style={styles.container}>
-            <Text style={styles.text}>Sexo :  </Text>
-            <Picker selectedValue = {this.state.sex} onValueChange = {this.updateSex}>
+            <Text style={styles.text}>Color :  </Text>
+            <Picker selectedValue = {this.state.colour} onValueChange = {this.updateColour}>
             {
-            sexOption.map(sex => {
-                return ( <Picker.Item key={sex.back_name+'_picker'} label={sex.name}  value={sex.back_name} />)
+            colourOption.map(colour => {
+                return ( <Picker.Item key={colour.back_name+'_picker'} label={colour.name}  value={colour.back_name} />)
             })
             }
             </Picker>
@@ -43,7 +43,6 @@ export default class AnimalSexPicker extends React.Component {
     }     
   
 }
-
 
 const styles = StyleSheet.create({
   container: {
