@@ -16,7 +16,7 @@ import AnimalColourPicker from '../components/AnimalColourPicker.js';
 import AnimalSizePicker from '../components/AnimalSizePicker.js';
 import AnimalTypePicker from '../components/AnimalTypePicker.js';
 import FinalStep from '../components/FinalStep.js';
-
+import AnimalAgePicker from '../components/AnimalAgePicker.js';
 
 const SELECTORS = [
   {
@@ -44,7 +44,117 @@ const SELECTORS = [
     value: 5,
   }
 ];
- const CONTENT = [
+
+export default class SearchAnimalScreen extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      minAge:'',
+      maxAge:'',
+      activeSections: [],
+      collapsed: true,
+      multipleSelect: false,
+    }
+
+    this.searchAnimals = this.searchAnimals.bind(this);
+  }
+
+  setSections = (sections) => {
+    this.setState({
+      activeSections: sections.includes(undefined) ? [] : sections,
+    });
+  };
+
+  renderHeader = (section, _, isActive) => {
+    return (
+      <Animatable.View
+        duration={400}
+        style={[styles.header, isActive ? styles.active : styles.inactive]}
+        transition="backgroundColor"
+      >
+        <Text style={styles.headerText}>{section.title}</Text>
+      </Animatable.View>
+    );
+  };
+componentDidMount(){
+  //this.searchAnimals();
+  //console.log(SELECTORS.map((selector) => (selector.value)))
+}
+  renderContent(section, _, isActive) {
+    return (
+        
+      <Animatable.View
+        duration={400}
+        style={[styles.content, isActive ? styles.active : styles.inactive]}
+        transition="backgroundColor"
+      >
+        <Animatable.View animation={isActive ? 'bounceIn' : undefined}>
+                {section.content}
+        </Animatable.View>
+
+      </Animatable.View>
+    );
+  }
+  
+  searchAnimals(searchParameters){
+     this.setState({
+      minAge: searchParameters.minAge,
+      maxAge: searchParameters.maxAge,
+    });
+    console.log(searchParameters.minAge + ' EDAD minima')
+  }
+
+
+  render() {
+     return (
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={{ paddingTop: 30 }}>
+          <Text style={styles.title}>Accordion Example</Text>
+
+          <View style={styles.multipleToggle}>
+              <Text style={styles.multipleToggle__title}>¿Quieres elegir mas de un filtro a la vez?</Text>
+            <Switch
+              value={this.state.multipleSelect}
+              onValueChange={(a) => this.setState({ multipleSelect: a })}
+            />
+          </View>       
+          <View style={styles.selectors}>
+            {SELECTORS.map((selector) => (
+              <TouchableOpacity
+                key={selector.title}
+                onPress={() => this.setSections([selector.value])}
+              >
+                <View style={styles.selector}>
+                  <Text
+                    style={
+                      this.state.activeSections.includes(selector.value) &&
+                      styles.activeSelector
+                    }
+                  >
+                    {selector.title}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <Accordion
+            activeSections={this.state.activeSections}
+            sections={CONTENT}
+            touchableComponent={TouchableOpacity}
+            expandMultiple={this.state.multipleSelect}
+            renderHeader={this.renderHeader}
+            renderContent={this.renderContent}
+            duration={400}
+            onChange={this.setSections}
+            renderAsFlatList={false}
+          />
+        </ScrollView>
+      </View>
+    );
+  }
+}
+const CONTENT = [
   {
     title: 'Ciudad',
     content: <FinalStep/>,
@@ -67,104 +177,9 @@ const SELECTORS = [
   },
    {
     title: 'Edad',
-    content: <AnimalSexPicker/>,
+    content: <AnimalAgePicker handlePress={this.searchAnimals}/>,
   },
   ];
-
-export default class SearchAnimalScreen extends Component {
-  state = {
-    activeSections: [],
-    collapsed: true,
-    multipleSelect: false,
-  };
-
-  setSections = (sections) => {
-    this.setState({
-      activeSections: sections.includes(undefined) ? [] : sections,
-    });
-  };
-
-  renderHeader = (section, _, isActive) => {
-    return (
-      <Animatable.View
-        duration={400}
-        style={[styles.header, isActive ? styles.active : styles.inactive]}
-        transition="backgroundColor"
-      >
-        <Text style={styles.headerText}>{section.title}</Text>
-      </Animatable.View>
-    );
-  };
-componentDidMount(){
-  //console.log(SELECTORS.map((selector) => (selector.value)))
-}
-  renderContent(section, _, isActive) {
-    return (
-        
-      <Animatable.View
-        duration={400}
-        style={[styles.content, isActive ? styles.active : styles.inactive]}
-        transition="backgroundColor"
-      >
-        <Animatable.View animation={isActive ? 'bounceIn' : undefined}>
-                {section.content}
-        </Animatable.View>
-
-      </Animatable.View>
-    );
-  }
-
-  render() {
- 
-    const { multipleSelect, activeSections } = this.state;
-    return (
-      <View style={styles.container}>
-        <ScrollView contentContainerStyle={{ paddingTop: 30 }}>
-          <Text style={styles.title}>Accordion Example</Text>
-
-          <View style={styles.multipleToggle}>
-              <Text style={styles.multipleToggle__title}>¿Quieres elegir mas de un filtro a la vez?</Text>
-            <Switch
-              value={multipleSelect}
-              onValueChange={(a) => this.setState({ multipleSelect: a })}
-            />
-          </View>       
-          <View style={styles.selectors}>
-            {SELECTORS.map((selector) => (
-              <TouchableOpacity
-                key={selector.title}
-                onPress={() => this.setSections([selector.value])}
-              >
-                <View style={styles.selector}>
-                  <Text
-                    style={
-                      activeSections.includes(selector.value) &&
-                      styles.activeSelector
-                    }
-                  >
-                    {selector.title}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </View>
-          <Accordion
-            activeSections={activeSections}
-            sections={CONTENT}
-            touchableComponent={TouchableOpacity}
-            expandMultiple={multipleSelect}
-            renderHeader={this.renderHeader}
-            renderContent={this.renderContent}
-            duration={400}
-            onChange={this.setSections}
-            renderAsFlatList={false}
-          />
-        </ScrollView>
-      </View>
-    );
-  }
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -187,7 +202,7 @@ const styles = StyleSheet.create({
   },
   content: {
     //padding: 20,
-    height:200,
+    height:300,
     width:430,
     backgroundColor: '#fff',
   },

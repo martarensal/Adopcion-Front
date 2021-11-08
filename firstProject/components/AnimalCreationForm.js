@@ -212,15 +212,12 @@ export default class AnimalCreationForm extends React.Component {
               let cityId = formManager.getField('cityId')
               let typeId = formManager.getField('typeId')
               let value = formManager.getField('value')
-
               this.addAnimalCall(name, sex, age, colour, size, cityId, typeId, image)
-
           }        
         break;
       default:
         break;
     }
-
   }
 }
 
