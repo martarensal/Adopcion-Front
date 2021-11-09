@@ -1,5 +1,4 @@
-
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Switch,
   ScrollView,
@@ -42,25 +41,59 @@ const SELECTORS = [
   {
     title: 'Edad',
     value: 5,
-  }
+  },
 ];
 
 export default class SearchAnimalScreen extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
-      minAge:'',
-      maxAge:'',
+      minAge: '',
+      maxAge: '',
+      sex: '',
+      type:'',
+
       activeSections: [],
       collapsed: true,
       multipleSelect: false,
-    }
+    };
 
     this.searchAnimals = this.searchAnimals.bind(this);
+    this.CONTENT = [
+      {
+        title: 'Ciudad',
+        content: <FinalStep onChange={city => this.setState({filterCity: city})} />,
+      },
+      {
+        title: 'Tipo de animal',
+        content: <AnimalTypePicker onChange={/*type => {this.setState({filterType: type})
+        console.log(this.state.filterType + ' filtertype')}*/
+        this.searchAnimals
+        } />,
+      },
+      {
+        title: 'Tamaño',
+        content: <AnimalSizePicker onChange={size => this.setState({filterSize: size})} />,
+      },
+      {
+        title: 'Sexo',
+        content: 
+          <AnimalSexPicker onChange={this.searchAnimals} />
+        ,
+      },
+      {
+        title: 'Color',
+        content: <AnimalColourPicker onChange={colour => this.setState({filterColour: colour})}/>,
+      },
+      {
+        title: 'Edad',
+        content: <AnimalAgePicker handlePress={this.searchAnimals} />,
+      },
+    ];
   }
 
-  setSections = (sections) => {
+  setSections = sections => {
     this.setState({
       activeSections: sections.includes(undefined) ? [] : sections,
     });
@@ -71,67 +104,96 @@ export default class SearchAnimalScreen extends Component {
       <Animatable.View
         duration={400}
         style={[styles.header, isActive ? styles.active : styles.inactive]}
-        transition="backgroundColor"
-      >
+        transition="backgroundColor">
         <Text style={styles.headerText}>{section.title}</Text>
       </Animatable.View>
     );
   };
-componentDidMount(){
-  //this.searchAnimals();
-  //console.log(SELECTORS.map((selector) => (selector.value)))
-}
+
   renderContent(section, _, isActive) {
     return (
-        
       <Animatable.View
         duration={400}
         style={[styles.content, isActive ? styles.active : styles.inactive]}
-        transition="backgroundColor"
-      >
+        transition="backgroundColor">
         <Animatable.View animation={isActive ? 'bounceIn' : undefined}>
-                {section.content}
+          {section.content}
         </Animatable.View>
-
       </Animatable.View>
     );
   }
-  
-  searchAnimals(searchParameters){
-     this.setState({
-      minAge: searchParameters.minAge,
-      maxAge: searchParameters.maxAge,
-    });
-    console.log(searchParameters.minAge + ' EDAD minima')
+  componentDidMount(){
+    console.log(this.state)
   }
 
+  searchAnimals(searchParameters) {
+    this.setState({
+     minAge: searchParameters.minAge,
+      maxAge: searchParameters.maxAge,
+    });
+    this.setState({sex: searchParameters.sex})
+    this.setState({type: searchParameters.type})
+    console.log(searchParameters.type + '  type')
+    console.log(searchParameters.sex + ' sexo');
+
+
+  }
+
+  CONTENT = [
+    {
+      title: 'Ciudad',
+      content: <FinalStep />,
+    },
+    {
+      title: 'Tipo de animal',
+      content: <AnimalTypePicker />,
+    },
+    {
+      title: 'Tamaño',
+      content: <AnimalSizePicker />,
+    },
+    {
+      title: 'Sexo',
+      content: (
+        <AnimalSexPicker onChange={sex => this.setState({filterSex: sex})} />
+      ),
+    },
+    {
+      title: 'Color',
+      content: <AnimalColourPicker />,
+    },
+    {
+      title: 'Edad',
+      content: <AnimalAgePicker handlePress={this.searchAnimals.bind(this)} />,
+    },
+  ];
 
   render() {
-     return (
+    return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={{ paddingTop: 30 }}>
+        <ScrollView contentContainerStyle={{paddingTop: 30}}>
           <Text style={styles.title}>Accordion Example</Text>
 
           <View style={styles.multipleToggle}>
-              <Text style={styles.multipleToggle__title}>¿Quieres elegir mas de un filtro a la vez?</Text>
+            <Text style={styles.multipleToggle__title}>
+              ¿Quieres elegir mas de un filtro a la vez?
+            </Text>
             <Switch
               value={this.state.multipleSelect}
-              onValueChange={(a) => this.setState({ multipleSelect: a })}
+              onValueChange={a => this.setState({multipleSelect: a})}
             />
-          </View>       
+          </View>
           <View style={styles.selectors}>
-            {SELECTORS.map((selector) => (
+            {SELECTORS.map(selector => (
               <TouchableOpacity
                 key={selector.title}
-                onPress={() => this.setSections([selector.value])}
-              >
+                onPress={() => this.setSections([selector.value])}>
                 <View style={styles.selector}>
                   <Text
                     style={
                       this.state.activeSections.includes(selector.value) &&
                       styles.activeSelector
-                    }
-                  >
+                    }>
                     {selector.title}
                   </Text>
                 </View>
@@ -140,7 +202,7 @@ componentDidMount(){
           </View>
           <Accordion
             activeSections={this.state.activeSections}
-            sections={CONTENT}
+            sections={this.CONTENT}
             touchableComponent={TouchableOpacity}
             expandMultiple={this.state.multipleSelect}
             renderHeader={this.renderHeader}
@@ -154,32 +216,7 @@ componentDidMount(){
     );
   }
 }
-const CONTENT = [
-  {
-    title: 'Ciudad',
-    content: <FinalStep/>,
-  },
-  {
-    title: 'Tipo de animal',
-    content: <AnimalTypePicker/>,
-  },
-  {
-    title: 'Tamaño',
-    content: <AnimalSizePicker/>,
-  },
-  {
-    title: 'Sexo',
-    content: <AnimalSexPicker/>,
-  },
-  {
-    title: 'Color',
-    content: <AnimalColourPicker/>,
-  },
-   {
-    title: 'Edad',
-    content: <AnimalAgePicker handlePress={this.searchAnimals}/>,
-  },
-  ];
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -202,8 +239,8 @@ const styles = StyleSheet.create({
   },
   content: {
     //padding: 20,
-    height:300,
-    width:430,
+    height: 300,
+    width: 430,
     backgroundColor: '#fff',
   },
   active: {
@@ -239,9 +276,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginRight: 8,
   },
-  multipleToggle__select:{
-        fontSize: 16,
+  multipleToggle__select: {
+    fontSize: 16,
     marginRight: 8,
-       
   },
 });

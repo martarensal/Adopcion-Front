@@ -1,67 +1,65 @@
-import React, { Fragment, useState } from 'react';
-import { StyleSheet, View, Text, Image} from 'react-native';
+import React, {Fragment, useState} from 'react';
+import {StyleSheet, View, Text, Image} from 'react-native';
 import {getTypes} from '../client/TypeApi';
 import {Picker} from '@react-native-picker/picker';
-import { TextInput, Button, HelperText } from 'react-native-paper';
+import {TextInput, Button, HelperText} from 'react-native-paper';
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
 
 export default class AnimalTypePicker extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-        types: [],
-        type:'',
-        typeId: -1,
-    }
+      types: [],
+      type: '',
+      typeId: -1,
+    };
     this.render = this.render.bind(this);
   }
-  updateType = (type) => {
-      this.setState({type: type})
-      //console.log(type)
-      //FormManager.getFormManager().setField('sex', sex)
-  }
-   async handleGetTypeResponse(response) {
-    var types = []
+  updateType = type => {
+    this.setState({type: type});
+    this.props.onChange(type);
+  };
+  async handleGetTypeResponse(response) {
+    var types = [];
     const jsonResponse = await response.json();
-    for (const i in jsonResponse.pages)
-    {
-      types.push( 
-        {
-          name: jsonResponse.pages[i].name,
-          id: jsonResponse.pages[i].id
-        })
+    for (const i in jsonResponse.pages) {
+      types.push({
+        name: jsonResponse.pages[i].name,
+        id: jsonResponse.pages[i].id,
+      });
     }
     this.setState({types: types});
   }
 
   getTypesCall() {
-    SecurityUtils.authorizeApi([], getTypes).then(this.handleGetTypeResponse.bind(this))
+    SecurityUtils.authorizeApi([], getTypes).then(
+      this.handleGetTypeResponse.bind(this),
+    );
   }
-  componentDidMount(){
-          //console.log(sexOption)
+  componentDidMount() {
     this.getTypesCall();
   }
-  
-  render()
-    {
-      return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Tipo de animal :  </Text>
-                <Picker selectedValue = {this.state.type} onValueChange = {this.updateType}>
-                {
-                this.state.types.map(type => {
-                    return ( <Picker.Item key={type.name+'_picker'} label={type.name} value={type.name}/>)
-                })
-                }
-                </Picker>         
-        </View>
-      );
-    }     
-  
-}
 
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.text}>Tipo de animal : </Text>
+        <Picker selectedValue={this.state.type} onValueChange={this.updateType}>
+          {this.state.types.map(type => {
+            return (
+              <Picker.Item
+                key={type.name + '_picker'}
+                label={type.name}
+                value={type.name}
+              />
+            );
+          })}
+        </Picker>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -73,7 +71,7 @@ const styles = StyleSheet.create({
     color: '#F05524',
     fontSize: 15,
     marginTop: 5,
-    paddingLeft:10,
+    paddingLeft: 10,
   },
   button: {
     marginTop: 24,
@@ -92,6 +90,5 @@ const styles = StyleSheet.create({
   },
   cameraButton: {
     marginTop: 12,
-  }
+  },
 });
-

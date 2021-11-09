@@ -1,47 +1,43 @@
-import React, { Fragment, useState } from 'react';
-import { sizeOption} from '../constants/DropdownOption';
-import { StyleSheet, View, Text, Image} from 'react-native';
+import React, {Fragment, useState} from 'react';
+import {sizeOption} from '../constants/DropdownOption';
+import {StyleSheet, View, Text, Image} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import { TextInput, Button, HelperText } from 'react-native-paper';
+import {TextInput, Button, HelperText} from 'react-native-paper';
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
 
 export default class AnimalSizePicker extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-        size:'',
-    }
+      size: '',
+    };
     this.render = this.render.bind(this);
   }
-  updateSize = (size) => {
-      this.setState({size: size})
-      console.log(sizeOption)
-      //FormManager.getFormManager().setField('sex', sex)
-  }
-  componentDidMount(){
-          //console.log(sexOption)
+  updateSize = size => {
+    this.setState({size: size});
+    console.log(sizeOption);
+    this.props.onChange(size);
+  };
 
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.text}>Tamaño : </Text>
+        <Picker selectedValue={this.state.size} onValueChange={this.updateSize}>
+          {sizeOption.map(size => {
+            return (
+              <Picker.Item
+                key={size.back_name + '_picker'}
+                label={size.name}
+                value={size.back_name}
+              />
+            );
+          })}
+        </Picker>
+      </View>
+    );
   }
-  
-  render()
-    {
-      return (
-
-        <View style={styles.container}>
-            <Text style={styles.text}>Tamaño :  </Text>
-            <Picker selectedValue = {this.state.size} onValueChange = {this.updateSize}>
-            {
-            sizeOption.map(size => {
-                return ( <Picker.Item key={size.back_name+'_picker'} label={size.name}  value={size.back_name} />)
-            })
-            }
-            </Picker>
-        </View>
-      );
-    }     
-  
 }
 
 const styles = StyleSheet.create({
@@ -54,7 +50,7 @@ const styles = StyleSheet.create({
     color: '#F05524',
     fontSize: 15,
     marginTop: 5,
-    paddingLeft:10,
+    paddingLeft: 10,
   },
   button: {
     marginTop: 24,
@@ -73,6 +69,5 @@ const styles = StyleSheet.create({
   },
   cameraButton: {
     marginTop: 12,
-  }
+  },
 });
-
