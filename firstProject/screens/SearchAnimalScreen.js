@@ -126,7 +126,7 @@ export default class SearchAnimalScreen extends Component {
     console.log(this.state)
   }
 
-  searchAnimals(searchParameters) {
+  async searchAnimals(searchParameters) {
     this.setState({
      minAge: searchParameters.minAge,
       maxAge: searchParameters.maxAge,
@@ -138,35 +138,6 @@ export default class SearchAnimalScreen extends Component {
 
 
   }
-
-  CONTENT = [
-    {
-      title: 'Ciudad',
-      content: <FinalStep />,
-    },
-    {
-      title: 'Tipo de animal',
-      content: <AnimalTypePicker />,
-    },
-    {
-      title: 'Tamaño',
-      content: <AnimalSizePicker />,
-    },
-    {
-      title: 'Sexo',
-      content: (
-        <AnimalSexPicker onChange={sex => this.setState({filterSex: sex})} />
-      ),
-    },
-    {
-      title: 'Color',
-      content: <AnimalColourPicker />,
-    },
-    {
-      title: 'Edad',
-      content: <AnimalAgePicker handlePress={this.searchAnimals.bind(this)} />,
-    },
-  ];
 
   render() {
     return (
