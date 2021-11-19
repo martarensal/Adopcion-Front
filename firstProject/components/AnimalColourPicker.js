@@ -9,25 +9,15 @@ var validate = require('validate.js');
 export default class AnimalColourPicker extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      colour: '',
-    };
-    this.render = this.render.bind(this);
   }
-  updateColour = colour => {
-    this.setState({colour: colour});
-    console.log(colourOption);
-    //this.props.onChange(colour);
-    this.props.onChange(colour)
-  };
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Color : </Text>
         <Picker
-          selectedValue={this.state.colour}
-          onValueChange={this.updateColour}>
+          selectedValue={this.props.colour}
+          onValueChange={newAnimalColour => this.props.onChange(newAnimalColour)}>
           {colourOption.map(colour => {
             return (
               <Picker.Item

@@ -1,8 +1,7 @@
-import { BASE_URL } from "./ApiConfiguration";
+import {BASE_URL} from './ApiConfiguration';
 
-export function addAnimal( animalCreationRequest, username, token) {
+export function addAnimal(animalCreationRequest, username, token) {
   return fetch(`${BASE_URL}/users/${username}/animals`, {
-
     method: 'POST',
     headers: new Headers({
       'content-type': 'application/json',
@@ -11,11 +10,12 @@ export function addAnimal( animalCreationRequest, username, token) {
     }),
     body: JSON.stringify(animalCreationRequest),
   });
-
 }
 
 export function getPaginatedAnimalsFromUser(page, size, username, token) {
-  return fetch(`${BASE_URL}/users/${username}/animals?page=${page}&size=${size}`,{
+  return fetch(
+    `${BASE_URL}/users/${username}/animals?page=${page}&size=${size}`,
+    {
       method: 'GET',
       headers: new Headers({
         'content-type': 'application/json',
@@ -27,16 +27,16 @@ export function getPaginatedAnimalsFromUser(page, size, username, token) {
 }
 
 export function modifyAnimalName(AnimalNameChangeRequest, idAnimal, token) {
-      console.log(AnimalNameChangeRequest)
+  console.log(AnimalNameChangeRequest);
   return fetch(`${BASE_URL}/animals/${idAnimal}/name`, {
-      method: 'PUT',
-      headers: new Headers({
-        'content-type': 'application/json',
-        Accept: 'application/json',
-        'X-API-KEY': token,
-      }),
-      body: JSON.stringify(AnimalNameChangeRequest),
-    });
+    method: 'PUT',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+    body: JSON.stringify(AnimalNameChangeRequest),
+  });
 }
 
 export function modifyAnimalAge(animalAgeChangeRequest, idAnimal, token) {
@@ -88,7 +88,7 @@ export function modifyAnimalStatus(animalStatusChangeRequest, idAnimal, token) {
 }
 
 export function modifyAnimalType(animalTypeChangeRequest, idAnimal, token) {
-  console.log(animalTypeChangeRequest + " animal type change EDNPOINT")
+  console.log(animalTypeChangeRequest + ' animal type change EDNPOINT');
   return fetch(`${BASE_URL}/animals/${idAnimal}/type`, {
     method: 'PUT',
     headers: new Headers({
@@ -101,7 +101,7 @@ export function modifyAnimalType(animalTypeChangeRequest, idAnimal, token) {
 }
 
 export function modifyAnimalCity(animalCityChangeRequest, idAnimal, token) {
-  console.log(animalCityChangeRequest)
+  console.log(animalCityChangeRequest);
   return fetch(`${BASE_URL}/animals/${idAnimal}/city`, {
     method: 'PUT',
     headers: new Headers({
@@ -145,7 +145,6 @@ export function deleteAnimal(idAnimal, token) {
       Accept: 'application/json',
       'X-API-KEY': token,
     }),
-
   });
 }
 
@@ -161,23 +160,24 @@ export function searchAnimals(
   size,
   token,
 ) {
-  var BASE_URL_ = BASE_URL +'/animals/filters?page=' + page + '&'
-  console.log(sex)
-
-  if(sex != null)
-  {
-    BASE_URL_ = BASE_URL_ + 'sex=' + sex
-    console.log(BASE_URL_)
-  }
-
-  return fetch(`${BASE_URL}/animals/filters?animalSize=${animalSize}&colour=${colour}&idCity=${idCity}&maxAge=${maxAge}&minAge=${minAge}&page=${page}&sex=${sex}&size=${size}`,
-    {
-      method: 'GET',
-      headers: new Headers({
-        'content-type': 'application/json',
-        Accept: 'application/json',
-        'X-API-KEY': token,
-      }),
-    },
-  );
+  let url = new URL('/animals/filters', BASE_URL);
+  if (animalSize) url.searchParams.append('animalSize', animalSize);
+  if (sex) url.searchParams.append('sex', sex);
+  if (colour) url.searchParams.append('colour', colour);
+  if (minAge) url.searchParams.append('minAge', minAge);
+  if (maxAge) url.searchParams.append('maxAge', maxAge);
+  if (idCity) url.searchParams.append('idCity', idCity);
+  if (idType) url.searchParams.append('idType', idType);
+  url.searchParams.append('page', page);
+  url.searchParams.append('size', size);
+ console.log(url)
+ console.log(arguments)
+  return fetch(url, {
+    method: 'GET',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+  });
 }

@@ -5,26 +5,18 @@ import {Picker} from '@react-native-picker/picker';
 import {TextInput, Button, HelperText} from 'react-native-paper';
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
-
 export default class AnimalSizePicker extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      size: '',
-    };
-    this.render = this.render.bind(this);
   }
-  updateSize = size => {
-    this.setState({size: size});
-    console.log(sizeOption);
-    this.props.onChange(size);
-  };
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Tamaño : </Text>
-        <Picker selectedValue={this.state.size} onValueChange={this.updateSize}>
+        <Picker
+          selectedValue={this.props.animalSize}
+          onValueChange={newAnimalSize => this.props.onChange(newAnimalSize)}>
           {sizeOption.map(size => {
             return (
               <Picker.Item
@@ -51,23 +43,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 5,
     paddingLeft: 10,
-  },
-  button: {
-    marginTop: 24,
-  },
-  searchableDropdown: {
-    padding: 10,
-    marginTop: 2,
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  textInputSearchable: {
-    padding: 12,
-    borderWidth: 1,
-    borderRadius: 5,
-    marginTop: 5,
-  },
-  cameraButton: {
-    marginTop: 12,
   },
 });

@@ -28,7 +28,7 @@ import AnimalTypeChangeScreen from './screens/AnimalTypeChangeScreen.js';
 import AnimalCityChangeScreen from './screens/AnimalCityChangeScreen.js';
 import AnimalImageChangeScreen from './screens/AnimalImageChangeScreen.js';
 import MyProfileScreen from './screens/MyProfileScreen.js';
-import SearchAnimalScreen from './screens/SearchAnimalScreen.js'
+import NewSearchAnimalScreen from './screens/NewSearchAnimalScreen.js'
 
 const Stack = createStackNavigator();
 export default class App extends Component {
@@ -168,8 +168,8 @@ export default class App extends Component {
                   options={{headerShown: false}}
                   />
                    <Stack.Screen
-                  name="SearchAnimalScreen"
-                  component={SearchAnimalScreen}
+                  name="NewSearchAnimalScreen"
+                  component={NewSearchAnimalScreen}
                   options={{headerShown: false}}
                   />
                   <Stack.Screen

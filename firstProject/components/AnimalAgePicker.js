@@ -1,18 +1,19 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
-
-export default class AnimalColourPicker extends React.Component {
+export default class AnimalAgePicker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       minAge: '',
       maxAge: '',
+
     };
-    this.render = this.render.bind(this);
   }
+  /*
 
   render() {
     return (
@@ -36,6 +37,21 @@ export default class AnimalColourPicker extends React.Component {
         </Button>
       </View>
     );
+  }*/
+ 
+  render() {
+    return (
+      <ScrollView scrollEnabled={true}>
+        <MultiSlider 
+          values={[this.props.minAge,this.props.maxAge]}
+          sliderLength={250}
+          onValuesChange={(values) => {this.props.onChange(values[0], values[1])}}
+          min={0}
+          max={30}
+          step={1}
+        />
+      </ScrollView>
+      );
   }
 }
 
@@ -45,16 +61,4 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
 
-  /*text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#F05524',
-    fontSize: 15,
-    marginTop: 5,
-    paddingLeft:10,
-  },*/
-  button: {
-    width: 40,
-    height: 40,
-    marginTop: 24,
-  },
 });

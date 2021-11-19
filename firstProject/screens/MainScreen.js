@@ -107,7 +107,7 @@ export default class MainScreen extends React.Component {
             mode="contained"
             dark={true}
             color="#F5C401"
-            onPress={() => this.props.navigation.navigate('SearchAnimalScreen')}>
+            onPress={() => this.props.navigation.navigate('NewSearchAnimalScreen')}>
             Buscar animal
           </Button>
         

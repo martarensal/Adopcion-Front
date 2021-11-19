@@ -9,22 +9,13 @@ var validate = require('validate.js');
 export default class AnimalSexPicker extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      sex: '',
-    };
-    this.render = this.render.bind(this);
-
   }
-  updateSex = sex => {
-    this.setState({sex: sex});
-    this.props.onChange(sex)
-  };
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Sexo : </Text>
-        <Picker selectedValue={this.state.sex} onValueChange={this.updateSex}>
+        <Picker selectedValue={this.props.sex} onValueChange={newAnimalSex => this.props.onChange(newAnimalSex)}>
           {sexOption.map(sex => {
             return (
               <Picker.Item
