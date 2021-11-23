@@ -106,6 +106,8 @@ export default class NewSearchAnimalScreen extends Component {
       idCity: undefined,
       loadingDataCommunity: true,
       autonomousCommunity: undefined,
+      provinces: [],
+      cities: []
     };
 
     this.setSections = this.setSections.bind(this);
@@ -145,7 +147,7 @@ export default class NewSearchAnimalScreen extends Component {
     this.setState({cities: jsonResponse.pages});
   }
 
-  async handlegetProvincefromAC(response) {
+  async handleGetProvincefromAC(response) {
     var provinces = [];
     const jsonResponse = await response.json();
     this.setState({provinces: jsonResponse.pages});
@@ -155,16 +157,18 @@ export default class NewSearchAnimalScreen extends Component {
     SecurityUtils.authorizeApi([], getAC).then(
       this.handleGetACResponse.bind(this),
     );
-  } 
-  
+  }
+
   getProvincesFromAC = () => {
+    console.log('hola')
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi(
         [this.state.autonomousCommunity],
         getProvincesFromAC,
-      ).then(this.handlegetProvincefromAC.bind(this));
+      ).then(this.handleGetProvincefromAC.bind(this));
     });
-  }
+  
+  };
 
   getCityFromProvince = () => {
     SecurityUtils.tokenInfo().then(info => {
@@ -173,7 +177,7 @@ export default class NewSearchAnimalScreen extends Component {
         getCityFromProvince,
       ).then(this.handleGetCityResponse.bind(this));
     });
-  }
+  };
   //END CITY
 
   componentDidMount() {
@@ -243,14 +247,22 @@ export default class NewSearchAnimalScreen extends Component {
         title: 'Ciudad',
         content: (
           <AnimalCityPicker
-            autonomousCommunity = {this.state.autonomousCommunity}
-            autonomousCommunities = {this.state.autonomousCommunities}
-            province = {this.state.province}
-            provinces = {this.state.provinces}
-            city = {this.state.idCity}
-            cities = {this.state.cities}
-            onChange={(autonomousCommunity, province, idCity) => {
-              this.setState({autonomousCommunity: autonomousCommunity, province: province,idCity: idCity});
+            autonomousCommunity={this.state.autonomousCommunity}
+            autonomousCommunities={this.state.autonomousCommunities}
+            province={this.state.province}
+            provinces={this.state.provinces}
+            city={this.state.city}
+            cities={this.state.cities}
+            onAutonomousCommunityChange={autonomousCommunity => {
+              this.setState({autonomousCommunity: autonomousCommunity});
+              this.getProvincesFromAC();
+            }}
+            onProvinceChange={province => {
+              this.setState({province: province});
+              this.getCityFromProvince();
+            }}
+            onCityChange={city => {
+              this.setState({city: city});
             }}
           />
         ),
@@ -309,7 +321,10 @@ export default class NewSearchAnimalScreen extends Component {
     ];
 
     console.log(JSON.stringify(this.state, null, 4));
-    if (this.state.loadingDataType && this.state.loadingDataCommunity )
+    if (
+      this.state.loadingDataType &&
+      this.state.loadingDataCommunity
+    )
       return (
         <View style={styles.container}>
           <LoadingIndicator />
@@ -371,9 +386,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   content: {
-    //padding: 20,
-    height: 100,
-    width: 430,
     backgroundColor: '#fff',
   },
   active: {

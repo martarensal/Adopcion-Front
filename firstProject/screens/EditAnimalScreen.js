@@ -33,8 +33,7 @@ export default class EditAnimalScreen extends React.Component {
         </Appbar>
       <ScrollView style={styles.background}>
         <View style={styles.container}>
-          <Text style={styles.text}>{this.props.route.params.animal.name}</Text>
-            
+          <Text style={styles.text}>{this.props.route.params.animal.name}</Text>     
         </View>
         <List.Item
           title="Foto"

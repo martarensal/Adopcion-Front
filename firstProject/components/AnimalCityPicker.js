@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, ScrollView, Text, Image} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {TextInput, Button, HelperText} from 'react-native-paper';
 import FormManager from './FormManager';
@@ -15,60 +15,62 @@ var validate = require('validate.js');
 export default class AnimalCityPicker extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      enabledProvince: false,
-      enabledCity: false,
-    };
   }
 
   render() {
     return (
-      <View>
+      <ScrollView>
         <Text style={styles.text}>Comunidad autonoma : </Text>
+
         <Picker
           selectedValue={this.props.autonomousCommunity}
-          onValueChange={(newCommunity) => {
-            this.setState({enabledProvince: true})
-            this.props.onAutonomousCommunityChange(newCommunity)
-          }
-          }
-          >
+          onValueChange={this.props.onAutonomousCommunityChange}>
+          <Picker.Item
+            key="undefined_picker"
+            label="-- NO SELECCIONADO --"
+            value={undefined}
+          />
           {this.props.autonomousCommunities.map(AC => {
             return (
               <Picker.Item
-                key={AC.name + '_picker'}
-                label={AC.name}
-                value={AC.name}
+                key={AC.autonomousCommunity + '_picker'}
+                label={AC.autonomousCommunity}
+                value={AC.autonomousCommunity}
               />
             );
           })}
         </Picker>
 
+        <Text style={styles.text}>Provincia : </Text>
         <Picker
           selectedValue={this.props.province}
-          onValueChange={(newProvince) => {
-            this.setState({enabledCity: true})
-            this.props.onProvinceChange(newProvince)
-          }} >
-          enabled={this.state.enabledProvince}
+          onValueChange={this.props.onProvinceChange}>
+          <Picker.Item
+            key="undefined_picker"
+            label="-- NO SELECCIONADO --"
+            value={undefined}
+          />
           {this.props.provinces.map(province => {
             return (
               <Picker.Item
-                key={province.name + '_picker'}
-                label={province.name}
-                value={province.name}
+                key={province.province + '_picker'}
+                label={province.province}
+                value={province.province}
               />
             );
           })}
         </Picker>
+        <Text style={styles.text}>Ciudad: </Text>
 
-        <Picker
+         <Picker
           selectedValue={this.props.city}
-          onValueChange={(newCity) => {
-            this.setState({enabledCity: true})
-            this.props.onCityChange(newCity)
-          }} >
-          enabled={this.state.enabledCity}
+          onValueChange={this.props.onCityChange}
+          >
+          <Picker.Item
+            key="undefined_picker"
+            label="-- NO SELECCIONADO --"
+            value={undefined}
+          />
           {this.props.cities.map(city => {
             return (
               <Picker.Item
@@ -78,10 +80,8 @@ export default class AnimalCityPicker extends React.Component {
               />
             );
           })}
-          </Picker>
-
-
-      </View>
+                  </Picker>
+      </ScrollView>
     );
   }
 }
