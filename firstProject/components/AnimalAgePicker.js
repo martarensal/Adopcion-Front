@@ -12,13 +12,16 @@ export default class AnimalAgePicker extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+          <Text style={styles.text}>
+            {'Mínima: ' + [this.props.minAge]+ '  Máxima: '+[ this.props.maxAge]}
+          </Text>
         <MultiSlider 
           values={[this.props.minAge,this.props.maxAge]}
           sliderLength={300}
           onValuesChange={(values) => {this.props.onChange(values[0], values[1])}}
           min={0}
           max={30}
-          step={1}
+          //step={1}
         />
       </View>
       );
@@ -26,8 +29,11 @@ export default class AnimalAgePicker extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  text: {
+    justifyContent: 'space-between',
+  },
   container: {
-    flex: 1,
+    //flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 12,

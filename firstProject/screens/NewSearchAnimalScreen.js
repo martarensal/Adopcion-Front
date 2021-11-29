@@ -107,7 +107,7 @@ export default class NewSearchAnimalScreen extends Component {
       loadingDataCommunity: true,
       autonomousCommunity: undefined,
       provinces: [],
-      cities: []
+      cities: [],
     };
 
     this.setSections = this.setSections.bind(this);
@@ -238,7 +238,8 @@ export default class NewSearchAnimalScreen extends Component {
   }
 
   handleSearchAnimalsResponse(response) {
-    console.log(response);
+    this.props.navigation.navigate('AnimalsFilterScreen', {response: response})
+    //console.log(response);
   }
 
   render() {
@@ -357,7 +358,7 @@ export default class NewSearchAnimalScreen extends Component {
               mode="contained"
               dark={true}
               onPress={this.callSearchAnimals}>
-              Filter
+              Buscar
             </Button>
           </ScrollView>
         </View>

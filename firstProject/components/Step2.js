@@ -28,8 +28,10 @@ export default class Step1 extends React.Component {
   }
 
   async handleGetTypeResponse(response) {
+    console.log(response)
     var types = []
     const jsonResponse = await response.json();
+    console.log(jsonResponse)
     for (const i in jsonResponse.pages)
     {
       types.push( 
@@ -39,6 +41,7 @@ export default class Step1 extends React.Component {
         })
     }
     this.setState({types: types});
+    console.log(types)
   }
   
   getTypesCall() {
