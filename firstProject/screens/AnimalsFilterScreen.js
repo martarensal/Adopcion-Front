@@ -106,7 +106,7 @@ export default class EmailChangeScreen extends React.Component {
                     <Card.Actions>
                       <Button
                         onPress={() =>
-                          this.props.navigation.navigate('EditAnimalScreen', {
+                          this.props.navigation.navigate('AnimalDetailScreen', {
                             animal: animal,
                           })
                         }>
