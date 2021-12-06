@@ -11,10 +11,10 @@ export function addUser(userRegistrationRequest) {
   });
 }
 
-export function getUser(username, token) {
-  console.log(username);
-  console.log(`${BASE_URL}/users/${username}`);
-  return fetch(`${BASE_URL}/users/${username}`, {
+export function getUser(idUser, token) {
+  console.log(idUser);
+  console.log(`${BASE_URL}/users/${idUser}`);
+  return fetch(`${BASE_URL}/users/${idUser}`, {
     method: 'GET',
     headers: new Headers({
       'content-type': 'application/json',

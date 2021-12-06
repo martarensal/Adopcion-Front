@@ -113,7 +113,6 @@ export default class NewSearchAnimalScreen extends Component {
     this.setSections = this.setSections.bind(this);
     this.callSearchAnimals = this.callSearchAnimals.bind(this);
   }
-  //TYPE
   async handleGetAnimalTypeResponse(response) {
     var types = [];
     const jsonResponse = await response.json();
@@ -128,9 +127,6 @@ export default class NewSearchAnimalScreen extends Component {
       this.handleGetAnimalTypeResponse.bind(this),
     );
   }
-  //END TYPE
-
-  //CITY
 
   async handleGetACResponse(response) {
     var ACs = [];
@@ -160,14 +156,13 @@ export default class NewSearchAnimalScreen extends Component {
   }
 
   getProvincesFromAC = () => {
-    console.log('hola')
+    console.log('hola');
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi(
         [this.state.autonomousCommunity],
         getProvincesFromAC,
       ).then(this.handleGetProvincefromAC.bind(this));
     });
-  
   };
 
   getCityFromProvince = () => {
@@ -178,7 +173,6 @@ export default class NewSearchAnimalScreen extends Component {
       ).then(this.handleGetCityResponse.bind(this));
     });
   };
-  //END CITY
 
   componentDidMount() {
     this.getAnimalTypeFromAPI();
@@ -186,7 +180,6 @@ export default class NewSearchAnimalScreen extends Component {
   }
 
   setSections = sections => {
-    //console.log(sections);
     this.setState({
       activeSections: sections.includes(undefined) ? [] : sections,
     });
@@ -238,8 +231,7 @@ export default class NewSearchAnimalScreen extends Component {
   }
 
   handleSearchAnimalsResponse(response) {
-    this.props.navigation.navigate('AnimalsFilterScreen', {response: response})
-    //console.log(response);
+    this.props.navigation.navigate('AnimalsFilterScreen', {response: response});
   }
 
   render() {
@@ -322,10 +314,7 @@ export default class NewSearchAnimalScreen extends Component {
     ];
 
     console.log(JSON.stringify(this.state, null, 4));
-    if (
-      this.state.loadingDataType &&
-      this.state.loadingDataCommunity
-    )
+    if (this.state.loadingDataType && this.state.loadingDataCommunity)
       return (
         <View style={styles.container}>
           <LoadingIndicator />
