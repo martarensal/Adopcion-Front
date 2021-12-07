@@ -7,7 +7,6 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
         includeBase64: true
     }
 
-
 export default class Camera extends React.Component {
     constructor(props) {
         super(props);

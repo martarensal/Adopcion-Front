@@ -181,3 +181,14 @@ export function searchAnimals(
     }),
   });
 }
+export function addPublication(publicationCreationRequest, token) {
+  return fetch(`${BASE_URL}/publications`, {
+    method: 'POST',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+    body: JSON.stringify(publicationCreationRequest),
+  });
+}

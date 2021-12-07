@@ -32,6 +32,8 @@ import NewSearchAnimalScreen from './screens/NewSearchAnimalScreen.js';
 import AnimalsFilterScreen from './screens/AnimalsFilterScreen.js';
 import AnimalDetailScreen from './screens/AnimalDetailScreen.js';
 import EmailScreen from './screens/EmailScreen.js';
+import LostAnimalScreen from './screens/LostAnimalScreen.js';
+
 const Stack = createStackNavigator();
 export default class App extends Component {
   constructor(props) {
@@ -198,6 +200,11 @@ export default class App extends Component {
                   <Stack.Screen
                   name="EmailScreen"
                   component={EmailScreen}
+                  options={{headerShown: false}}
+                  />
+                  <Stack.Screen
+                  name="LostAnimalScreen"
+                  component={LostAnimalScreen}
                   options={{headerShown: false}}
                   />
                    
