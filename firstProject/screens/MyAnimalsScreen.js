@@ -61,8 +61,7 @@ export default class MyAnimalsScreen extends React.Component {
         paginationInfo: data.paginationInfo,
         loading: false,
       }),
-      //console.log(data)
-      //console.log(this.state.animals)
+    
     );
   }
 
@@ -77,8 +76,6 @@ export default class MyAnimalsScreen extends React.Component {
   }
 
    fetchUserDataWithAnimals() {
-    //if (this.state.page === 0) this.setState({loading: true});
-
     this.setState({animals: []});
 
     SecurityUtils.tokenInfo().then(info => {

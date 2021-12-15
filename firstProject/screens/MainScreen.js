@@ -1,12 +1,19 @@
 import React from 'react';
 import {Appbar, Button} from 'react-native-paper';
 import {getUser} from '../client/UsersApi';
-import {Text, View, StyleSheet, Alert} from 'react-native';
-import {createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList} from '@react-navigation/drawer';
-import { DrawerActions } from '@react-navigation/native';
+import {Text, View, StyleSheet, Alert, Image} from 'react-native';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItem,
+  DrawerItemList,
+} from '@react-navigation/drawer';
+import {DrawerActions} from '@react-navigation/native';
 import LoadingIndicator from '../components/LoadingIndicator';
 import MyProfileScreen from './MyProfileScreen';
 import MyAnimalsScreen from './MyAnimalsScreen';
+import CreateAnimalScreen from './CreateAnimalScreen';
+import LostAnimalScreen from './LostAnimalScreen';
 
 var SecurityUtils = require('../utils/SecurityUtils.js');
 const Drawer = createDrawerNavigator();
@@ -26,28 +33,26 @@ export default class MainScreen extends React.Component {
   handleLogout = () => {
     Alert.alert('Cerrar Sesión', '¿Está seguro que quiere cerrar sesión?', [
       {
-        text: 'Sí', 
-        onPress: () =>  {
-          SecurityUtils.deleteToken(); 
-        }
+        text: 'Sí',
+        onPress: () => {
+          SecurityUtils.deleteToken();
+        },
       },
       {
-        text: 'No'
-      }
+        text: 'No',
+      },
+    ]);
+  };
 
-    ])
-
-  }
-
-  customDrawer(draw){
-    return(
-      <DrawerContentScrollView{...draw}>
-        <DrawerItemList{...draw}/>
-        <DrawerItem label = "Cerrar Sesión" onPress={this.handleLogout}  />
+  customDrawer(draw) {
+    return (
+      <DrawerContentScrollView {...draw}>
+        <DrawerItemList {...draw} />
+        <DrawerItem label="Cerrar Sesión" onPress={this.handleLogout} />
       </DrawerContentScrollView>
-    )
+    );
   }
- 
+
   handleGetUserResponse(response) {
     response.json().then(data => this.setState({user: data, loading: false}));
   }
@@ -76,49 +81,47 @@ export default class MainScreen extends React.Component {
     return (
       <View style={styles.background}>
         <Appbar style={styles.barra}>
-          <Appbar.Action icon="menu" onPress={() => this.props.navigation.dispatch(DrawerActions.openDrawer())} />
-            <Text style={styles.logo}>
-              SavePet
-            </Text>
+          <Appbar.Action
+            icon="menu"
+            onPress={() =>
+              this.props.navigation.dispatch(DrawerActions.openDrawer())
+            }
+          />
+          <Text style={styles.logo}>SavePet</Text>
         </Appbar>
-       
+
         <View style={styles.container}>
-          <Text style={styles.helloText}> ¡Hola, {this.state.user.name}!</Text>
-          <Button
-            style={styles.button}
-            color="#ABE009"
-            mode="contained"
-            dark={true}
-            onPress={() => this.props.navigation.navigate('CreateAnimalScreen', {
-                        username: this.state.user.username,
-                      })}>
-            Añadir publicación de animal
-          </Button>
-          <Button
-            style={styles.button}
-            mode="contained"
-            dark={true}
-            color="#F5C401"
-            onPress={() => this.props.navigation.navigate('LostAnimalScreen')}>
-            Añadir animal perdido
-          </Button>
-              <Button
-            style={styles.button}
-            mode="contained"
-            dark={true}
-            color="#F5C401"
-            onPress={() => this.props.navigation.navigate('NewSearchAnimalScreen')}>
+          <Image
+            source={require('../assets/img/masrectoesquinita.png')}
+            style={styles.image}
+          />
+          <Text style={styles.helloText}> Bienvenido a SavePet, {this.state.user.name}</Text>
+              <Text style={styles.text}> ¿Quieres adoptar o acoger un animal?</Text>
+          <View style={styles.buttons}>
+          <Button 
+              dark={true}
+              mode='contained'
+              color='#F5C401'
+
+            onPress={() =>
+              this.props.navigation.navigate('NewSearchAnimalScreen')
+            }>
             Buscar animal
           </Button>
-              <Button
-            style={styles.button}
-            mode="contained"
-            dark={true}
-            color="#F5C401"
-            onPress={() => this.props.navigation.navigate('LostAnimalsScreen')}>
-            Buscar animal
+          <Text style={styles.text}> Ver las publicaciones de animales perdidos </Text>
+
+          <Button style={styles.button}
+                dark={true}
+                mode='contained'
+                color='#F5C401'
+
+            onPress={() =>
+              this.props.navigation.navigate('LostAnimalsListScreen')
+            }>
+            Animales perdidos
           </Button>
-        
+          </View>
+         
         </View>
       </View>
     );
@@ -129,23 +132,48 @@ export default class MainScreen extends React.Component {
       return <LoadingIndicator />;
     } else {
       return (
-        <Drawer.Navigator edgeWidth={60} drawerContent={cositas => <this.customDrawer {...cositas} />}>
+        <Drawer.Navigator
+          edgeWidth={60}
+          drawerContent={cositas => <this.customDrawer {...cositas} />}>
           <Drawer.Screen name="Inicio" component={this.startData} />
           <Drawer.Screen name="Mi perfil" component={MyProfileScreen} />
           <Drawer.Screen name="Mis animales" component={MyAnimalsScreen} />
           <Drawer.Screen name="Mis solicitudes" component={MainScreen} />
-          <Drawer.Screen name="Animales solicitados por mi" component={MainScreen} />
-         
+          <Drawer.Screen
+            name="Añadir animal"
+            initialParams={{username: this.state.user.username}}
+            component={CreateAnimalScreen}
+          />
+          <Drawer.Screen
+            name="Publicar animal perdido"
+            component={LostAnimalScreen}
+          />
+          <Drawer.Screen
+            name="Animales solicitados por mi"
+            component={MainScreen}
+          />
         </Drawer.Navigator>
-
       );
-      }
-    
-
+    }
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    width: '100%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+  },
+  background: {
+    flex: 1,
+  },
+  button: {
+    color:'#D99748',
+  },
   barra: {
     backgroundColor: '#E67E00',
   },
@@ -156,36 +184,29 @@ const styles = StyleSheet.create({
     marginLeft: 14,
     alignSelf: 'center',
   },
-  container: {
-    flex: 1,
-    padding: 20,
-    width: '100%',
-    maxWidth: 400,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
-  },
-  background: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
   helloText: {
-    fontFamily: 'OpenSans-Bold',
+    fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 25,
+    marginBottom: 15,
   },
-  underText: {
-    fontFamily: 'OpenSans-Bold',
+  text:{
+    fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
-    fontSize: 20,
+    fontSize: 15,
+    alignContent: 'center',
+    marginBottom: 5,
+    marginTop: 20,
   },
   image: {
-    marginTop: 35,
-    width: 280,
-    height: 280,
+    width: 200,
+    height: 216,
   },
-  button: {
-    marginTop: 25,
+  button:{
+    marginBottom:15,
+  },
+  buttons: {
+    //flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
 });

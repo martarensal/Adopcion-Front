@@ -12,6 +12,7 @@
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-community/datetimepicker": "^4.0.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-picker/picker": "^1.16.4",
     "@react-navigation/drawer": "^5.12.5",

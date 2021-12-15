@@ -192,3 +192,17 @@ export function addPublication(publicationCreationRequest, token) {
     body: JSON.stringify(publicationCreationRequest),
   });
 }
+
+export function getPaginatedPublications(page, size, token) {
+  return fetch(
+    `${BASE_URL}/publications?page=${page}&size=${size}`,
+    {
+      method: 'GET',
+      headers: new Headers({
+        'content-type': 'application/json',
+        Accept: 'application/json',
+        'X-API-KEY': token,
+      }),
+    },
+  );
+}

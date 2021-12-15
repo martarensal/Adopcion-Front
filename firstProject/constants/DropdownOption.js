@@ -110,3 +110,20 @@ export const colourOption = [
     name: 'Naranja',
   },
 ];
+export const typeOption = [
+    {
+    id: 1,
+    back_name: undefined,
+    name: '-- NO SELECCIONADO --',
+  },
+  {
+    id: 2,
+    back_name: 'adoption',
+    name: 'Adopción',
+  },
+  {
+    id: 3,
+    back_name: 'shelter',
+    name: 'Casa de acogida',
+  },
+];

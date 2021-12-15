@@ -31,6 +31,8 @@ export default class AnimalCreationForm extends React.Component {
       loading: false,
       user:{},
     }
+    this.addAnimalCall = this.addAnimalCall.bind(this)
+    this.handleCreateNewAnimalResponse = this.handleCreateNewAnimalResponse.bind(this)
   }
 
   async handleGetTypeResponse(response) {
@@ -72,7 +74,6 @@ export default class AnimalCreationForm extends React.Component {
     if (response.ok) {
       console.log(JSON.stringify(response));
       console.log('Animal creado');
-
     } else {
       console.log(JSON.stringify(response));
       this.setState({isErrorVisible: true});

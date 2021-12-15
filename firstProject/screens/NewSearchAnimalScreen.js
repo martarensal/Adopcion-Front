@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {Button} from 'react-native-paper';
+import {Button, Appbar} from 'react-native-paper';
 import * as Animatable from 'react-native-animatable';
 import Collapsible from 'react-native-collapsible';
 import Accordion from 'react-native-collapsible/Accordion';
@@ -19,6 +19,7 @@ import AnimalCityPicker from '../components/AnimalCityPicker.js';
 import FinalStep from '../components/FinalStep.js';
 import AnimalAgePicker from '../components/AnimalAgePicker.js';
 import {searchAnimals} from '../client/AnimalApi';
+import { DrawerActions } from '@react-navigation/native';
 import {getTypes} from '../client/TypeApi';
 import {
   getAC,
@@ -322,9 +323,13 @@ export default class NewSearchAnimalScreen extends Component {
       );
     else
       return (
+        <>
+         <Appbar style={styles.barra}>
+            <Text style={styles.logo}>SavePet</Text>
+        </Appbar>
         <View style={styles.container}>
           <ScrollView contentContainerStyle={{paddingTop: 30}}>
-            <Text style={styles.title}>Accordion Example</Text>
+            <Text style={styles.title}>Filtros</Text>
 
             <FilterHeaderComponent
               selectors={SELECTORS}
@@ -351,6 +356,7 @@ export default class NewSearchAnimalScreen extends Component {
             </Button>
           </ScrollView>
         </View>
+        </>
       );
   }
 }
@@ -358,16 +364,38 @@ export default class NewSearchAnimalScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    padding: 20,
+    width: '100%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+  },
+  background: {
+    flex: 1,
+  },
+  button: {
+    color:'#D99748',
+  },
+  barra: {
+    backgroundColor: '#E67E00',
+  },
+  logo: {
+    fontFamily: 'Butler_Light',
+    color: 'white',
+    fontSize: 25,
+    marginLeft: 14,
+    alignSelf: 'center',
   },
   title: {
     textAlign: 'center',
-    fontSize: 22,
+    fontSize: 25,
     fontWeight: '300',
     marginBottom: 20,
+        fontFamily: 'RobotoSlab-Regular',
+
   },
   header: {
-    backgroundColor: '#F5FCFF',
     padding: 10,
   },
   headerText: {
@@ -375,22 +403,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
-  content: {
-    backgroundColor: '#fff',
-  },
-  active: {
-    backgroundColor: 'rgba(255,255,255,1)',
-  },
-  inactive: {
-    backgroundColor: 'rgba(245,252,255,1)',
-  },
+  
   selectors: {
     marginBottom: 10,
     flexDirection: 'row',
     justifyContent: 'center',
   },
   selector: {
-    backgroundColor: '#F5FCFF',
     padding: 10,
   },
   activeSelector: {

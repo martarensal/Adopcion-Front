@@ -12,15 +12,16 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DrawerActions} from '@react-navigation/native';
 var SecurityUtils = require('../utils/SecurityUtils');
+import {getPaginatedPublications} from '../client/AnimalApi';
 
 var SecurityUtils = require('../utils/SecurityUtils');
 
-export default class AnimalsFilterScreen extends React.Component {
+export default class LostAnimalsListScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      animals: [],
+      publications: [],
       paginationInfo: {},
       loading: true,
       page: 0,
@@ -29,16 +30,33 @@ export default class AnimalsFilterScreen extends React.Component {
       height: 80,
     };
   }
+  handleGetPublicationResponse(response) {
+    response.json().then(data =>
+      this.setState({
+        publications: this.state.publications.concat(data.pages),
+        paginationInfo: data.paginationInfo,
+        loading: false,
+      }),
+    );
+  }
+
+  fetchPublications() {
+    //if (this.state.page === 0) this.setState({loading: true});
+    SecurityUtils.authorizeApi([0, 25], getPaginatedPublications).then(
+      this.handleGetPublicationResponse.bind(this),
+    );
+  }
 
   componentDidMount() {
-    this.setState({
-      animals: this.state.animals.concat(
+    /*this.setState({
+      publications: this.state.publications.concat(
         this.props.route.params.response.pages,
       ),
       paginationInfo: this.props.route.params.response.paginationInfo,
       loading: false,
-    });
-    //console.log(this.state.animals)
+    });*/
+    this.fetchPublications();
+    //this.state.publications.map(publication => this.setState({publication.publicationDate: publication.publicationDate})
   }
 
   render() {
@@ -54,41 +72,15 @@ export default class AnimalsFilterScreen extends React.Component {
           <Text style={styles.logo}>SavePet</Text>
         </Appbar>
         <View style={styles.background}>
-          <ScrollView style={styles.background}>
-            <View style={styles.container}>
-              <Text style={styles.text}>Animales disponibles</Text>
-            </View>
-            {this.state.animals[0] === undefined ? (
-              <>
-                <View style={styles.container}>
-                  <Text style={styles.label}>
-                    Ningún animal cumple con esas características
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() =>
-                      this.props.navigation.navigate('NewSearchAnimalScreen')
-                    }>
-                    <Text style={styles.link}>
-                      ¿Quieres probar con otros filtros?
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </>
-            ) : (
-              this.state.animals.map(animal => {
-                return (
-                  <Card key={animal.id}>
+        {this.state.publications.map(publication => {
+          return (
+                  <Card key={publication.image}>
                     <Card.Title
-                      title={animal.name}
+                      title={publication.publicationDate/*.toISOString().substring(0, '####-##-##'.length)*/}
                       titleStyle={styles.title}
                       subtitle={
-                        'Sexo: ' +
-                        animal.sex +
-                        '\n' +
-                        ' Edad: ' +
-                        animal.age +
-                        ' Ciudad: ' +
-                        animal.city
+                        'Descripcion: ' +
+                        publication.description 
                       }
                       subtitleStyle={styles.subtitle}
                       left={() => (
@@ -98,26 +90,14 @@ export default class AnimalsFilterScreen extends React.Component {
                             height: this.state.height,
                             borderRadius: 5,
                           }}
-                          source={{uri: this.state.base64 + animal.image}}
+                          source={{uri: this.state.base64 + publication.image}}
                         />
                       )}
                     />
-
-                    <Card.Actions>
-                      <Button
-                        onPress={() =>
-                          this.props.navigation.navigate('AnimalDetailScreen', {
-                            animal: animal,
-                          })
-                        }>
-                        Ver detalles
-                      </Button>
-                    </Card.Actions>
                   </Card>
                 );
               })
-            )}
-          </ScrollView>
+              }
         </View>
       </>
     );
