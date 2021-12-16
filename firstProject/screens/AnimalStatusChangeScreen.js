@@ -1,19 +1,20 @@
-import React, { Fragment, useState } from 'react';
+import React, {Fragment, useState} from 'react';
 import {modifyAnimalStatus} from '../client/AnimalApi';
-import { statusOption} from '../constants/DropdownOption';
-import { StyleSheet, View, Text, Image} from 'react-native';
+import {statusOption} from '../constants/DropdownOption';
+import {StyleSheet, View, Text, Image} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import { TextInput, Button, HelperText } from 'react-native-paper';
+import {TextInput, Button, HelperText} from 'react-native-paper';
+import HeaderAppbar from '../components/HeaderAppbar';
+
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
 
 export default class AnimalStatusChangeScreen extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-        status:'',
-    }
+      status: '',
+    };
     this.changeAnimalStatus = this.changeAnimalStatus.bind(this);
   }
 
@@ -24,54 +25,49 @@ export default class AnimalStatusChangeScreen extends React.Component {
   }
 
   changeAnimalStatus(animalStatusChangeRequest) {
-      console.log(animalStatusChangeRequest)
-            console.log(animalStatusChangeRequest)
-
+    console.log(animalStatusChangeRequest);
+    console.log(animalStatusChangeRequest);
 
     let body = {
       newAnimalStatus: animalStatusChangeRequest,
     };
-    console.log(body)
+    console.log(body);
     SecurityUtils.tokenInfo().then(info => {
-      SecurityUtils.authorizeApi([body, this.props.route.params.id], modifyAnimalStatus).then(
-          this.handleChangeAnimalStatusResponse.bind(this));
+      SecurityUtils.authorizeApi(
+        [body, this.props.route.params.id],
+        modifyAnimalStatus,
+      ).then(this.handleChangeAnimalStatusResponse.bind(this));
     });
   }
 
-  render()
-    {
-      return (
-
+  render() {
+    return (
+      <>
+        <HeaderAppbar />
         <View style={styles.container}>
-            <Text style={styles.text}>Estado :  </Text>
-
-            <Picker selectedValue = {this.props.route.params.status} onValueChange = {this.changeAnimalStatus}>
-            {
-            statusOption.map(status => {
-                return ( <Picker.Item key={status.back_name+'_picker'} label={status.name}  value={status.back_name} />)
-            })
-            }
-            </Picker>
-
-
+          <Picker
+            selectedValue={this.props.route.params.status}
+            onValueChange={this.changeAnimalStatus}>
+            {statusOption.map(status => {
+              return (
+                <Picker.Item
+                  key={status.back_name + '_picker'}
+                  label={status.name}
+                  value={status.back_name}
+                />
+              );
+            })}
+          </Picker>
         </View>
-      );
-    }     
-  
+      </>
+    );
+  }
 }
-
 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
     marginVertical: 12,
-  },
-  text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#F05524',
-    fontSize: 15,
-    marginTop: 5,
-    paddingLeft:10,
   },
   button: {
     marginTop: 24,
@@ -90,6 +86,5 @@ const styles = StyleSheet.create({
   },
   cameraButton: {
     marginTop: 12,
-  }
+  },
 });
-

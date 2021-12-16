@@ -2,6 +2,8 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import ChangeForm from '../components/ChangeForm';
 import {modifyAnimalAge} from '../client/AnimalApi';
+import HeaderAppbar from '../components/HeaderAppbar';
+
 var SecurityUtils = require('../utils/SecurityUtils');
 
 export default class AnimalageChangeScreen extends React.Component {
@@ -21,19 +23,24 @@ export default class AnimalageChangeScreen extends React.Component {
       newAnimalAge: animalAgeChangeRequest.newValue,
     };
     SecurityUtils.tokenInfo().then(info => {
-      SecurityUtils.authorizeApi([body, this.props.route.params.id], modifyAnimalAge).then(
-          this.handleChangeAnimalAgeResponse.bind(this));
+      SecurityUtils.authorizeApi(
+        [body, this.props.route.params.id],
+        modifyAnimalAge,
+      ).then(this.handleChangeAnimalAgeResponse.bind(this));
     });
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <ChangeForm
-          value={this.props.route.params.age}
-          handlePress={this.changeAnimalAge}
-        />
-      </View>
+      <>
+        <HeaderAppbar />
+        <View style={styles.container}>
+          <ChangeForm
+            value={this.props.route.params.age}
+            handlePress={this.changeAnimalAge}
+          />
+        </View>
+      </>
     );
   }
 }

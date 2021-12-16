@@ -1,121 +1,120 @@
-import React, { Fragment, useState } from 'react';
-import { StyleSheet, View, Text, Image} from 'react-native';
+import React, {Fragment, useState} from 'react';
+import {StyleSheet, View, Text, Image} from 'react-native';
 import {modifyAnimalCity} from '../client/AnimalApi';
 import {Picker} from '@react-native-picker/picker';
-import { TextInput, Button, HelperText } from 'react-native-paper';
-import {getAC, getProvincesFromAC, getCityFromProvince} from '../client/CityApi';
+import {TextInput, Button, HelperText} from 'react-native-paper';
+import {
+  getAC,
+  getProvincesFromAC,
+  getCityFromProvince,
+} from '../client/CityApi';
+import HeaderAppbar from '../components/HeaderAppbar';
+
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
 
 export default class AnimalCityChangeScreen extends React.Component {
-
- constructor(props) {
+  constructor(props) {
     super(props);
-    this.state = {  
+    this.state = {
       ACs: [],
-      provinces:[],
-      cities:[],
+      provinces: [],
+      cities: [],
       city: '',
       cityId: -1,
-      province:'',
-      AC:'',
+      province: '',
+      AC: '',
       enabledProvince: false,
-      enabledCity: false,    
-    }
+      enabledCity: false,
+    };
     this.changeAnimalCity = this.changeAnimalCity.bind(this);
-    this.render = this.render.bind(this)
+    this.render = this.render.bind(this);
   }
-  
+
   async handleGetACResponse(response) {
-    var ACs = []
+    var ACs = [];
     const jsonResponse = await response.json();
-    for (const i in jsonResponse.pages)
-    {
-      
-      ACs.push(
-        {
-          name: jsonResponse.pages[i].autonomousCommunity,
-          id: jsonResponse.pages[i].id
-        })
+    for (const i in jsonResponse.pages) {
+      ACs.push({
+        name: jsonResponse.pages[i].autonomousCommunity,
+        id: jsonResponse.pages[i].id,
+      });
     }
 
     this.setState({ACs: ACs});
   }
 
-   async handleGetCityResponse(response) {
-    var cities = []
+  async handleGetCityResponse(response) {
+    var cities = [];
     const jsonResponse = await response.json();
-    for (const i in jsonResponse.pages)
-    {
-      cities.push(
-        {
-          name: jsonResponse.pages[i].name,
-          id: jsonResponse.pages[i].id
-        })
+    for (const i in jsonResponse.pages) {
+      cities.push({
+        name: jsonResponse.pages[i].name,
+        id: jsonResponse.pages[i].id,
+      });
     }
 
     this.setState({cities: cities});
   }
-  
+
   async handlegetProvincefromAC(response) {
-    var provinces = []
+    var provinces = [];
     const jsonResponse = await response.json();
-    for (const i in jsonResponse.pages)
-    {
-      provinces.push(
-        {
-          name: jsonResponse.pages[i].province,
-          id: jsonResponse.pages[i].id
-        })
+    for (const i in jsonResponse.pages) {
+      provinces.push({
+        name: jsonResponse.pages[i].province,
+        id: jsonResponse.pages[i].id,
+      });
     }
     this.setState({provinces: provinces});
   }
 
-  updateAC = (AC) => {
-      this.setState({ AC: AC })
-  }
-  
-  updateProvince = (province) => {
-      this.setState({ province: province })
-  }
+  updateAC = AC => {
+    this.setState({AC: AC});
+  };
+
+  updateProvince = province => {
+    this.setState({province: province});
+  };
 
   updateCity = (city, indexCity) => {
-      this.setState({ city: city})
-      this.changeAnimalCity(this.state.cities[indexCity].id)
-  }
+    this.setState({city: city});
+    this.changeAnimalCity(this.state.cities[indexCity].id);
+  };
 
   handleEnabledProvince = () => {
-    this.setState({enabledProvince: true})
+    this.setState({enabledProvince: true});
     this.getProvincesFromAC();
-  }
-  
+  };
+
   handleEnabledCity = () => {
-    this.setState({enabledCity: true})
+    this.setState({enabledCity: true});
     this.getCityFromProvince();
-  }
+  };
 
   getACCall() {
-    SecurityUtils.authorizeApi([], getAC).then(this.handleGetACResponse.bind(this))
+    SecurityUtils.authorizeApi([], getAC).then(
+      this.handleGetACResponse.bind(this),
+    );
   }
 
   getProvincesFromAC = () => {
     SecurityUtils.tokenInfo().then(info => {
-      SecurityUtils.authorizeApi(
-        [this.state.AC],
-        getProvincesFromAC,
-      ).then(this.handlegetProvincefromAC.bind(this));
+      SecurityUtils.authorizeApi([this.state.AC], getProvincesFromAC).then(
+        this.handlegetProvincefromAC.bind(this),
+      );
     });
-  }
+  };
 
-   getCityFromProvince = () => {
+  getCityFromProvince = () => {
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi(
         [this.state.province],
         getCityFromProvince,
       ).then(this.handleGetCityResponse.bind(this));
     });
-  }
-  
+  };
+
   handleChangeAnimalCityResponse(response) {
     console.log('Ciudad del animal modificado');
     console.log(JSON.stringify(response));
@@ -123,58 +122,78 @@ export default class AnimalCityChangeScreen extends React.Component {
   }
 
   changeAnimalCity(animalCityChangeRequest) {
-        let body = {
-        newAnimalCity_id: animalCityChangeRequest,
-        };
-        console.log(body)
-        console.log(this.props.route.params.id)
-        SecurityUtils.tokenInfo().then(info => {
-        SecurityUtils.authorizeApi([body, this.props.route.params.id], modifyAnimalCity).then(
-            this.handleChangeAnimalCityResponse.bind(this));
-        });
-    }
+    let body = {
+      newAnimalCity_id: animalCityChangeRequest,
+    };
+    console.log(body);
+    console.log(this.props.route.params.id);
+    SecurityUtils.tokenInfo().then(info => {
+      SecurityUtils.authorizeApi(
+        [body, this.props.route.params.id],
+        modifyAnimalCity,
+      ).then(this.handleChangeAnimalCityResponse.bind(this));
+    });
+  }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getACCall();
   }
 
   render() {
-  return (
-      <View>
-      <Text style={styles.text}>Comunidad autonoma :  </Text>
-        <Picker selectedValue = {this.state.AC} onValueChange = {this.updateAC}  enabled={true}  onBlur={this.handleEnabledProvince}  >
-         {
-           this.state.ACs.map(AC => {
-             return ( 
-             <Picker.Item key={AC.name+'_picker'} label={AC.name} value={AC.name}/>)
-           })
-         }
-        
-        </Picker>
+    return (
+      <>
+        <HeaderAppbar />
+        <View>
+          <Text style={styles.text}>Comunidad autonoma : </Text>
+          <Picker
+            selectedValue={this.state.AC}
+            onValueChange={this.updateAC}
+            enabled={true}
+            onBlur={this.handleEnabledProvince}>
+            {this.state.ACs.map(AC => {
+              return (
+                <Picker.Item
+                  key={AC.name + '_picker'}
+                  label={AC.name}
+                  value={AC.name}
+                />
+              );
+            })}
+          </Picker>
 
-         <Picker selectedValue = {this.state.province} onValueChange = {this.updateProvince}  enabled={this.state.enabledProvince} onBlur={this.handleEnabledCity}    >
-         {
-           this.state.provinces.map(province => {
-             return ( 
-             <Picker.Item key={province.name+'_picker'} label={province.name} value={province.name}/>)
-           })
-         }
-        
-        </Picker>
+          <Picker
+            selectedValue={this.state.province}
+            onValueChange={this.updateProvince}
+            enabled={this.state.enabledProvince}
+            onBlur={this.handleEnabledCity}>
+            {this.state.provinces.map(province => {
+              return (
+                <Picker.Item
+                  key={province.name + '_picker'}
+                  label={province.name}
+                  value={province.name}
+                />
+              );
+            })}
+          </Picker>
 
-         <Picker selectedValue = {this.state.city} onValueChange = {this.updateCity}  enabled={this.state.enabledCity}   >
-         {
-           this.state.cities.map(city => {
-             return ( 
-             <Picker.Item key={city.name+'_picker'} label={city.name} value={city.name}/>)
-           })
-         }
-        
-        </Picker>
-      
-      </View>
-      
-  );
+          <Picker
+            selectedValue={this.state.city}
+            onValueChange={this.updateCity}
+            enabled={this.state.enabledCity}>
+            {this.state.cities.map(city => {
+              return (
+                <Picker.Item
+                  key={city.name + '_picker'}
+                  label={city.name}
+                  value={city.name}
+                />
+              );
+            })}
+          </Picker>
+        </View>
+      </>
+    );
   }
 }
 const styles = StyleSheet.create({
@@ -187,7 +206,7 @@ const styles = StyleSheet.create({
     color: '#F05524',
     fontSize: 15,
     marginTop: 5,
-    paddingLeft:10,
+    paddingLeft: 10,
   },
   button: {
     marginTop: 24,
@@ -206,6 +225,5 @@ const styles = StyleSheet.create({
   },
   cameraButton: {
     marginTop: 12,
-  }
+  },
 });
-

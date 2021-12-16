@@ -51,7 +51,7 @@ export default class ChangeEmailForm extends React.Component {
         {this.renderHelperText()}
         <View style={styles.buttonContainer}>
           <Button
-            color="#15abe7"
+            color="#ABE009"
             mode="contained"
             disabled={validate.single(this.state.newEmail, validation.email)}
             dark={true}

@@ -22,7 +22,7 @@ export default class ChangeForm extends React.Component {
         />
         <View style={styles.buttonContainer}>
           <Button
-            color="#15abe7"
+            color="#ABE009"
             mode="contained"
             disabled={!this.state.newValue}
             dark={true}

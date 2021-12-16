@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
+import HeaderAppbar from '../components/HeaderAppbar';
 import ChangePasswordForm from '../components/ChangePasswordForm';
 import {modifyUserPassword} from '../client/UsersApi';
 var SecurityUtils = require('../utils/SecurityUtils');
@@ -27,9 +28,12 @@ export default class PasswordChangeScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <ChangePasswordForm handlePress={this.changeUserPassword} />
-      </View>
+      <>
+        <HeaderAppbar />
+        <View style={styles.container}>
+          <ChangePasswordForm handlePress={this.changeUserPassword} />
+        </View>
+      </>
     );
   }
 }

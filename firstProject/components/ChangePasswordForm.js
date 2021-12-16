@@ -25,7 +25,7 @@ export default class ChangePasswordForm extends React.Component {
         <PasswordInput onChange={this.setPassword} mode="flat" />
         <View style={styles.buttonContainer}>
           <Button
-            color="#15abe7"
+            color="#ABE009"
             mode="contained"
             disabled={!this.state.newPassword && !this.state.passwordRepeat}
             dark={true}

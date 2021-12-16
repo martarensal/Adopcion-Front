@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import ChangeForm from '../components/ChangeForm';
+import HeaderAppbar from '../components/HeaderAppbar';
 import {modifyUserPhone} from '../client/UsersApi';
 var SecurityUtils = require('../utils/SecurityUtils');
 
@@ -31,12 +32,15 @@ export default class PhoneChangeScreen extends React.Component {
 
   render() {
     return (
+      <>
+      <HeaderAppbar/>
       <View style={styles.container}>
         <ChangeForm
           value={this.props.route.params.phone}
           handlePress={this.changeUserPhone}
         />
       </View>
+      </>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import ChangeEmailForm from '../components/ChangeEmailForm';
+import HeaderAppbar from '../components/HeaderAppbar';
 import {modifyUserEmail} from '../client/UsersApi';
 var SecurityUtils = require('../utils/SecurityUtils');
 
@@ -30,12 +31,15 @@ export default class EmailChangeScreen extends React.Component {
 
   render() {
     return (
+      <>
+      <HeaderAppbar/>
       <View style={styles.container}>
         <ChangeEmailForm
           value={this.props.route.params.email}
           handlePress={this.changeUserEmail}
         />
       </View>
+      </>
     );
   }
 }

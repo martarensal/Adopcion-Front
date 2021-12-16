@@ -21,15 +21,6 @@ export default class AnimalDetailScreen extends React.Component {
       height: 150,
     };
   }
-  /*componentDidMount(){
-    Image.getSize(this.state.base64 + this.props.route.params.animal.image, (width, height) => {
-      screen_percentage = 0.55
-      this.setState({
-        width: ((Dimensions.get("screen").width*screen_percentage/width)*width),
-        height: ((Dimensions.get("screen").height*screen_percentage/height)*height)
-      })
-     });
-  }*/
 
   render() {
     return (

@@ -2,6 +2,8 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import ChangeForm from '../components/ChangeForm';
 import {modifyUserName} from '../client/UsersApi';
+import HeaderAppbar from '../components/HeaderAppbar';
+
 var SecurityUtils = require('../utils/SecurityUtils');
 
 export default class NameChangeScreen extends React.Component {
@@ -31,12 +33,15 @@ export default class NameChangeScreen extends React.Component {
 
   render() {
     return (
+      <>
+             <HeaderAppbar/>
       <View style={styles.container}>
         <ChangeForm
           value={this.props.route.params.name}
           handlePress={this.changeUserName}
         />
       </View>
+      </>
     );
   }
 }

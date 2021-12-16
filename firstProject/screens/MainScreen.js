@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 216,
+    marginBottom: 15,
   },
   button:{
     marginBottom:15,
