@@ -102,20 +102,7 @@ export default class AnimalCreationForm extends React.Component {
     this.getTypesCall();
     this.fetchUserData.bind(this)
   }
-
-  isFormIncompleteOrIncorrect() {
-    return (
-      validate(this.state) !== undefined ||
-      !this.state.name ||
-      !this.state.age ||
-      !this.state.sex ||
-      !this.state.city ||
-      !this.state.size ||
-      !this.state.colour ||
-      !this.state.status
-    );
-  }
-
+  
   renderHelperText(fieldName) {
     if (this.state[fieldName].length > 0) {
       let validationResult = validate.single(

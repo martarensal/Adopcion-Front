@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {modifyAnimalColour} from '../client/AnimalApi';
 import {colourOption} from '../constants/DropdownOption';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image,Alert} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {TextInput, Button, HelperText} from 'react-native-paper';
 import HeaderAppbar from '../components/HeaderAppbar';
@@ -13,7 +13,7 @@ export default class AnimalColourChangeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      colour: '',
+      newValue: '',
     };
     this.changeAnimalColour = this.changeAnimalColour.bind(this);
   }
@@ -21,17 +21,14 @@ export default class AnimalColourChangeScreen extends React.Component {
   handleChangeAnimalColourResponse(response) {
     console.log('Color del animal modificado');
     console.log(JSON.stringify(response));
-    this.props.navigation.navigate('MyAnimalsScreen');
+    //this.props.navigation.navigate('MyAnimalsScreen');
   }
 
   changeAnimalColour(animalColourChangeRequest) {
-    console.log(animalColourChangeRequest);
-    console.log(animalColourChangeRequest);
-
-    let body = {
+    this.setState({newValue: animalColourChangeRequest});
+     let body = {
       newAnimalColour: animalColourChangeRequest,
     };
-    console.log(body);
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi(
         [body, this.props.route.params.id],
@@ -58,6 +55,28 @@ export default class AnimalColourChangeScreen extends React.Component {
               );
             })}
           </Picker>
+          <Button
+          style={styles.button}
+            color="#ABE009"
+            mode="contained"
+            disabled={!this.state.newValue}
+            dark={true}
+            onPress={() =>
+                        Alert.alert(
+                          'Confirmación',
+                          'El color del animal ha sido modificado con éxito',
+                          [
+                            {
+                              text: 'Ok',
+                              onPress: () => this.props.navigation.navigate('MyAnimalsScreen'),
+                            },
+                          ],
+                          {cancelable: false},
+                        )
+                      }>
+            {' '}
+            Enviar{' '}
+          </Button>
         </View>
       </>
     );
@@ -66,7 +85,11 @@ export default class AnimalColourChangeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex:1,
     width: '100%',
     marginVertical: 12,
+  },
+  button: {
+    justifyContent: 'flex-end',
   },
 });

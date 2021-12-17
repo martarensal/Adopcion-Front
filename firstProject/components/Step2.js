@@ -131,11 +131,12 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#F05524',
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
     fontSize: 15,
-    marginTop: 5,
-    paddingLeft:10,
+    alignContent: 'center',
+    marginBottom: 5,
+    marginTop: 20,
   },
   button: {
     marginTop: 24,

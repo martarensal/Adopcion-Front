@@ -22,7 +22,6 @@ export default class Step1 extends React.Component {
     this.setState({name: FormManager.getFormManager().getField('name')})
     this.setState({age: FormManager.getFormManager().getField('age')})
     console.log(this.state.age)
-
   }
 
   render(){

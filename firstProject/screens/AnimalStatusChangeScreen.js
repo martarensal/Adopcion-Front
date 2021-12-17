@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {modifyAnimalStatus} from '../client/AnimalApi';
 import {statusOption} from '../constants/DropdownOption';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image, Alert} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {TextInput, Button, HelperText} from 'react-native-paper';
 import HeaderAppbar from '../components/HeaderAppbar';
@@ -13,7 +13,7 @@ export default class AnimalStatusChangeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      status: '',
+      newValue: '',
     };
     this.changeAnimalStatus = this.changeAnimalStatus.bind(this);
   }
@@ -21,12 +21,12 @@ export default class AnimalStatusChangeScreen extends React.Component {
   handleChangeAnimalStatusResponse(response) {
     console.log('Estado animal modificado');
     console.log(JSON.stringify(response));
-    this.props.navigation.navigate('MyAnimalsScreen');
   }
 
   changeAnimalStatus(animalStatusChangeRequest) {
     console.log(animalStatusChangeRequest);
     console.log(animalStatusChangeRequest);
+    this.setState({newValue: animalStatusChangeRequest});
 
     let body = {
       newAnimalStatus: animalStatusChangeRequest,
@@ -58,6 +58,30 @@ export default class AnimalStatusChangeScreen extends React.Component {
               );
             })}
           </Picker>
+          
+          <Button
+            style={styles.button}
+            color="#ABE009"
+            mode="contained"
+            disabled={!this.state.newValue}
+            dark={true}
+            onPress={() =>
+              Alert.alert(
+                'Confirmación',
+                'El estado del animal ha sido modificado con éxito',
+                [
+                  {
+                    text: 'Ok',
+                    onPress: () =>
+                      this.props.navigation.navigate('MyAnimalsScreen'),
+                  },
+                ],
+                {cancelable: false},
+              )
+            }>
+            {' '}
+            Enviar{' '}
+          </Button>
         </View>
       </>
     );
@@ -71,20 +95,5 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 24,
-  },
-  searchableDropdown: {
-    padding: 10,
-    marginTop: 2,
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  textInputSearchable: {
-    padding: 12,
-    borderWidth: 1,
-    borderRadius: 5,
-    marginTop: 5,
-  },
-  cameraButton: {
-    marginTop: 12,
   },
 });

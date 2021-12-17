@@ -5,7 +5,8 @@ import {addAnimal} from '../client/UsersApi';
 import { DrawerActions } from '@react-navigation/native';
 var SecurityUtils = require('../utils/SecurityUtils');
 import {ScrollView} from 'react-native-gesture-handler';
-import {Appbar} from 'react-native-paper';
+import HeaderAppbar from '../components/HeaderAppbar';
+
 export default class CreateAnimalScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -16,9 +17,7 @@ export default class CreateAnimalScreen extends React.Component {
   render() {
     return (
       <>
-       <Appbar style={styles.barra}>
-            <Text style={styles.logo}>SavePet</Text>
-        </Appbar>
+       <HeaderAppbar/>
       <View style={styles.background}>
         <View style={styles.container} behavior="padding">
           <Text style={styles.text}>Nuevo animal</Text>
@@ -57,12 +56,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
   },
   text: {
-    fontFamily: 'OpenSans-Bold',
-    fontSize: 20,
-    marginTop: 5,
-  },
-  image: {
-    width: 100,
-    height: 100,
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 25,
+    marginBottom: 15,
   },
 });

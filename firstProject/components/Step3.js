@@ -58,19 +58,20 @@ export default class Step3 extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center'
+    //textAlign: 'center',
+    //alignItems: 'center',
+    //justifyContent: 'center'
   },
   button: {
     marginTop: 24,
   },
   text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#F05524',
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
     fontSize: 18,
-    marginTop: 5,
-    paddingLeft:10,
+    alignContent: 'center',
+    marginBottom: 5,
+    marginTop: 20,
   },
   searchableDropdown: {
     padding: 10,
@@ -86,12 +87,13 @@ const styles = StyleSheet.create({
   },
   cameraButton: {
     backgroundColor: '#ABE009',
-    marginVertical: '5%',
+    marginVertical: '2%',
     height: 40,
     width: '80%',
-    justifyContent:'center',
-    alignItems:'center',
-    borderRadius: 5
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    marginLeft: 25,
   },
   textStyle: {
       fontSize: 18,

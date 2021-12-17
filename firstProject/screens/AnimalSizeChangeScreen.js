@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {modifyAnimalSize} from '../client/AnimalApi';
 import {sizeOption} from '../constants/DropdownOption';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image, Alert} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {TextInput, Button, HelperText} from 'react-native-paper';
 import HeaderAppbar from '../components/HeaderAppbar';
@@ -13,7 +13,7 @@ export default class AnimalSizeChangeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      size: '',
+      newValue: '',
     };
     this.changeAnimalSize = this.changeAnimalSize.bind(this);
   }
@@ -27,6 +27,7 @@ export default class AnimalSizeChangeScreen extends React.Component {
   changeAnimalSize(animalSizeChangeRequest) {
     console.log(animalSizeChangeRequest);
     console.log(animalSizeChangeRequest);
+    this.setState({newValue: animalSizeChangeRequest});
 
     let body = {
       newAnimalSize: animalSizeChangeRequest,
@@ -45,10 +46,8 @@ export default class AnimalSizeChangeScreen extends React.Component {
       <>
         <HeaderAppbar />
         <View style={styles.container}>
-          <Text style={styles.text}>Estado : </Text>
-
           <Picker
-            selectedValue={this.props.route.params.statsize}
+            selectedValue={this.props.route.params.size}
             onValueChange={this.changeAnimalSize}>
             {sizeOption.map(size => {
               return (
@@ -60,6 +59,29 @@ export default class AnimalSizeChangeScreen extends React.Component {
               );
             })}
           </Picker>
+          <Button
+            style={styles.button}
+            color="#ABE009"
+            mode="contained"
+            disabled={!this.state.newValue}
+            dark={true}
+            onPress={() =>
+              Alert.alert(
+                'Confirmación',
+                'El estado del animal ha sido modificado con éxito',
+                [
+                  {
+                    text: 'Ok',
+                    onPress: () =>
+                      this.props.navigation.navigate('MyAnimalsScreen'),
+                  },
+                ],
+                {cancelable: false},
+              )
+            }>
+            {' '}
+            Enviar{' '}
+          </Button>
         </View>
       </>
     );
@@ -70,30 +92,9 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     marginVertical: 12,
-  },
-  text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#F05524',
-    fontSize: 15,
-    marginTop: 5,
-    paddingLeft: 10,
+    marginTop: 15,
   },
   button: {
     marginTop: 24,
-  },
-  searchableDropdown: {
-    padding: 10,
-    marginTop: 2,
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  textInputSearchable: {
-    padding: 12,
-    borderWidth: 1,
-    borderRadius: 5,
-    marginTop: 5,
-  },
-  cameraButton: {
-    marginTop: 12,
   },
 });
