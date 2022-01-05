@@ -14,7 +14,7 @@ export default class Step1 extends React.Component {
    
     this.state = {
       name: '',
-      age: '',
+      age: undefined,
       };
   }
 

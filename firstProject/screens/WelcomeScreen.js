@@ -15,19 +15,20 @@ export default class WelcomeScreen extends React.Component {
         <View style={{justifyContent: 'center', marginTop: 200}}>
           <Text
             style={{
-              fontFamily: 'Pacifico-Regular',
+              fontFamily: 'RobotoSlab-Regular',
               color: '#F5C401',
               fontSize: 70,
             }}>
             Save
             <Text
               style={{
-                color: '#A7E009',
+                color: '#ABE009',
+                fontFamily: 'RobotoSlab-Regular',
               }}>
               Pet
             </Text>
           </Text>
-       
+
           <Button
             style={styles.button}
             mode="contained"
@@ -35,7 +36,7 @@ export default class WelcomeScreen extends React.Component {
             onPress={() => {
               this.props.navigation.navigate('LoginScreen');
             }}
-            color="#A7E009">
+            color="#ABE009">
             Iniciar Sesión
           </Button>
           <Button
@@ -57,5 +58,6 @@ export default class WelcomeScreen extends React.Component {
 const styles = StyleSheet.create({
   button: {
     marginTop: 15,
+    fontFamily: 'RobotoSlab-Regular',
   },
 });

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 var SecurityUtils = require('../utils/SecurityUtils.js');
-
+import Icon from 'react-native-vector-icons/Ionicons';
 import {TextInput, Button, HelperText} from 'react-native-paper';
 import Camera from '../components/Camera';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
@@ -32,44 +32,54 @@ export default class LostAnimalForm extends React.Component {
     return (
       <View style={styles.container}>
         <TextInput
+          multiline={true}
           label="Introduzca aquí la descripción"
+          selectionColor="black"
+          activeOutlineColor="black"
           value={this.props.description}
           onChangeText={newDescription =>
             this.props.onDescriptionChange(newDescription)
           }
         />
-        <TouchableOpacity
-          style={styles.cameraButton}
-          mode="contained"
-          dark={true}
-          onPress={() => {
-            launchCamera(launchCameraOptions, response => {
-              if (!response.didCancel) {
-                this.props.onImageChange(response.assets[0].base64);
-              }
-            });
-          }}>
-          <Text style={styles.textStyle}> Camara</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.cameraButton}
-          mode="contained"
-          dark={true}
-          onPress={() => {
-            launchImageLibrary(launchCameraOptions, response => {
-              if (!response.didCancel) {
-                this.props.onImageChange(response.assets[0].base64);
-              }
-            });
-          }}>
-          <Text style={styles.textStyle}> Galería </Text>
-        </TouchableOpacity>
+        <View style={styles.icons}>
+          <TouchableOpacity
+            onPress={() => {
+              launchCamera(launchCameraOptions, response => {
+                if (!response.didCancel) {
+                  this.props.onImageChange(response.assets[0].base64);
+                }
+              });
+            }}>
+            <Icon size={50} name="camera-outline"></Icon>
+            <Text style={styles.text}> Cámara </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              launchImageLibrary(launchCameraOptions, response => {
+                if (!response.didCancel) {
+                  this.props.onImageChange(response.assets[0].base64);
+                }
+              });
+            }}>
+            <Icon size={50} name="images-outline"></Icon>
+            <Text style={styles.text}> Galería </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  icons: {
+    marginVertical: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  icon: {
+    width: 50,
+    height: 50,
+  },
   container: {
     width: '100%',
     marginVertical: 12,
@@ -89,16 +99,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 5,
   },
-
+  ImageIconStyle: {
+    width: 20,
+    height: 20,
+  },
   button: {
     marginTop: 24,
   },
   text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#F05524',
-    fontSize: 18,
-    marginTop: 5,
-    paddingLeft: 10,
+    fontFamily: 'RobotoSlab-Regular',
+    color: 'black',
+    fontSize: 15,
   },
   searchableDropdown: {
     padding: 10,

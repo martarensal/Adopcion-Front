@@ -1,61 +1,66 @@
-import React, { Fragment, useState } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
-import { TextInput, Button, HelperText } from 'react-native-paper';
-import FormManager from "./FormManager";
+import React, {Fragment, useState} from 'react';
+import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import {TextInput, Button, HelperText} from 'react-native-paper';
+import FormManager from './FormManager';
 import Camera from '../components/Camera';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker'
+import Icon from 'react-native-vector-icons/Ionicons';
+
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 var validate = require('validate.js');
 
 const launchCameraOptions = {
-        includeBase64: true
-}
+  includeBase64: true,
+};
 
 export default class Step3 extends React.Component {
-  
   constructor(props) {
     super(props);
   }
 
-  render(){
-      return (
-        <View style ={ styles.container}>
-            <Text style={styles.text}>Añade una foto del animal :  </Text>
-
-            <TouchableOpacity style = {styles.cameraButton}
-                    mode="contained"
-                    dark={true}
-                    onPress={() =>{
-                        launchCamera(launchCameraOptions,(response) => 
-                        {
-                          if(!response.didCancel){
-                             FormManager.getFormManager().setField('image', response.assets[0].base64)
-                          }
-                        })
-                    }
-                     }>
-                   <Text style={styles.textStyle}> Camara</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style = {styles.cameraButton}
-                    mode="contained"
-                    dark={true}
-                    onPress={() =>{
-                       launchImageLibrary(launchCameraOptions,(response) => 
-                       {
-                         if(!response.didCancel){
-                           FormManager.getFormManager().setField('image', response.assets[0].base64)
-                         }
-                       })
-                    }
-                    }>
-                    <Text style={styles.textStyle}> Galería </Text>
-                </TouchableOpacity>
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Añade una foto del animal </Text>
+        <View style={styles.icons}>
+          <TouchableOpacity
+            onPress={() => {
+              launchCamera(launchCameraOptions, response => {
+                if (!response.didCancel) {
+                  this.props.onImageChange(response.assets[0].base64);
+                }
+              });
+            }}>
+            <Icon size={50} color="#575757" name="camera-outline"></Icon>
+            <Text style={styles.text}> Cámara </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              launchImageLibrary(launchCameraOptions, response => {
+                if (!response.didCancel) {
+                  this.props.onImageChange(response.assets[0].base64);
+                }
+              });
+            }}>
+            <Icon size={50} color="#575757" name="images-outline"></Icon>
+            <Text style={styles.text}> Galería </Text>
+          </TouchableOpacity>
         </View>
-      )
-    }
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
+  icons: {
+    marginVertical: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  icon: {
+    width: 50,
+    height: 50,
+  },
   container: {
     width: '100%',
     //textAlign: 'center',
@@ -68,10 +73,18 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
-    fontSize: 18,
+    fontSize: 15,
     alignContent: 'center',
     marginBottom: 5,
-    marginTop: 20,
+  },
+  title: {
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 15,
+    alignContent: 'center',
+    marginBottom: 5,
+    marginLeft: 60,
+    marginVertical: 20,
   },
   searchableDropdown: {
     padding: 10,
@@ -96,7 +109,6 @@ const styles = StyleSheet.create({
     marginLeft: 25,
   },
   textStyle: {
-      fontSize: 18,
-  }
+    fontSize: 18,
+  },
 });
-

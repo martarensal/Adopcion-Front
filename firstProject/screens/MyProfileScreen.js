@@ -61,63 +61,61 @@ export default class MyProfileScreen extends Component {
             />
             <Text style={styles.logo}>SavePet</Text>
           </Appbar>
-            <View style={styles.container}>
-              <Text style={styles.informativeText}>
-                Información de mi cuenta
-              </Text>
-              <List.Item
-                title="Nombre de usuario"
-                description={this.state.user.username}
-                onPress={() => {
-                  this.props.navigation.navigate('UsernameChangeScreen', {
-                    username: this.state.user.username,
-                  });
-                }}
-              />
-              <List.Item
-                title="Nombre"
-                description={this.state.user.name}
-                onPress={() => {
-                  this.props.navigation.navigate('NameChangeScreen', {
-                    name: this.state.user.name,
-                  });
-                }}
-              />
-              <List.Item
-                title="Apellidos"
-                description={this.state.user.lastnames}
-                onPress={() => {
-                  this.props.navigation.navigate('LastnamesChangeScreen', {
-                    lastnames: this.state.user.lastnames,
-                  });
-                }}
-              />
-              <List.Item
-                title="Email"
-                description={this.state.user.email}
-                onPress={() => {
-                  this.props.navigation.navigate('EmailChangeScreen', {
-                    email: this.state.user.email,
-                  });
-                }}
-              />
-              <List.Item
-                title="Teléfono"
-                description={this.state.user.phone}
-                onPress={() => {
-                  this.props.navigation.navigate('PhoneChangeScreen', {
-                    phone: this.state.user.phone,
-                  });
-                }}
-              />
-              <List.Item
-                title="Contraseña"
-                description="***********"
-                onPress={() => {
-                  this.props.navigation.navigate('PasswordChangeScreen');
-                }}
-              />
-            </View>
+          <Text style={styles.informativeText}>Información de mi cuenta</Text>
+          <View style={styles.container}>
+            <List.Item
+              title="Nombre de usuario"
+              description={this.state.user.username}
+              onPress={() => {
+                this.props.navigation.navigate('UsernameChangeScreen', {
+                  username: this.state.user.username,
+                });
+              }}
+            />
+            <List.Item
+              title="Nombre"
+              description={this.state.user.name}
+              onPress={() => {
+                this.props.navigation.navigate('NameChangeScreen', {
+                  name: this.state.user.name,
+                });
+              }}
+            />
+            <List.Item
+              title="Apellidos"
+              description={this.state.user.lastnames}
+              onPress={() => {
+                this.props.navigation.navigate('LastnamesChangeScreen', {
+                  lastnames: this.state.user.lastnames,
+                });
+              }}
+            />
+            <List.Item
+              title="Email"
+              description={this.state.user.email}
+              onPress={() => {
+                this.props.navigation.navigate('EmailChangeScreen', {
+                  email: this.state.user.email,
+                });
+              }}
+            />
+            <List.Item
+              title="Teléfono"
+              description={this.state.user.phone}
+              onPress={() => {
+                this.props.navigation.navigate('PhoneChangeScreen', {
+                  phone: this.state.user.phone,
+                });
+              }}
+            />
+            <List.Item
+              title="Contraseña"
+              description="***********"
+              onPress={() => {
+                this.props.navigation.navigate('PasswordChangeScreen');
+              }}
+            />
+          </View>
         </>
       );
     }
@@ -147,5 +145,6 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginBottom: 15,
     marginTop: 20,
+    textAlign: 'center',
   },
 });

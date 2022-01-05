@@ -25,7 +25,7 @@ export default class RegistrationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      phone:'',
+      phone: '',
       email: '',
       role: 'ROLE_USER',
       lastnames: '',

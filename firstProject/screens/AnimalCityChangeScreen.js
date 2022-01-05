@@ -9,7 +9,6 @@ import {
   getCityFromProvince,
 } from '../client/CityApi';
 import HeaderAppbar from '../components/HeaderAppbar';
-
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
 

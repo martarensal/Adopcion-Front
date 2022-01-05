@@ -28,6 +28,7 @@ import {
 } from '../client/CityApi';
 
 import LoadingIndicator from '../components/LoadingIndicator';
+import HeaderAppbar from '../components/HeaderAppbar';
 
 var SecurityUtils = require('../utils/SecurityUtils');
 
@@ -109,6 +110,8 @@ export default class NewSearchAnimalScreen extends Component {
       autonomousCommunity: undefined,
       provinces: [],
       cities: [],
+      types: [],
+
     };
 
     this.setSections = this.setSections.bind(this);
@@ -157,7 +160,6 @@ export default class NewSearchAnimalScreen extends Component {
   }
 
   getProvincesFromAC = () => {
-    console.log('hola');
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi(
         [this.state.autonomousCommunity],
@@ -324,9 +326,7 @@ export default class NewSearchAnimalScreen extends Component {
     else
       return (
         <>
-         <Appbar style={styles.barra}>
-            <Text style={styles.logo}>SavePet</Text>
-        </Appbar>
+         <HeaderAppbar/>
         <View style={styles.container}>
           <ScrollView contentContainerStyle={{paddingTop: 30}}>
             <Text style={styles.title}>Filtros</Text>
@@ -348,9 +348,11 @@ export default class NewSearchAnimalScreen extends Component {
               renderAsFlatList={false}
             />
             <Button
-              style={styles.button}
-              mode="contained"
-              dark={true}
+            style={styles.button}
+               dark={true}
+                mode='contained'
+                color='#F5C401'
+
               onPress={this.callSearchAnimals}>
               Buscar
             </Button>
@@ -375,13 +377,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    color:'#D99748',
+    width: '80%',
+    marginLeft: 40,
+    justifyContent: 'flex-end',
   },
   barra: {
     backgroundColor: '#E67E00',
   },
   logo: {
-    fontFamily: 'Butler_Light',
+    fontFamily: 'RobotoSlab-Regular',
     color: 'white',
     fontSize: 25,
     marginLeft: 14,
@@ -392,7 +396,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '300',
     marginBottom: 20,
-        fontFamily: 'RobotoSlab-Regular',
+    fontFamily: 'RobotoSlab-Regular',
 
   },
   header: {
@@ -408,6 +412,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     flexDirection: 'row',
     justifyContent: 'center',
+    fontFamily: 'RobotoSlab-Regular',
+
   },
   selector: {
     padding: 10,

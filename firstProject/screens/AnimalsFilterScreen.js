@@ -11,6 +11,7 @@ import {Appbar, FAB, Card, Button} from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DrawerActions} from '@react-navigation/native';
+import HeaderAppbar from '../components/HeaderAppbar';
 var SecurityUtils = require('../utils/SecurityUtils');
 
 var SecurityUtils = require('../utils/SecurityUtils');
@@ -38,21 +39,12 @@ export default class AnimalsFilterScreen extends React.Component {
       paginationInfo: this.props.route.params.response.paginationInfo,
       loading: false,
     });
-    //console.log(this.state.animals)
   }
 
   render() {
     return (
       <>
-        <Appbar style={styles.barra}>
-          <Appbar.Action
-            icon="menu"
-            onPress={() =>
-              this.props.navigation.dispatch(DrawerActions.openDrawer())
-            }
-          />
-          <Text style={styles.logo}>SavePet</Text>
-        </Appbar>
+        <HeaderAppbar/>
         <View style={styles.background}>
           <ScrollView style={styles.background}>
             <View style={styles.container}>
@@ -103,8 +95,8 @@ export default class AnimalsFilterScreen extends React.Component {
                       )}
                     />
 
-                    <Card.Actions>
-                      <Button
+                    <Card.Actions style={styles.button}>
+                      <Button 
                         onPress={() =>
                           this.props.navigation.navigate('AnimalDetailScreen', {
                             animal: animal,
@@ -128,8 +120,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginLeft: 35,
   },
   barra: {
     backgroundColor: '#E67E00',
@@ -151,9 +142,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
   },
   text: {
-    fontFamily: 'OpenSans-Bold',
-    fontSize: 20,
-    marginTop: 5,
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 25,
+    marginBottom: 15,
+
   },
   subtitle: {
     marginLeft: 30,
@@ -164,5 +157,8 @@ const styles = StyleSheet.create({
   title: {
     marginLeft: 30,
     fontSize: 20,
+  },
+  button: {
+    color:'#E67E00',
   },
 });

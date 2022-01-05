@@ -126,7 +126,7 @@ export default class FinalStep extends React.Component {
   render() {
   return (
       <View>
-      <Text style={styles.text}>Comunidad autonoma :  </Text>
+      <Text style={styles.text}>Selecciona la ubicación del animal </Text>
         <Picker selectedValue = {this.state.AC} onValueChange = {this.updateAC}  enabled={true}  onBlur={this.handleEnabledProvince}  >
          {
            this.state.ACs.map(AC => {
@@ -169,11 +169,11 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#F05524',
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
     fontSize: 15,
-    marginTop: 5,
-    paddingLeft:10,
+    alignContent: 'center',
+    marginVertical: 15,
   },
   button: {
     marginTop: 24,

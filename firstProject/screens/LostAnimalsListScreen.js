@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {Appbar, FAB, Card, Button} from 'react-native-paper';
+import {Appbar, FAB, Card, Button, Divider} from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DrawerActions} from '@react-navigation/native';
@@ -41,22 +41,13 @@ export default class LostAnimalsListScreen extends React.Component {
   }
 
   fetchPublications() {
-    //if (this.state.page === 0) this.setState({loading: true});
     SecurityUtils.authorizeApi([0, 25], getPaginatedPublications).then(
       this.handleGetPublicationResponse.bind(this),
     );
   }
 
-  componentDidMount() {
-    /*this.setState({
-      publications: this.state.publications.concat(
-        this.props.route.params.response.pages,
-      ),
-      paginationInfo: this.props.route.params.response.paginationInfo,
-      loading: false,
-    });*/
+  componentDidMount() { 
     this.fetchPublications();
-    //this.state.publications.map(publication => this.setState({publication.publicationDate: publication.publicationDate})
   }
 
   render() {
@@ -71,45 +62,60 @@ export default class LostAnimalsListScreen extends React.Component {
           />
           <Text style={styles.logo}>SavePet</Text>
         </Appbar>
-        <View style={styles.background}>
-        {this.state.publications.map(publication => {
-          return (
-                  <Card key={publication.image}>
-                    <Card.Title
-                      title={publication.publicationDate/*.toISOString().substring(0, '####-##-##'.length)*/}
-                      titleStyle={styles.title}
-                      subtitle={
-                        'Descripcion: ' +
-                        publication.description 
-                      }
-                      subtitleStyle={styles.subtitle}
-                      left={() => (
-                        <Image
-                          style={{
-                            width: this.state.width,
-                            height: this.state.height,
-                            borderRadius: 5,
-                          }}
-                          source={{uri: this.state.base64 + publication.image}}
-                        />
-                      )}
-                    />
-                  </Card>
-                );
-              })
-              }
-        </View>
+        <ScrollView style={styles.background}>
+          <Text style={styles.title}> Animales perdidos</Text>
+          <View style={styles.container}>
+            {this.state.publications.map(publication => {
+              return (
+                <Card  key={publication.id}>
+                  <Divider style={styles.divider} />
+                 
+                  <Card.Title
+                  style={styles.cardStyle}
+
+                    title={
+                      publication.publicationDate /*.toISOString().substring(0, '####-##-##'.length)*/
+                    }
+                    titleStyle={styles.title}
+                    subtitle={publication.description}
+                  
+                    subtitleStyle={styles.subtitle}
+                    left={() => (
+                      <Image
+                        style={{
+                          width: this.state.width,
+                          height: this.state.height,
+                          borderRadius: 5,
+                        }}
+                        source={{uri: this.state.base64 + publication.image}}
+                      />
+                    )}
+                  />
+                </Card>
+              );
+            })}
+          </View>
+        </ScrollView>
       </>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  cardStyle:{
+    marginBottom: 60,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginLeft: 25,
+    backgroundColor: '#fafafa',
+  },
+  background: {
+    flex: 1,
+    backgroundColor: '#fafafa',
+  },
+  divider: {
+    marginBottom: 40,
   },
   barra: {
     backgroundColor: '#E67E00',
@@ -137,12 +143,22 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginLeft: 30,
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
     fontSize: 15,
-    alignContent: 'center',
-    alignItems: 'center',
   },
-  title: {
+  
+      title: {
     marginLeft: 30,
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
     fontSize: 20,
+  },
+
+    image: {
+    width: 30,
+    height: 30,
+    marginRight: 10,
+    marginTop: 30,
   },
 });

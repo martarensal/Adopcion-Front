@@ -103,20 +103,6 @@ export default class AnimalCreationForm extends React.Component {
     this.fetchUserData.bind(this)
   }
   
-  renderHelperText(fieldName) {
-    if (this.state[fieldName].length > 0) {
-      let validationResult = validate.single(
-        this.state[fieldName],
-      );
-      if (validationResult !== undefined) {
-        return (
-          <HelperText type="error" padding="none">
-            {validationResult[0]}
-          </HelperText>
-        );
-      }
-    }
-  }
   
   render(){
     return( 
@@ -211,7 +197,7 @@ export default class AnimalCreationForm extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+   width: '100%',
     marginVertical: 12,
   },
   button: {

@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import RegistrationForm from '../components/RegistrationForm';
-import Header from '../components/Header';
 import ErrorText from '../components/ErrorText';
 import {addUser} from '../client/UsersApi';
+import HeaderAppbar from '../components/HeaderAppbar'
 
 export default class RegistrationScreen extends React.Component {
   constructor(props) {
@@ -30,8 +30,10 @@ export default class RegistrationScreen extends React.Component {
 
   render() {
     return (
+      <>
+      <HeaderAppbar />
       <View style={styles.registrationScreen} behavior="padding">
-        <Header>Registro</Header>
+        <Text style={styles.header}>Registro</Text>
         {this.state.isErrorVisible ? (
           <ErrorText>El usuario o el correo electrónico ya está en uso</ErrorText>
         ) : (
@@ -46,6 +48,7 @@ export default class RegistrationScreen extends React.Component {
           </TouchableOpacity>
         </View>
       </View>
+      </>
     );
   }
 }
@@ -63,7 +66,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#F3F3F3',
   },
   header:{
-    color:'#F5C401'
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 25,
+    marginBottom: 15,
   },
   label: {
     color: '#525252',
@@ -74,6 +80,6 @@ const styles = StyleSheet.create({
   },
   link: {
     fontWeight: 'bold',
-    color: '#A7E009',
+    color: '#E67E00',
   },
 });

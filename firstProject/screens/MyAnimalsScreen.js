@@ -51,11 +51,6 @@ export default class MyAnimalsScreen extends React.Component {
       this.handleDeteleAnimalResponse,
     );
   }
-  showMoreAnimals() {
-    this.setState({page: this.state.page + 1}, () =>
-      this.fetchUserDataWithAnimals(),
-    );
-  }
 
   handleGetAnimalsResponse(response) {
     response.json().then(data =>
@@ -106,93 +101,95 @@ export default class MyAnimalsScreen extends React.Component {
           />
           <Text style={styles.logo}>SavePet</Text>
         </Appbar>
-
-        <ScrollView style={styles.container}>
-          {this.state.animals[0] === undefined ? (
-            <>
-              <View style={styles.container}>
-                <Text style={styles.label}>
-                  Parece que no has añadido ningún animal aún
-                </Text>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate('CreateAnimalScreen', {
-                      username: this.state.user.username,
-                    })
-                  }>
-                  <Text style={styles.link}>
-                    ¿Quieres añadir un animal ahora?
+        
+        <ScrollView style={styles.background}>
+          <Text style={styles.title}> Tus animales</Text>
+          <View style={styles.container}>
+            {this.state.animals[0] === undefined ? (
+              <>
+                <View style={styles.container}>
+                  <Text style={styles.label}>
+                    Parece que no has añadido ningún animal aún
                   </Text>
-                </TouchableOpacity>
-              </View>
-            </>
-          ) : (
-            this.state.animals.map(animal => {
-              return (
-                <Card key={animal.id}>
-                  <Divider style={styles.divider} />
-                  <Card.Title
-                    title={animal.name}
-                    titleStyle={styles.title}
-                    subtitle={
-                      'Sexo: ' +
-                      animal.sex +
-                      '\n' +
-                      ' Edad: ' +
-                      animal.age +
-                      ' Ciudad: ' +
-                      animal.city
-                    }
-                    subtitleStyle={styles.subtitle}
-                    left={() => (
-                      <Image
-                        style={{
-                          width: this.state.width,
-                          height: this.state.height,
-                          borderRadius: 5,
-                        }}
-                        source={{uri: this.state.base64 + animal.image}}
-                      />
-                    )}
-                  />
+                  <TouchableOpacity
+                    onPress={() =>
+                      this.props.navigation.navigate('CreateAnimalScreen', {
+                        username: this.state.user.username,
+                      })
+                    }>
+                    <Text style={styles.link}>
+                      ¿Quieres añadir un animal ahora?
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            ) : (
+              this.state.animals.map(animal => {
+                return (
+                  <Card key={animal.id}>
+                    <Card.Title
+                      title={animal.name}
+                      titleStyle={styles.name}
+                      subtitle={
+                        'Sexo: ' +
+                        animal.sex +
+                        '\n' +
+                        ' Edad: ' +
+                        animal.age +
+                        ' Ciudad: ' +
+                        animal.city
+                      }
+                      subtitleStyle={styles.subtitle}
+                      left={() => (
+                        <Image
+                          style={{
+                            width: this.state.width,
+                            height: this.state.height,
+                            borderRadius: 5,
+                          }}
+                          source={{uri: this.state.base64 + animal.image}}
+                        />
+                      )}
+                    />
 
-                  <Card.Actions>
-                    <Button
-                      color="#E67E00"
-                      onPress={() =>
-                        this.props.navigation.navigate('EditAnimalScreen', {
-                          animal: animal,
-                        })
-                      }>
-                      Editar
-                    </Button>
-                    <Button
-                      color="red"
-                      onPress={() =>
-                        Alert.alert(
-                          'Confirmación',
-                          '¿Está seguro de que quiere borrar el animal? Los animales eliminados no pueden recuperarse.',
-                          [
-                            {
-                              text: 'Cancelar',
-                              onPress: () => console.log('Cancel Pressed'),
-                              style: 'cancel',
-                            },
-                            {
-                              text: 'Si, estoy seguro',
-                              onPress: () => this.deleteAnimal(animal.id),
-                            },
-                          ],
-                          {cancelable: false},
-                        )
-                      }>
-                      Eliminar
-                    </Button>
-                  </Card.Actions>
-                </Card>
-              );
-            })
-          )}
+                    <Card.Actions>
+                      <Button
+                        color="#E67E00"
+                        onPress={() =>
+                          this.props.navigation.navigate('EditAnimalScreen', {
+                            animal: animal,
+                          })
+                        }>
+                        Editar
+                      </Button>
+                      <Button
+                        color="red"
+                        onPress={() =>
+                          Alert.alert(
+                            'Confirmación',
+                            '¿Está seguro de que quiere borrar el animal? Los animales eliminados no pueden recuperarse.',
+                            [
+                              {
+                                text: 'Cancelar',
+                                onPress: () => console.log('Cancel Pressed'),
+                                style: 'cancel',
+                              },
+                              {
+                                text: 'Si, estoy seguro',
+                                onPress: () => this.deleteAnimal(animal.id),
+                              },
+                            ],
+                            {cancelable: false},
+                          )
+                        }>
+                        Eliminar
+                      </Button>
+                    </Card.Actions>
+                  </Card>
+                );
+              })
+            )}
+          </View>
         </ScrollView>
       </>
     );
@@ -202,7 +199,11 @@ export default class MyAnimalsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
+    backgroundColor: 'white',
+  },
+  background: {
+    flex: 1,
+    backgroundColor: 'white',
   },
   divider: {
     marginBottom: 20,
@@ -218,12 +219,23 @@ const styles = StyleSheet.create({
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 15,
+    justifyContent: 'flex-end',
   },
   title: {
-    marginLeft: 30,
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
-    fontSize: 20,
+    fontSize: 22,
+    marginBottom: 15,
+    marginTop: 20,
+    textAlign: 'center',
+  },
+  name: {
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 22,
+    marginLeft: 30,
+    marginBottom: 15,
+    marginTop: 20,
   },
   barra: {
     backgroundColor: '#E67E00',

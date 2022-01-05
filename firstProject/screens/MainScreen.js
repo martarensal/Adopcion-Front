@@ -171,14 +171,11 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
   },
-  button: {
-    color:'#D99748',
-  },
   barra: {
     backgroundColor: '#E67E00',
   },
   logo: {
-    fontFamily: 'Butler_Light',
+    fontFamily: 'RobotoSlab-Regular',
     color: 'white',
     fontSize: 25,
     marginLeft: 14,
@@ -205,9 +202,10 @@ const styles = StyleSheet.create({
   },
   button:{
     marginBottom:15,
+    color:'#D99748',
+
   },
   buttons: {
-    //flexDirection: 'row',
     justifyContent: 'space-evenly',
   },
 });
