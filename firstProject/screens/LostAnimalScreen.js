@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image, Alert} from 'react-native';
 import LostAnimalForm from '../components/LostAnimalForm';
 import {DrawerActions} from '@react-navigation/native';
 import {addPublication} from '../client/AnimalApi';
@@ -31,6 +31,19 @@ export default class LostAnimalScreen extends React.Component {
   }
   handleCreateNewPublicationResponse(response) {
     if (response.ok) {
+      Alert.alert(
+                'Confirmación',
+                'La publicación del animal perdido ha sido creada',
+                [
+                  {
+                    text: 'Ok',
+                    onPress: () =>
+                      this.props.navigation.navigate('LostAnimalsListScreen'),
+                  },
+                ],
+                {cancelable: false},
+              )
+      
       console.log(JSON.stringify(response));
       console.log('Publicacion creada');
     } else {
@@ -38,9 +51,7 @@ export default class LostAnimalScreen extends React.Component {
       this.setState({isErrorVisible: true});
     }
   }
-  componentDidMount() {
-    //console.log(this.state.date.toISOString().substring(0, '####-##-##'.length))
-  }
+
   render() {
     return (
       <>
@@ -54,8 +65,9 @@ export default class LostAnimalScreen extends React.Component {
             />
             <Text style={styles.logo}>SavePet</Text>
           </Appbar>
+          <Text style={styles.text}>Animal perdido</Text>
+
           <View style={styles.container}>
-            <Text style={styles.text}>Animal perdido</Text>
             <LostAnimalForm
               description={this.state.description}
               image={this.state.image}
@@ -92,15 +104,17 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 25,
+    padding: 20,
     width: '100%',
-    backgroundColor: '#FFFFFF',
+    maxWidth: 340,
     alignSelf: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
+    //justifyContent: 'center',
+    backgroundColor: 'white',
   },
   background: {
     flex: 1,
+    backgroundColor: 'white',
   },
   text: {
     fontFamily: 'RobotoSlab-Regular',
@@ -112,6 +126,6 @@ const styles = StyleSheet.create({
   },
   button: {
     marginBottom: 15,
-    width: '80%',
+    width: '100%',
   },
 });

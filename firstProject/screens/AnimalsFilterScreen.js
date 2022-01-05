@@ -44,11 +44,10 @@ export default class AnimalsFilterScreen extends React.Component {
   render() {
     return (
       <>
-        <HeaderAppbar/>
-        <View style={styles.background}>
+        <HeaderAppbar />
           <ScrollView style={styles.background}>
             <View style={styles.container}>
-              <Text style={styles.text}>Animales disponibles</Text>
+              <Text style={styles.title}>Animales disponibles</Text>
             </View>
             {this.state.animals[0] === undefined ? (
               <>
@@ -69,10 +68,10 @@ export default class AnimalsFilterScreen extends React.Component {
             ) : (
               this.state.animals.map(animal => {
                 return (
-                  <Card key={animal.id}>
+                  <Card style={styles.card}key={animal.id}>
                     <Card.Title
                       title={animal.name}
-                      titleStyle={styles.title}
+                      titleStyle={styles.text}
                       subtitle={
                         'Sexo: ' +
                         animal.sex +
@@ -96,7 +95,8 @@ export default class AnimalsFilterScreen extends React.Component {
                     />
 
                     <Card.Actions style={styles.button}>
-                      <Button 
+                      <Button
+                        color="#E67E00"
                         onPress={() =>
                           this.props.navigation.navigate('AnimalDetailScreen', {
                             animal: animal,
@@ -110,17 +110,18 @@ export default class AnimalsFilterScreen extends React.Component {
               })
             )}
           </ScrollView>
-        </View>
       </>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  card:{
+    marginBottom: 20,
+  },
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    marginLeft: 35,
   },
   barra: {
     backgroundColor: '#E67E00',
@@ -144,21 +145,26 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
-    fontSize: 25,
+    fontSize: 20,
     marginBottom: 15,
-
+    marginLeft: 40,
   },
   subtitle: {
-    marginLeft: 30,
+    marginLeft: 40,
     fontSize: 15,
     alignContent: 'center',
     alignItems: 'center',
   },
   title: {
-    marginLeft: 30,
-    fontSize: 20,
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 22,
+    marginBottom: 15,
+    marginTop: 20,
+    textAlign: 'center',
   },
   button: {
-    color:'#E67E00',
+    color: '#E67E00',
+    justifyContent: 'flex-end',
   },
 });

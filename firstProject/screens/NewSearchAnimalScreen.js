@@ -373,12 +373,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#FFFFFF',
   },
+  
   background: {
     flex: 1,
   },
   button: {
-    width: '80%',
-    marginLeft: 40,
+      marginBottom: 15,
+      marginVertical: 15,
+    width: '100%',
     justifyContent: 'flex-end',
   },
   barra: {
@@ -392,12 +394,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   title: {
-    textAlign: 'center',
-    fontSize: 25,
-    fontWeight: '300',
-    marginBottom: 20,
     fontFamily: 'RobotoSlab-Regular',
-
+    color: '#575757',
+    fontSize: 22,
+    marginBottom: 15,
+    marginTop: 20,
+    textAlign: 'center',
   },
   header: {
     padding: 10,

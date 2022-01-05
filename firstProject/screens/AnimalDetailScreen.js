@@ -11,56 +11,56 @@ import {
 import {List, Divider, Button} from 'react-native-paper';
 import {Appbar} from 'react-native-paper';
 import {DrawerActions} from '@react-navigation/native';
+import HeaderAppbar from '../components/HeaderAppbar';
 
 export default class AnimalDetailScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       base64: 'data:image/png;base64,',
-      width: 150,
-      height: 150,
     };
   }
 
   render() {
     return (
       <>
-        <Appbar style={styles.barra}>
-          <Text style={styles.logo}>SavePet</Text>
-        </Appbar>
+        <HeaderAppbar />
         <View style={styles.background}>
           <View style={styles.container}>
-            <Image
-              style={styles.image}
-              source={{
-                uri: this.state.base64 + this.props.route.params.animal.image,
-              }}
-            />
-            <Text> Nombre: {this.props.route.params.animal.name}</Text>
-            <Divider />
-            <Text> Edad: {this.props.route.params.animal.age}</Text>
-            <Divider />
-            <Text> Color: {this.props.route.params.animal.colour}</Text>
-            <Divider />
-
-            <Text> Ciudad: {this.props.route.params.animal.city}</Text>
-            <Divider />
-
-            <Text> Estado actual: {this.props.route.params.animal.status}</Text>
-            <Divider />
-            <Text> Tamaño: {this.props.route.params.animal.size}</Text>
-
-            <Text> ID usuario: {this.props.route.params.animal.user}</Text>
+           
+            <Text style={styles.title}> Información del animal</Text>
+            <View style={styles.layout}>
+             
+               <Image
+                style={styles.image}
+                source={{
+                  uri: this.state.base64 + this.props.route.params.animal.image,
+                }}
+              />
+              <View style={styles.text}>
+                <Text style={styles.text}> Nombre {this.props.route.params.animal.name}</Text>
+                <Text style={styles.text}>
+                  {' '}
+                  Estado actual {this.props.route.params.animal.status}
+                </Text>
+                <Text style={styles.text}> Ciudad {this.props.route.params.animal.city}</Text>
+                <Text style={styles.text}> Edad {this.props.route.params.animal.age}</Text>
+                <Text style={styles.text}> Color {this.props.route.params.animal.colour}</Text>
+                <Text style={styles.text}> Tamaño {this.props.route.params.animal.size}</Text>
+              </View>
+            </View>
           </View>
           <Button
             style={styles.button}
-            color="blue"
+            dark={true}
+            mode="contained"
+            color="#F5C401"
             onPress={() => {
               this.props.navigation.navigate('EmailScreen', {
                 user: this.props.route.params.animal.user,
               });
             }}>
-            Solicitar adopción
+            Solicitar
           </Button>
         </View>
       </>
@@ -69,38 +69,44 @@ export default class AnimalDetailScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  barra: {
-    backgroundColor: '#E67E00',
-  },
-  logo: {
-    fontFamily: 'Butler-Light',
-    color: 'white',
-    fontSize: 25,
-    marginLeft: 14,
-    alignSelf: 'center',
+  layout: {
+    flexDirection: 'row',
+    textAlign: 'left',
   },
   container: {
-    marginTop: 40,
-    marginHorizontal: 10,
     flex: 1,
-    padding: 20,
+    width: '100%',
+    //alignSelf: 'center',
+    alignItems: 'center',
+    //justifyContent: 'center',
+    backgroundColor: '#FFFFFF',
+  },
+  button: {
     width: '100%',
   },
   text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#69e000',
-    fontSize: 20,
-    marginTop: 5,
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 15,
+    marginVertical: 5,
+    marginLeft: 20,
   },
   background: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: 'white',
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 200,
+    height: 200,
     borderRadius: 5,
     //alignSelf: 'center',
     //alignItems: 'center',
+  },
+  title: {
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 22,
+    marginVertical: 15,
+    textAlign: 'center',
   },
 });

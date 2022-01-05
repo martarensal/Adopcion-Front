@@ -80,7 +80,7 @@ export default class Step1 extends React.Component {
   render(){
       return (
       <View style={styles.container}>
-        <Text style={styles.text}>Sexo :  </Text>
+        <Text style={styles.text}>Sexo   </Text>
 
          <Picker selectedValue = {this.state.sex} onValueChange = {this.updateSex}>
          
@@ -90,7 +90,7 @@ export default class Step1 extends React.Component {
            })
          }
         </Picker>
-        <Text style={styles.text}>Color :  </Text>
+        <Text style={styles.text}>Color   </Text>
 
         <Picker selectedValue = {this.state.colour} onValueChange = {this.updateColour}>
          {
@@ -101,7 +101,7 @@ export default class Step1 extends React.Component {
         </Picker>
       
 
-        <Text style={styles.text}>Tamaño :  </Text>
+        <Text style={styles.text}>Tamaño   </Text>
          <Picker selectedValue = {this.state.size} onValueChange = {this.updateSize}>
          {
            sizeOption.map(size => {
@@ -111,7 +111,7 @@ export default class Step1 extends React.Component {
          }
         </Picker>
         
-        <Text style={styles.text}>Tipo de animal :  </Text>
+        <Text style={styles.text}>Tipo de animal  </Text>
         <Picker selectedValue = {this.state.type} onValueChange = {this.updateType}>
          {
            this.state.types.map(type => {

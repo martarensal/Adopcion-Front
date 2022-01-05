@@ -20,7 +20,7 @@ export default class AnimalCityPicker extends React.Component {
   render() {
     return (
       <ScrollView>
-        <Text style={styles.text}>Comunidad autonoma : </Text>
+        <Text style={styles.text}>Comunidad autonoma </Text>
 
         <Picker
           selectedValue={this.props.autonomousCommunity}
@@ -41,7 +41,7 @@ export default class AnimalCityPicker extends React.Component {
           })}
         </Picker>
 
-        <Text style={styles.text}>Provincia : </Text>
+        <Text style={styles.text}>Provincia  </Text>
         <Picker
           selectedValue={this.props.province}
           onValueChange={this.props.onProvinceChange}>
@@ -60,7 +60,7 @@ export default class AnimalCityPicker extends React.Component {
             );
           })}
         </Picker>
-        <Text style={styles.text}>Ciudad: </Text>
+        <Text style={styles.text}>Ciudad </Text>
 
          <Picker
           selectedValue={this.props.city}
@@ -92,11 +92,11 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#F05524',
+      fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
     fontSize: 15,
-    marginTop: 5,
-    paddingLeft: 10,
+    alignContent: 'center',
+    marginVertical: 15,
   },
   button: {
     marginTop: 24,

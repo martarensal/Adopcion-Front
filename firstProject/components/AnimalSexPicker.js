@@ -14,7 +14,6 @@ export default class AnimalSexPicker extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Sexo : </Text>
         <Picker selectedValue={this.props.sex} onValueChange={newAnimalSex => this.props.onChange(newAnimalSex)}>
           {sexOption.map(sex => {
             return (
@@ -35,30 +34,5 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     marginVertical: 12,
-  },
-  text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#F05524',
-    fontSize: 15,
-    marginTop: 5,
-    paddingLeft: 10,
-  },
-  button: {
-    marginTop: 24,
-  },
-  searchableDropdown: {
-    padding: 10,
-    marginTop: 2,
-    borderWidth: 1,
-    borderRadius: 5,
-  },
-  textInputSearchable: {
-    padding: 12,
-    borderWidth: 1,
-    borderRadius: 5,
-    marginTop: 5,
-  },
-  cameraButton: {
-    marginTop: 12,
-  },
+  }
 });

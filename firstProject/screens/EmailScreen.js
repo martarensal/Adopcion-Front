@@ -7,38 +7,9 @@ import {Appbar} from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import RequestForm from '../components/RequestForm';
 import AnimalTypeRequestPicker from '../components/AnimalTypeRequestPicker';
+import HeaderAppbar from '../components/HeaderAppbar';
 
 var SecurityUtils = require('../utils/SecurityUtils.js');
-
-const styles = StyleSheet.create({
-  barra: {
-    backgroundColor: '#E67E00',
-  },
-  logo: {
-    fontFamily: 'Butler-Light',
-    color: 'white',
-    fontSize: 25,
-    marginLeft: 14,
-    alignSelf: 'center',
-  },
-  container: {
-    marginTop: 40,
-    marginHorizontal: 10,
-    flex: 1,
-    padding: 20,
-    width: '100%',
-  },
-  text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#69e000',
-    fontSize: 20,
-    marginTop: 5,
-  },
-  background: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-  },
-});
 
 export default class EmailScreen extends React.Component {
   constructor(props) {
@@ -48,9 +19,7 @@ export default class EmailScreen extends React.Component {
       phone: '',
       email: '',
       username: '',
-      to_name: 'James',
       message: '',
-      from_name: 'Marta',
       userOrigen: {},
       userDestination: {},
       emailDestination: '',
@@ -133,23 +102,22 @@ export default class EmailScreen extends React.Component {
   componentWillUnmount() {
     this._unsubscribe();
   }
-  requestType(){
-          console.log('hola')
-          console.log(this.state.type)
+  requestType() {
+    console.log(this.state.type);
 
-    if(this.state.type == 'shelter'){
-            <RequestForm
-                startDate={this.state.startDate}
-                onChange={startDate => {
-                  this.setState({
-                    startDate: startDate,
-                  }); /*console.log(startDate)*/
-                }}
-              />      
-               //falta enddate
-      }else {
-        console.log('ey')
-      }
+    if (this.state.type == 'shelter') {
+      <RequestForm
+        startDate={this.state.startDate}
+        onChange={startDate => {
+          this.setState({
+            startDate: startDate,
+          }); /*console.log(startDate)*/
+        }}
+      />;
+      //falta enddate
+    } else {
+      console.log('ey');
+    }
   }
 
   render() {
@@ -158,9 +126,7 @@ export default class EmailScreen extends React.Component {
     } else {
       return (
         <>
-          <Appbar style={styles.barra}>
-            <Text style={styles.logo}>SavePet</Text>
-          </Appbar>
+          <HeaderAppbar />
           <View style={styles.background}>
             <View style={styles.container}>
               <AnimalTypeRequestPicker
@@ -171,7 +137,8 @@ export default class EmailScreen extends React.Component {
               />
               {this.requestType()}
               <TextInput
-                label="Introduzca aquí la descripción"
+                multiline={true}
+                label="Pregunta algo sobre el animal"
                 value={this.state.message}
                 onChangeText={value => this.setState({message: value})}
               />
@@ -191,8 +158,9 @@ export default class EmailScreen extends React.Component {
 
               <Button
                 style={styles.button}
-                mode="contained"
                 dark={true}
+                mode="contained"
+                color="#F5C401"
                 onPress={() => this.sendEmail()}>
                 Buscar
               </Button>
@@ -203,3 +171,41 @@ export default class EmailScreen extends React.Component {
     }
   }
 }
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 40,
+    marginHorizontal: 10,
+    flex: 1,
+    padding: 20,
+    width: '100%',
+  },
+
+  button: {
+    width: '100%',
+  },
+  text: {
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 15,
+    marginVertical: 5,
+    marginLeft: 20,
+  },
+  background: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  image: {
+    width: 200,
+    height: 200,
+    borderRadius: 5,
+    //alignSelf: 'center',
+    //alignItems: 'center',
+  },
+  title: {
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 22,
+    marginVertical: 15,
+    textAlign: 'center',
+  },
+});

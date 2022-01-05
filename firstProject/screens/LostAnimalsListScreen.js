@@ -46,7 +46,7 @@ export default class LostAnimalsListScreen extends React.Component {
     );
   }
 
-  componentDidMount() { 
+  componentDidMount() {
     this.fetchPublications();
   }
 
@@ -63,22 +63,21 @@ export default class LostAnimalsListScreen extends React.Component {
           <Text style={styles.logo}>SavePet</Text>
         </Appbar>
         <ScrollView style={styles.background}>
-          <Text style={styles.title}> Animales perdidos</Text>
           <View style={styles.container}>
+            <Text style={styles.title}> Animales perdidos</Text>
+
             {this.state.publications.map(publication => {
               return (
-                <Card  key={publication.id}>
+                <Card key={publication.publicationDate}>
                   <Divider style={styles.divider} />
-                 
-                  <Card.Title
-                  style={styles.cardStyle}
 
-                    title={
-                      publication.publicationDate /*.toISOString().substring(0, '####-##-##'.length)*/
-                    }
+                  <Card.Title
+                    style={styles.cardStyle}
+                    title={publication.publicationDate
+                     /* .toISOString()
+                      .substring(0, '####-##-##'.length)*/}
                     titleStyle={styles.title}
                     subtitle={publication.description}
-                  
                     subtitleStyle={styles.subtitle}
                     left={() => (
                       <Image
@@ -102,17 +101,16 @@ export default class LostAnimalsListScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  cardStyle:{
+  cardStyle: {
     marginBottom: 60,
   },
   container: {
     flex: 1,
-    marginLeft: 25,
-    backgroundColor: '#fafafa',
+    backgroundColor: 'white',
   },
   background: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: 'white',
   },
   divider: {
     marginBottom: 40,
@@ -142,20 +140,20 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   subtitle: {
-    marginLeft: 30,
+    marginLeft: 50,
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 15,
   },
-  
-      title: {
-    marginLeft: 30,
+  title: {
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
-    fontSize: 20,
+    fontSize: 22,
+    marginBottom: 15,
+    marginTop: 20,
+    textAlign: 'center',
   },
-
-    image: {
+  image: {
     width: 30,
     height: 30,
     marginRight: 10,

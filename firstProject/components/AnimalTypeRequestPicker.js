@@ -14,7 +14,7 @@ export default class AnimalTypeRequestPicker extends React.Component {
   render() {
     return (
       <View >
-        <Text >Tipo de solicitud : </Text>
+        <Text >Tipo de solicitud  </Text>
         <Picker selectedValue={this.props.type} onValueChange={newAnimalTypeRequest => this.props.onChange(newAnimalTypeRequest)}>
           {typeOption.map(type => {
             return (

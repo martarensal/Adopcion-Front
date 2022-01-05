@@ -13,7 +13,6 @@ export default class AnimalSizePicker extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Tamaño : </Text>
         <Picker
           selectedValue={this.props.animalSize}
           onValueChange={newAnimalSize => this.props.onChange(newAnimalSize)}>
@@ -36,12 +35,5 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     marginVertical: 12,
-  },
-  text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#F05524',
-    fontSize: 15,
-    marginTop: 5,
-    paddingLeft: 10,
-  },
+  }
 });

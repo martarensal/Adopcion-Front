@@ -34,13 +34,13 @@ export default class LostAnimalForm extends React.Component {
         <TextInput
           multiline={true}
           label="Introduzca aquí la descripción"
-          selectionColor="black"
-          activeOutlineColor="black"
           value={this.props.description}
           onChangeText={newDescription =>
             this.props.onDescriptionChange(newDescription)
           }
         />
+        <Text style={styles.informativeText}> Añade una foto del animal </Text>
+
         <View style={styles.icons}>
           <TouchableOpacity
             onPress={() => {
@@ -50,7 +50,7 @@ export default class LostAnimalForm extends React.Component {
                 }
               });
             }}>
-            <Icon size={50} name="camera-outline"></Icon>
+            <Icon size={50} size={50} color="#575757" name="camera-outline"></Icon>
             <Text style={styles.text}> Cámara </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -61,7 +61,7 @@ export default class LostAnimalForm extends React.Component {
                 }
               });
             }}>
-            <Icon size={50} name="images-outline"></Icon>
+            <Icon size={50} size={50} color="#575757" name="images-outline"></Icon>
             <Text style={styles.text}> Galería </Text>
           </TouchableOpacity>
         </View>
@@ -86,6 +86,16 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 24,
+  },
+  informativeText: {
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 15,
+    alignContent: 'center',
+    marginVertical: 15,
+     alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   searchableDropdown: {
     padding: 10,
