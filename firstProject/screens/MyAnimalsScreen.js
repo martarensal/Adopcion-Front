@@ -153,7 +153,7 @@ export default class MyAnimalsScreen extends React.Component {
                     />
 
                     <Card.Actions>
-                      <Button
+                      <Button 
                         color="#E67E00"
                         onPress={() =>
                           this.props.navigation.navigate('EditAnimalScreen', {
@@ -162,7 +162,7 @@ export default class MyAnimalsScreen extends React.Component {
                         }>
                         Editar
                       </Button>
-                      <Button
+                      <Button 
                         color="red"
                         onPress={() =>
                           Alert.alert(
@@ -251,4 +251,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 30,
   },
+  label: {
+    marginLeft: 25,
+    marginVertical: 15,
+  },
+  link: {
+    marginLeft: 25,
+    color:'#E67E00',
+  }
 });

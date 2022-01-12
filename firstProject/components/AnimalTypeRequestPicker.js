@@ -14,7 +14,7 @@ export default class AnimalTypeRequestPicker extends React.Component {
   render() {
     return (
       <View >
-        <Text >Tipo de solicitud  </Text>
+        <Text style={styles.text} >Selecciona el tipo de solicitud  </Text>
         <Picker selectedValue={this.props.type} onValueChange={newAnimalTypeRequest => this.props.onChange(newAnimalTypeRequest)}>
           {typeOption.map(type => {
             return (
@@ -30,3 +30,14 @@ export default class AnimalTypeRequestPicker extends React.Component {
     );
   }
 }
+
+
+const styles = StyleSheet.create({
+
+ text: {
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 15,
+    marginVertical: 15,
+  },
+});

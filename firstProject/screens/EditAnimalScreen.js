@@ -175,9 +175,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
   },
   title: {
-    marginTop: 10,
+    marginVertical: 15,
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 20,
+    alignSelf: 'center',
+    alignItems: 'center',
   },
 });

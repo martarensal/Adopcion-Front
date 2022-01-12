@@ -58,6 +58,7 @@ export default class AnimalDetailScreen extends React.Component {
             onPress={() => {
               this.props.navigation.navigate('EmailScreen', {
                 user: this.props.route.params.animal.user,
+                animal: this.props.route.params.animal,
               });
             }}>
             Solicitar
@@ -99,8 +100,6 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     borderRadius: 5,
-    //alignSelf: 'center',
-    //alignItems: 'center',
   },
   title: {
     fontFamily: 'RobotoSlab-Regular',

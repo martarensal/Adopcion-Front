@@ -15,11 +15,11 @@ export default class EmailScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      // name: '',
       phone: '',
       email: '',
       username: '',
-      message: '',
+      message: undefined,
       userOrigen: {},
       userDestination: {},
       emailDestination: '',
@@ -27,6 +27,10 @@ export default class EmailScreen extends React.Component {
       startDate: new Date(),
       endDate: new Date(),
       type: undefined,
+      animalName: '',
+      animalAge: '',
+      animalType: '',
+      animalCity: '',
     };
     this.sendEmail = this.sendEmail.bind(this);
   }
@@ -67,9 +71,14 @@ export default class EmailScreen extends React.Component {
         userOrigen: data,
         loading: false,
         username: data.username,
-        name: data.name,
         phone: data.phone,
         email: data.email,
+        type: data.type,
+        message: data.message,
+        animalName: this.props.route.params.animal.name,
+        animalAge: this.props.route.params.animal.age,
+        animalType: this.props.route.params.animal.type,
+        animalCity: this.props.route.params.animal.city,
       });
     });
   }
@@ -89,6 +98,8 @@ export default class EmailScreen extends React.Component {
   }
 
   componentDidMount() {
+    //console.log(this.props.route.params.animal)
+
     this._unsubscribe = this.props.navigation.addListener(
       'focus',
       this.fetchUserDataOrigen.bind(this),
@@ -102,24 +113,6 @@ export default class EmailScreen extends React.Component {
   componentWillUnmount() {
     this._unsubscribe();
   }
-  requestType() {
-    console.log(this.state.type);
-
-    if (this.state.type == 'shelter') {
-      <RequestForm
-        startDate={this.state.startDate}
-        onChange={startDate => {
-          this.setState({
-            startDate: startDate,
-          }); /*console.log(startDate)*/
-        }}
-      />;
-      //falta enddate
-    } else {
-      console.log('ey');
-    }
-  }
-
   render() {
     if (this.state.loading) {
       return <LoadingIndicator />;
@@ -129,39 +122,61 @@ export default class EmailScreen extends React.Component {
           <HeaderAppbar />
           <View style={styles.background}>
             <View style={styles.container}>
+              <Text style={styles.title}> Solicitud por correo </Text>
               <AnimalTypeRequestPicker
                 type={this.state.type}
                 onChange={type => {
                   this.setState({type: type}); /*console.log(type)*/
                 }}
               />
-              {this.requestType()}
+              <Text style={styles.informativeText}>
+                Los siguientes datos serán enviados por correo al usuario {this.state.userDestination.username}.
+              </Text>
+              <Divider style={styles.divider} />
+              <Text style={styles.informativeText}>
+                {' '}
+                Nombre: {this.state.name}
+              </Text>
+              <Text style={styles.informativeText}>
+                {' '}
+                Apellidos: {this.state.lastnames}
+              </Text>
+              <Text style={styles.informativeText}>
+                {' '}
+                Teléfono: {this.state.phone}
+              </Text>
+              <Text style={styles.informativeText}>
+                {' '}
+                Email: {this.state.email}
+              </Text>
+              <Divider style={styles.divider} />
+
               <TextInput
+                style={styles.textInput}
                 multiline={true}
-                label="Pregunta algo sobre el animal"
+                label="Escribe aqui tus dudas"
                 value={this.state.message}
                 onChangeText={value => this.setState({message: value})}
               />
-
-              <Text>
-                {' '}
-                Los siguientes datos serán enviados al usuario{' '}
-                {this.state.userDestination.username}.
-              </Text>
-              <Divider />
-              <Text> Nombre: {this.state.name}</Text>
-              <Divider />
-              <Text> Teléfono: {this.state.phone}</Text>
-              <Divider />
-              <Text> Email: {this.state.email}</Text>
-              <Divider />
-
               <Button
                 style={styles.button}
                 dark={true}
                 mode="contained"
                 color="#F5C401"
-                onPress={() => this.sendEmail()}>
+                onPress={
+                  () => this.sendEmail() /* Alert.alert(
+                'Confirmación',
+                'Se ha solicitado el animal con éxito, espere a obtener una respuesta por correo',
+                [
+                  {
+                    text: 'Ok',
+                    onPress: () =>
+                      this.props.navigation.navigate('MainScreen'),
+                  },
+                ],
+                {cancelable: false},
+              )*/
+                }>
                 Buscar
               </Button>
             </View>
@@ -173,15 +188,25 @@ export default class EmailScreen extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
-    marginHorizontal: 10,
+    marginVertical: 15,
     flex: 1,
     padding: 20,
     width: '100%',
   },
-
+  informativeText: {
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 15,
+  },
+  divider: {
+    marginVertical: 20,
+  },
   button: {
     width: '100%',
+    justifyContent: 'flex-end',
+  },
+  textInput: {
+    marginBottom: 20,
   },
   text: {
     fontFamily: 'RobotoSlab-Regular',

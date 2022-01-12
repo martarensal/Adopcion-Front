@@ -366,11 +366,11 @@ export default class NewSearchAnimalScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    //padding: 20,
     width: '100%',
     alignSelf: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
+    //justifyContent: 'center',
     backgroundColor: '#FFFFFF',
   },
   
@@ -378,9 +378,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-      marginBottom: 15,
-      marginVertical: 15,
-    width: '100%',
     justifyContent: 'flex-end',
   },
   barra: {
@@ -397,8 +394,7 @@ const styles = StyleSheet.create({
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 22,
-    marginBottom: 15,
-    marginTop: 20,
+    marginVertical: 15,
     textAlign: 'center',
   },
   header: {
