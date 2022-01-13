@@ -1,7 +1,7 @@
 import {BASE_URL} from './ApiConfiguration';
 
 export function addRequest(requestCreationRequest, token) {
-  console.log(requestCreationRequest)
+  console.log(JSON.stringify(requestCreationRequest))
   return fetch(`${BASE_URL}/requests`, {
     method: 'POST',
     headers: new Headers({

@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Alert} from 'react-native';
 import {TextInput, Button, Text, Divider} from 'react-native-paper';
 import emailjs from 'emailjs-com';
 import {getUser} from '../client/UsersApi';
@@ -33,7 +33,7 @@ export default class EmailScreen extends React.Component {
       animalType: '',
       animalCity: '',
     };
-    this.sendEmail = this.sendEmail.bind(this);
+    //this.sendEmail = this.sendEmail.bind(this);
     this.addRequest = this.addRequest.bind(this);
   }
 
@@ -45,8 +45,7 @@ export default class EmailScreen extends React.Component {
         [
           {
             text: 'Ok',
-            onPress: () =>
-              this.props.navigation.navigate('MainScreen'),
+            onPress: () => this.props.navigation.navigate('MainScreen'),
           },
         ],
         {cancelable: false},
@@ -54,6 +53,22 @@ export default class EmailScreen extends React.Component {
 
       console.log(JSON.stringify(response));
       console.log('Solicitud creada');
+
+      emailjs
+        .send(
+          'service_arm8pjk',
+          'template_3krsrdn',
+          this.state,
+          'user_eOb7ryBtIDgcOWIsaMCgO',
+        )
+        .then(
+          result => {
+            console.log(result.text);
+          },
+          error => {
+            console.log(error.text);
+          },
+        );
     } else {
       console.log(JSON.stringify(response));
       this.setState({isErrorVisible: true});
@@ -63,10 +78,10 @@ export default class EmailScreen extends React.Component {
     let body = {
       endDate: this.state.startDate,
       startDate: this.state.endDate,
-      status: this.state.type,
+      status: 'sent',
       animal_id: this.props.route.params.animal.id,
       user_id: this.props.route.params.user,
-      type: 'sent',
+      type: this.state.type,
     };
     //console.log(body)
     SecurityUtils.authorizeApi([body], addRequest).then(
@@ -74,23 +89,6 @@ export default class EmailScreen extends React.Component {
     );
   }
 
-  sendEmail() {
-    emailjs
-      .send(
-        'service_arm8pjk',
-        'template_3krsrdn',
-        this.state,
-        'user_eOb7ryBtIDgcOWIsaMCgO',
-      )
-      .then(
-        result => {
-          console.log(result.text);
-        },
-        error => {
-          console.log(error.text);
-        },
-      );
-  }
   async handleGetUserResponseDestination(response) {
     response.json().then(data => {
       console.log(data);
@@ -139,8 +137,7 @@ export default class EmailScreen extends React.Component {
 
   componentDidMount() {
     //console.log(this.props.route.params.animal)
-       // console.log(this.props.route.params.animal.id + 'ID animAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAl')
-
+    // console.log(this.props.route.params.animal.id + 'ID animAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAl')
 
     this._unsubscribe = this.props.navigation.addListener(
       'focus',
