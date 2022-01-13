@@ -6,6 +6,8 @@ import {getUser} from '../client/UsersApi';
 import {Appbar} from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import RequestForm from '../components/RequestForm';
+import {addRequest} from '../client/RequestApi';
+
 import AnimalTypeRequestPicker from '../components/AnimalTypeRequestPicker';
 import HeaderAppbar from '../components/HeaderAppbar';
 
@@ -15,7 +17,6 @@ export default class EmailScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // name: '',
       phone: '',
       email: '',
       username: '',
@@ -33,6 +34,44 @@ export default class EmailScreen extends React.Component {
       animalCity: '',
     };
     this.sendEmail = this.sendEmail.bind(this);
+    this.addRequest = this.addRequest.bind(this);
+  }
+
+  handleCreateNewRequestResponse(response) {
+    if (response.ok) {
+      Alert.alert(
+        'Confirmación',
+        'La solicitud ha sido creada',
+        [
+          {
+            text: 'Ok',
+            onPress: () =>
+              this.props.navigation.navigate('MainScreen'),
+          },
+        ],
+        {cancelable: false},
+      );
+
+      console.log(JSON.stringify(response));
+      console.log('Solicitud creada');
+    } else {
+      console.log(JSON.stringify(response));
+      this.setState({isErrorVisible: true});
+    }
+  }
+  addRequest() {
+    let body = {
+      endDate: this.state.startDate,
+      startDate: this.state.endDate,
+      status: this.state.type,
+      animal_id: this.props.route.params.animal.id,
+      user_id: this.props.route.params.user,
+      type: 'sent',
+    };
+    //console.log(body)
+    SecurityUtils.authorizeApi([body], addRequest).then(
+      this.handleCreateNewRequestResponse.bind(this),
+    );
   }
 
   sendEmail() {
@@ -52,7 +91,6 @@ export default class EmailScreen extends React.Component {
         },
       );
   }
-
   async handleGetUserResponseDestination(response) {
     response.json().then(data => {
       console.log(data);
@@ -75,6 +113,8 @@ export default class EmailScreen extends React.Component {
         email: data.email,
         type: data.type,
         message: data.message,
+        startDate: data.startDate,
+        endDate: data.endDate,
         animalName: this.props.route.params.animal.name,
         animalAge: this.props.route.params.animal.age,
         animalType: this.props.route.params.animal.type,
@@ -99,6 +139,8 @@ export default class EmailScreen extends React.Component {
 
   componentDidMount() {
     //console.log(this.props.route.params.animal)
+       // console.log(this.props.route.params.animal.id + 'ID animAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAl')
+
 
     this._unsubscribe = this.props.navigation.addListener(
       'focus',
@@ -126,21 +168,25 @@ export default class EmailScreen extends React.Component {
               <AnimalTypeRequestPicker
                 type={this.state.type}
                 onChange={type => {
-                  this.setState({type: type}); /*console.log(type)*/
+                  this.setState({type: type});
                 }}
               />
+
+              <Text style={styles.text}> Fecha de inicio de acogida </Text>
+              <RequestForm
+                startDate={this.state.startDate}
+                onChange={startDate => this.setState({startDate: startDate})}
+              />
+              <Text style={styles.text}> Fecha fin de acogida </Text>
+              <RequestForm
+                endDate={this.state.endDate}
+                onChange={endDate => this.setState({endDate: endDate})}
+              />
               <Text style={styles.informativeText}>
-                Los siguientes datos serán enviados por correo al usuario {this.state.userDestination.username}.
+                Los siguientes datos serán enviados por correo al usuario{' '}
+                {this.state.userDestination.username}.
               </Text>
               <Divider style={styles.divider} />
-              <Text style={styles.informativeText}>
-                {' '}
-                Nombre: {this.state.name}
-              </Text>
-              <Text style={styles.informativeText}>
-                {' '}
-                Apellidos: {this.state.lastnames}
-              </Text>
               <Text style={styles.informativeText}>
                 {' '}
                 Teléfono: {this.state.phone}
@@ -164,7 +210,7 @@ export default class EmailScreen extends React.Component {
                 mode="contained"
                 color="#F5C401"
                 onPress={
-                  () => this.sendEmail() /* Alert.alert(
+                  () => this.addRequest() /* Alert.alert(
                 'Confirmación',
                 'Se ha solicitado el animal con éxito, espere a obtener una respuesta por correo',
                 [

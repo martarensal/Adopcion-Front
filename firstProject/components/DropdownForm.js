@@ -27,7 +27,7 @@ export default class DropdownForm extends React.Component {
   }
 
   render() {
-      return (
+      /*return (
         <SearchableDropdown 
         onItemSelect={(sex) => {
           console.log(sex)
@@ -65,7 +65,7 @@ export default class DropdownForm extends React.Component {
         }
         }
     />
-      )
+      )*/
     return (
       <View>
         <TextInput
