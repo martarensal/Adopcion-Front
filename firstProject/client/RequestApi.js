@@ -12,3 +12,28 @@ export function addRequest(requestCreationRequest, token) {
     body: JSON.stringify(requestCreationRequest),
   });
 }
+
+export function getPaginatedRequestFromUser(page, size, username, token) {
+  return fetch(
+    `${BASE_URL}/users/${username}/requests?page=${page}&size=${size}`,
+    {
+      method: 'GET',
+      headers: new Headers({
+        'content-type': 'application/json',
+        Accept: 'application/json',
+        'X-API-KEY': token,
+      }),
+    },
+  );
+}
+
+export function deleteRequest(idRequest, token) {
+  return fetch(`${BASE_URL}/requests/${idRequest}`, {
+    method: 'DELETE',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+  });
+}

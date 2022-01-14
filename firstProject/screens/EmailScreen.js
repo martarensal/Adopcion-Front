@@ -128,7 +128,6 @@ export default class EmailScreen extends React.Component {
 
   fetchUserDataOrigen() {
     SecurityUtils.tokenInfo().then(info => {
-      console.log(info);
       SecurityUtils.authorizeApi([info.sub], getUser).then(
         this.handleGetUserResponse.bind(this),
       );
@@ -136,9 +135,7 @@ export default class EmailScreen extends React.Component {
   }
 
   componentDidMount() {
-    //console.log(this.props.route.params.animal)
-    // console.log(this.props.route.params.animal.id + 'ID animAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAl')
-
+  
     this._unsubscribe = this.props.navigation.addListener(
       'focus',
       this.fetchUserDataOrigen.bind(this),

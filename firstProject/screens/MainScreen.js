@@ -14,6 +14,8 @@ import MyProfileScreen from './MyProfileScreen';
 import MyAnimalsScreen from './MyAnimalsScreen';
 import CreateAnimalScreen from './CreateAnimalScreen';
 import LostAnimalScreen from './LostAnimalScreen';
+import MyRequestScreen from './MyRequestScreen';
+
 
 var SecurityUtils = require('../utils/SecurityUtils.js');
 const Drawer = createDrawerNavigator();
@@ -138,7 +140,7 @@ export default class MainScreen extends React.Component {
           <Drawer.Screen name="Inicio" component={this.startData} />
           <Drawer.Screen name="Mi perfil" component={MyProfileScreen} />
           <Drawer.Screen name="Mis animales" component={MyAnimalsScreen} />
-          <Drawer.Screen name="Mis solicitudes" component={MainScreen} />
+          <Drawer.Screen name="Mis solicitudes" component={MyRequestScreen} />
           <Drawer.Screen
             name="Añadir animal"
             initialParams={{username: this.state.user.username}}
