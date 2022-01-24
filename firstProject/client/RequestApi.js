@@ -37,3 +37,15 @@ export function deleteRequest(idRequest, token) {
     }),
   });
 }
+
+export function modifyRequestStatus(requestStatusChangeRequest, idRequest, token) {
+  return fetch(`${BASE_URL}/requests/${idRequest}/requestStatus`, {
+    method: 'PUT',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+    body: JSON.stringify(requestStatusChangeRequest),
+  });
+}

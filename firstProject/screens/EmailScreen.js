@@ -33,9 +33,10 @@ export default class EmailScreen extends React.Component {
       animalType: '',
       animalCity: '',
     };
-    //this.sendEmail = this.sendEmail.bind(this);
     this.addRequest = this.addRequest.bind(this);
   }
+
+  
 
   handleCreateNewRequestResponse(response) {
     if (response.ok) {

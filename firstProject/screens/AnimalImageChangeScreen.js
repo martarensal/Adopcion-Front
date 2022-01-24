@@ -1,11 +1,14 @@
 import React, {Fragment, useState} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-import {modifyAnimalImage} from '../client/AnimalApi';
 import {TextInput, Button, HelperText} from 'react-native-paper';
 import Camera from '../components/Camera';
+import {modifyAnimalImage} from '../client/AnimalApi';
 import HeaderAppbar from '../components/HeaderAppbar';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
+import Icon from 'react-native-vector-icons/Ionicons';
 var SecurityUtils = require('../utils/SecurityUtils.js');
+
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 var validate = require('validate.js');
 
@@ -14,7 +17,7 @@ const launchCameraOptions = {
 };
 
 export default class AnimalImageChangeScreen extends React.Component {
-  constructor(props) {
+ constructor(props) {
     super(props);
     this.changeAnimalImage = this.changeAnimalImage.bind(this);
     this.render = this.render.bind(this);
@@ -39,19 +42,15 @@ export default class AnimalImageChangeScreen extends React.Component {
     });
   }
 
+
   render() {
     return (
       <>
-        <HeaderAppbar />
-        <View style={styles.container}>
-          <Text style={styles.text}>Cambia la foto del animal </Text>
-          <Text style={styles.informationText}>
-            Hacer foto en este momento
-          </Text>
+      <HeaderAppbar />
+      <View style={styles.container}>
+        <Text style={styles.title}>Cambia la foto del animal </Text>
+        <View style={styles.icons}>
           <TouchableOpacity
-            style={styles.cameraButton}
-            mode="contained"
-            dark={true}
             onPress={() => {
               launchCamera(launchCameraOptions, response => {
                 if (!response.didCancel) {
@@ -59,16 +58,10 @@ export default class AnimalImageChangeScreen extends React.Component {
                 }
               });
             }}>
-            <Text style={styles.textStyle}> Cámara</Text>
+            <Icon size={50} color="#575757" name="camera-outline"></Icon>
+            <Text style={styles.text}> Cámara </Text>
           </TouchableOpacity>
-          <Text style={styles.informationText}>
-            Elige una foto de la galería
-          </Text>
-
           <TouchableOpacity
-            style={styles.cameraButton}
-            mode="contained"
-            dark={true}
             onPress={() => {
               launchImageLibrary(launchCameraOptions, response => {
                 if (!response.didCancel) {
@@ -76,18 +69,31 @@ export default class AnimalImageChangeScreen extends React.Component {
                 }
               });
             }}>
-            <Text style={styles.textStyle}> Galería </Text>
+            <Icon size={50} color="#575757" name="images-outline"></Icon>
+            <Text style={styles.text}> Galería </Text>
           </TouchableOpacity>
         </View>
+      </View>
       </>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  icons: {
+    marginVertical: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  icon: {
+    width: 50,
+    height: 50,
+  },
   container: {
     width: '100%',
-    textAlign: 'center',
+    //textAlign: 'center',
+    //alignItems: 'center',
+    //justifyContent: 'center'
   },
   button: {
     marginTop: 24,
@@ -95,18 +101,30 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
-    fontSize: 20,
-    marginBottom: 15,
-    marginTop: 10,
-    marginLeft: 25,
+    fontSize: 15,
+    alignContent: 'center',
+    marginBottom: 5,
   },
-  informationText: {
+  title: {
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 15,
-    marginBottom: 15,
-    marginTop: 10,
-    marginLeft: 25,
+    alignContent: 'center',
+    marginBottom: 5,
+    marginLeft: 60,
+    marginVertical: 20,
+  },
+  searchableDropdown: {
+    padding: 10,
+    marginTop: 2,
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  textInputSearchable: {
+    padding: 12,
+    borderWidth: 1,
+    borderRadius: 5,
+    marginTop: 5,
   },
   cameraButton: {
     backgroundColor: '#ABE009',
@@ -118,8 +136,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginLeft: 25,
   },
-  textStyle:{
-    fontSize:15,
-        fontFamily: 'RobotoSlab-Regular',
-  }
+  textStyle: {
+    fontSize: 18,
+  },
 });

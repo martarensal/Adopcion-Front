@@ -16,7 +16,7 @@ import {DrawerActions} from '@react-navigation/native';
 
 var SecurityUtils = require('../utils/SecurityUtils');
 
-export default class MyRequestScreen extends React.Component {
+export default class AnimalsRequestReceived extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +34,7 @@ export default class MyRequestScreen extends React.Component {
   }
 
   handleDeteleRequestResponse(response) {
-      console.log(response)
+    console.log(response);
     if (response.ok) {
       console.log('Solicitud borrada');
       this.setState({requests: {}});
@@ -100,8 +100,9 @@ export default class MyRequestScreen extends React.Component {
         </Appbar>
 
         <ScrollView style={styles.background}>
-          <Text style={styles.title}> Tus solicitudes</Text>
-          <View style={styles.container}>
+            <Text style={styles.title}> Tus solicitudes</Text>
+                      <View style={styles.container}>
+
             {this.state.requests[0] === undefined ? (
               <>
                 <View style={styles.container}>
@@ -123,19 +124,20 @@ export default class MyRequestScreen extends React.Component {
             ) : (
               this.state.requests.map(request => {
                 return (
+                    <View style={styles.container}>
                   <Card key={request.id}>
+                
                     <Card.Title
-                      title={request.name}
+                      title={request.status}
                       titleStyle={styles.name}
-                      subtitle={
-                          <View >
-                                          <Text style={styles.informativeText}> Estado {request.status}</Text>
-                                          <Text style={styles.informativeText}> Tipo de solicitud {request.type}</Text>
-                                          <Text style={styles.informativeText}> Fecha inicio {request.startDate}</Text>
-                                          <Text style={styles.informativeText}> Fecha fin {request.endDate}</Text>
-                                          <Text style={styles.informativeText}> Estado {request.status}</Text>
-                                          </View>
-                      }
+                      subtitle={         
+                            'Solicitud ' + request.type +
+                         
+                            'Fecha' + request.startDate +
+                        
+                            '-' + request.endDate 
+                                                
+                        }
                       subtitleStyle={styles.subtitle}
                     />
 
@@ -164,6 +166,7 @@ export default class MyRequestScreen extends React.Component {
                       </Button>
                     </Card.Actions>
                   </Card>
+                  </View>
                 );
               })
             )}
@@ -178,6 +181,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+     alignContent: 'center',
+    //alignItems: 'center',
   },
   background: {
     flex: 1,
@@ -186,15 +191,16 @@ const styles = StyleSheet.create({
   divider: {
     marginBottom: 20,
   },
+  allText: {
+    marginVertical: 40,
+   
+  },
   informativeText: {
-       fontFamily: 'RobotoSlab-Regular',
+    fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 15,
-    marginVertical: 5,
-    marginLeft: 20,
-
   },
-  
+
   text: {
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',

@@ -27,7 +27,7 @@ export default class Step3 extends React.Component {
             onPress={() => {
               launchCamera(launchCameraOptions, response => {
                 if (!response.didCancel) {
-                  this.props.onImageChange(response.assets[0].base64);
+                    FormManager.getFormManager().setField('image', response.assets[0].base64)
                 }
               });
             }}>
@@ -38,7 +38,7 @@ export default class Step3 extends React.Component {
             onPress={() => {
               launchImageLibrary(launchCameraOptions, response => {
                 if (!response.didCancel) {
-                  this.props.onImageChange(response.assets[0].base64);
+                    FormManager.getFormManager().setField('image', response.assets[0].base64)
                 }
               });
             }}>

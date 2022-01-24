@@ -206,3 +206,28 @@ export function getPaginatedPublications(page, size, token) {
     },
   );
 }
+
+export function getMyPublications(username, page, size, token) {
+  return fetch(
+    `${BASE_URL}/user/${username}/publications?page=${page}&size=${size}`,
+    {
+      method: 'GET',
+      headers: new Headers({
+        'content-type': 'application/json',
+        Accept: 'application/json',
+        'X-API-KEY': token,
+      }),
+    },
+  );
+}
+
+export function deletePublication(idPublication, token) {
+  return fetch(`${BASE_URL}/publications/${idPublication}`, {
+    method: 'DELETE',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+  });
+}

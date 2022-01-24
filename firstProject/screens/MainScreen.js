@@ -15,7 +15,8 @@ import MyAnimalsScreen from './MyAnimalsScreen';
 import CreateAnimalScreen from './CreateAnimalScreen';
 import LostAnimalScreen from './LostAnimalScreen';
 import MyRequestScreen from './MyRequestScreen';
-
+import AnimalsRequestReceived from './AnimalsRequestReceived';
+import MyLostAnimals from './MyLostAnimals';
 
 var SecurityUtils = require('../utils/SecurityUtils.js');
 const Drawer = createDrawerNavigator();
@@ -142,6 +143,10 @@ export default class MainScreen extends React.Component {
           <Drawer.Screen name="Mis animales" component={MyAnimalsScreen} />
           <Drawer.Screen name="Mis solicitudes" component={MyRequestScreen} />
           <Drawer.Screen
+            name="Mis animales perdidos"
+            component={MyLostAnimals}
+          />
+          <Drawer.Screen
             name="Añadir animal"
             initialParams={{username: this.state.user.username}}
             component={CreateAnimalScreen}
@@ -152,7 +157,7 @@ export default class MainScreen extends React.Component {
           />
           <Drawer.Screen
             name="Animales solicitados por mi"
-            component={MainScreen}
+            component={AnimalsRequestReceived}
           />
         </Drawer.Navigator>
       );

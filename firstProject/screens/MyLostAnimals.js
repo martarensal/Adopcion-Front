@@ -1,6 +1,4 @@
 import React from 'react';
-import {getUser} from '../client/UsersApi';
-import {getPaginatedAnimalsFromUser, deleteAnimal} from '../client/AnimalApi';
 import {
   Text,
   View,
@@ -9,84 +7,89 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import {getUser} from '../client/UsersApi';
+
 import {Appbar, FAB, Card, Button, Divider} from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DrawerActions} from '@react-navigation/native';
-
+var SecurityUtils = require('../utils/SecurityUtils');
+import {getMyPublications,deletePublication} from '../client/AnimalApi';
 var SecurityUtils = require('../utils/SecurityUtils');
 
-export default class MyAnimalsScreen extends React.Component {
+export default class MyLostAnimals extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      animals: {},
+      publications: [],
       paginationInfo: {},
       loading: true,
-      page: 0,
       user: {},
-      base64: 'data:image/png;base64,',
+      page: 0,
       width: 80,
       height: 80,
+      base64: 'data:image/png;base64,',
     };
 
-    this.deleteAnimal = this.deleteAnimal.bind(this);
-    this.handleDeteleAnimalResponse =
-      this.handleDeteleAnimalResponse.bind(this);
-    this.fetchUserDataWithAnimals = this.fetchUserDataWithAnimals.bind(this);
+    this.deletePublication = this.deletePublication.bind(this);
+    this.handleDetelePublicationResponse = this.handleDetelePublicationResponse.bind(this)
+    this.fetchUserData = this.fetchUserData.bind(this)
+    this.fetchPublications = this.fetchPublications.bind(this)
+    this.handleGetUserResponse = this.handleGetUserResponse.bind(this)
   }
 
-  handleDeteleAnimalResponse(response) {
+  handleDetelePublicationResponse(response) {
     if (response.ok) {
-      console.log('Animal borrado');
-      this.setState({animals: {}});
-      this.fetchUserDataWithAnimals();
+      console.log('Publicacion borrado');
+      this.setState({publications: {}});
     } else {
       console.log('Error');
     }
   }
-  deleteAnimal(idAnimal) {
+  deletePublication(idPublication) {
     this.setState({loading: true});
-    SecurityUtils.authorizeApi([idAnimal], deleteAnimal).then(
-      this.handleDeteleAnimalResponse,
+    SecurityUtils.authorizeApi([idPublication], deletePublication).then(
+      this.handleDetelePublicationResponse,
     );
   }
-
-  handleGetAnimalsResponse(response) {
+  handleGetPublicationResponse(response) {
     response.json().then(data =>
       this.setState({
-        animals: this.state.animals.concat(data.pages),
+        publications: this.state.publications.concat(data.pages),
         paginationInfo: data.paginationInfo,
         loading: false,
       }),
     );
   }
 
+  fetchPublications(data) {
+    this.setState({user: data})
+    SecurityUtils.authorizeApi([data.username, 0, 25], getMyPublications).then(
+      this.handleGetPublicationResponse.bind(this),
+    );
+  }
   handleGetUserResponse(response) {
-    response.json().then(data => {
-      this.setState({user: data});
-      SecurityUtils.authorizeApi(
-        [this.state.page, 5, data.username],
-        getPaginatedAnimalsFromUser,
-      ).then(this.handleGetAnimalsResponse.bind(this));
-    });
+    response.json().then(data => this.fetchPublications(data));
   }
 
-  fetchUserDataWithAnimals() {
-    this.setState({animals: []});
-
+  fetchUserData() {
+    this.setState({loading: true});
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi([info.sub], getUser).then(
         this.handleGetUserResponse.bind(this),
       );
     });
   }
-
   componentDidMount() {
-    this.fetchUserDataWithAnimals();
-    this._outOfFocus = this.props.navigation.addListener('blur', () =>
-      this.setState({animals: [], page: 0}),
+    this._unsubscribe = this.props.navigation.addListener(
+      'focus',
+      this.fetchUserData.bind(this),
     );
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
   }
 
   render() {
@@ -101,63 +104,61 @@ export default class MyAnimalsScreen extends React.Component {
           />
           <Text style={styles.logo}>SavePet</Text>
         </Appbar>
-        
+       
         <ScrollView style={styles.background}>
-          <Text style={styles.title}> Mis animales</Text>
           <View style={styles.container}>
-            {this.state.animals[0] === undefined ? (
+            <Text style={styles.title}> Mis animales perdidos</Text>
+             {this.state.publications[0] === undefined ? (
               <>
                 <View style={styles.container}>
                   <Text style={styles.label}>
-                    Parece que no has añadido ningún animal aún
+                    Parece que no has añadido ninguna publicación
                   </Text>
                   <TouchableOpacity
                     onPress={() =>
-                      this.props.navigation.navigate('CreateAnimalScreen', {
+                      this.props.navigation.navigate('LostAnimalScreen', {
                         username: this.state.user.username,
                       })
                     }>
                     <Text style={styles.link}>
-                      ¿Quieres añadir un animal ahora?
+                      ¿Quieres añadir un animal perdido ahora?
                     </Text>
                   </TouchableOpacity>
                 </View>
               </>
-            ) : (
-              this.state.animals.map(animal => {
-                return (
-                  <Card key={animal.id}>
-                    <Card.Title
-                      title={animal.name}
-                      titleStyle={styles.name}
-                      subtitle={
-                        'Sexo: ' +
-                        animal.sex +
-                        '\n' +
-                        ' Edad: ' +
-                        animal.age +
-                        ' Ciudad: ' +
-                        animal.city
-                      }
-                      subtitleStyle={styles.subtitle}
-                      left={() => (
-                        <Image
-                          style={{
-                            width: this.state.width,
-                            height: this.state.height,
-                            borderRadius: 5,
-                          }}
-                          source={{uri: this.state.base64 + animal.image}}
-                        />
-                      )}
-                    />
+            ) : ( 
+              this.state.publications.map(publication => {
+              return (
+                <Card key={publication.publicationDate}>
+                  <Divider style={styles.divider} />
 
-                    <Card.Actions>
+                  <Card.Title
+                    style={styles.cardStyle}
+                    title={
+                      publication.publicationDate
+                      /* .toISOString()
+                      .substring(0, '####-##-##'.length)*/
+                    }
+                    titleStyle={styles.title}
+                    subtitle={publication.description}
+                    subtitleStyle={styles.subtitle}
+                    left={() => (
+                      <Image
+                        style={{
+                          width: this.state.width,
+                          height: this.state.height,
+                          borderRadius: 5,
+                        }}
+                        source={{uri: this.state.base64 + publication.image}}
+                      />
+                    )}
+                  />
+                  <Card.Actions>
                       <Button 
                         color="#E67E00"
                         onPress={() =>
-                          this.props.navigation.navigate('EditAnimalScreen', {
-                            animal: animal,
+                          this.props.navigation.navigate('EditPublicationScreen', {
+                            publication: publication,
                           })
                         }>
                         Editar
@@ -176,7 +177,7 @@ export default class MyAnimalsScreen extends React.Component {
                               },
                               {
                                 text: 'Si, estoy seguro',
-                                onPress: () => this.deleteAnimal(animal.id),
+                                onPress: () => this.deletePublication(publication.id),
                               },
                             ],
                             {cancelable: false},
@@ -186,7 +187,7 @@ export default class MyAnimalsScreen extends React.Component {
                       </Button>
                     </Card.Actions>
                   </Card>
-                );
+               );
               })
             )}
           </View>
@@ -197,6 +198,9 @@ export default class MyAnimalsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  cardStyle: {
+    marginBottom: 60,
+  },
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -206,20 +210,37 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   divider: {
-    marginBottom: 20,
+    marginBottom: 40,
+  },
+  barra: {
+    backgroundColor: '#E67E00',
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+  logo: {
+    fontFamily: 'Butler_Light',
+    color: 'white',
+    fontSize: 25,
+    marginLeft: 14,
+    alignSelf: 'center',
+  },
+  background: {
+    flex: 1,
+    backgroundColor: '#fafafa',
   },
   text: {
-    fontFamily: 'RobotoSlab-Regular',
-    color: '#575757',
-    fontSize: 25,
-    marginBottom: 15,
+    fontFamily: 'OpenSans-Bold',
+    fontSize: 20,
+    marginTop: 5,
   },
   subtitle: {
-    marginLeft: 30,
+    marginLeft: 50,
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 15,
-    justifyContent: 'flex-end',
   },
   title: {
     fontFamily: 'RobotoSlab-Regular',
@@ -229,34 +250,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: 'center',
   },
-  name: {
-    fontFamily: 'RobotoSlab-Regular',
-    color: '#575757',
-    fontSize: 22,
-    marginLeft: 30,
-    marginBottom: 15,
-    marginTop: 20,
-  },
-  barra: {
-    backgroundColor: '#E67E00',
-  },
-  logo: {
-    fontFamily: 'Butler_Light',
-    color: 'white',
-    fontSize: 25,
-    marginLeft: 14,
-    alignSelf: 'center',
-  },
   image: {
-    borderRadius: 5,
+    width: 30,
+    height: 30,
+    marginRight: 10,
     marginTop: 30,
   },
-  label: {
-    marginLeft: 25,
-    marginVertical: 15,
-  },
-  link: {
-    marginLeft: 25,
-    color:'#E67E00',
-  }
 });
