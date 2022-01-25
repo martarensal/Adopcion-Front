@@ -35,15 +35,14 @@ export default class MyProfileScreen extends Component {
   }
 
   componentDidMount() {
-    /*this._unsubscribe = this.props.navigation.addListener(
+    this._unsubscribe = this.props.navigation.addListener(
       'focus',
       this.fetchUserData.bind(this),
-    );*/
-    this.fetchUserData();
+    );
   }
 
   componentWillUnmount() {
-    //this._unsubscribe();
+    this._unsubscribe();
   }
 
   render() {

@@ -95,8 +95,10 @@ export default class MyAnimalsScreen extends React.Component {
         <Appbar style={styles.barra}>
           <Appbar.Action
             icon="menu"
-            onPress={() =>
-              this.props.navigation.dispatch(DrawerActions.openDrawer())
+            onPress={() =>{
+              console.log("ABRIENDO DRAWER")
+              this.props.navigation.dispatch(DrawerActions.toggleDrawer())
+            }
             }
           />
           <Text style={styles.logo}>SavePet</Text>

@@ -1,7 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import {TextInput, Button, HelperText} from 'react-native-paper';
-import FormManager from './FormManager';
 import Camera from '../components/Camera';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -13,7 +12,7 @@ const launchCameraOptions = {
   includeBase64: true,
 };
 
-export default class Step3 extends React.Component {
+export default class ImageStep extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -27,7 +26,7 @@ export default class Step3 extends React.Component {
             onPress={() => {
               launchCamera(launchCameraOptions, response => {
                 if (!response.didCancel) {
-                    FormManager.getFormManager().setField('image', response.assets[0].base64)
+                    this.props.onChange('image', response.assets[0].base64)
                 }
               });
             }}>
@@ -38,7 +37,7 @@ export default class Step3 extends React.Component {
             onPress={() => {
               launchImageLibrary(launchCameraOptions, response => {
                 if (!response.didCancel) {
-                    FormManager.getFormManager().setField('image', response.assets[0].base64)
+                  this.props.onChange('image', response.assets[0].base64)
                 }
               });
             }}>
@@ -46,6 +45,7 @@ export default class Step3 extends React.Component {
             <Text style={styles.text}> Galería </Text>
           </TouchableOpacity>
         </View>
+        {/* MOSTRAR AQUÍ RETROALIMENTACIÓN ¿QUÉ IMAGEN SE HA OBTENIDO???*/}
       </View>
     );
   }

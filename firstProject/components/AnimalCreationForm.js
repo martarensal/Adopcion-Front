@@ -1,193 +1,149 @@
-import React, { Fragment, useState } from 'react';
-import { StyleSheet, View, Text, Image, Alert } from 'react-native';
-import { TextInput, Button, HelperText } from 'react-native-paper';
+import React, {Fragment, useState} from 'react';
+import {StyleSheet, View, Text, Image, Alert} from 'react-native';
+import {TextInput, Button, HelperText} from 'react-native-paper';
 var SecurityUtils = require('../utils/SecurityUtils.js');
-import { sexOption, sizeOption, statusOption, colorOption } from '../constants/DropdownOption';
+import {
+  sexOption,
+  sizeOption,
+  statusOption,
+  colorOption,
+} from '../constants/DropdownOption';
 import {getTypes} from '../client/TypeApi';
 import {addAnimal} from '../client/AnimalApi';
 import {getUser} from '../client/UsersApi';
 import Stepper from 'react-native-stepper-ui';
-import Step1 from '../components/Step1.js';
-import Step2 from '../components/Step2.js';
-import Step3 from '../components/Step3.js';
+import NameAndAgeStep from '../components/NameAndAgeStep.js';
+import SexColourSizeAndTypeStep from '../components/SexColourSizeAndTypeStep.js';
+import ImageStep from '../components/ImageStep.js';
 import FinalStep from '../components/FinalStep.js';
-import FormManager from "./FormManager";
 
 var validate = require('validate.js');
 
-   const launchCameraOptions = {
-        includeBase64: true
-    }
+const launchCameraOptions = {
+  includeBase64: true,
+};
 
 export default class AnimalCreationForm extends React.Component {
-  formManager = FormManager.getFormManager()
-
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.addAnimalCall = this.addAnimalCall.bind(this)
-    this.state = 
-    {
-      active: 0, 
-      loading: false,
-      user:{},
-    }
-    this.addAnimalCall = this.addAnimalCall.bind(this)
-    this.handleCreateNewAnimalResponse = this.handleCreateNewAnimalResponse.bind(this)
+    this.state = {
+      active: 0,
+    };
   }
 
-  async handleGetTypeResponse(response) {
-    var types = []
-    const jsonResponse = await response.json();
-    for (const i in jsonResponse.pages)
-    {
-      types.push( 
-        {
-          name: jsonResponse.pages[i].name,
-        })
-    }
-    this.setState({types: types});
-  }
+  render() {
 
-  handleGetUserResponse(response) {
-    response.json().then(data => {
-      //console.log(data)
-      this.setState({user: data, loading: false})
-    
-    } );
-  }
-
-  fetchUserData() {
-    this.setState({loading: true});
-    SecurityUtils.tokenInfo().then(info => {
-      SecurityUtils.authorizeApi([info.sub], getUser).then(
-        this.handleGetUserResponse.bind(this),
-      );
-    });
- 
-  }
-
-  getTypesCall() {
-    SecurityUtils.authorizeApi([], getTypes).then(this.handleGetTypeResponse.bind(this))
-  }
-
-  handleCreateNewAnimalResponse(response) {
-    if (response.ok) {
-      console.log(JSON.stringify(response));
-      console.log('Animal creado');
-    } else {
-      console.log(JSON.stringify(response));
-      this.setState({isErrorVisible: true});
-    }
-  }
-
-  addAnimalCall(name, sex, age, colour, size, city, type, image) {
-
-    let body = {
-          age: age,
-          city_id: city,
-          colour: colour,
-          image: image,
-          name: name,
-          sex: sex,
-          size: size,
-          status:'homeless',
-          type_id: type,
-    }
-
-    SecurityUtils.authorizeApi([body, this.props.username], addAnimal).then(this.handleCreateNewAnimalResponse.bind(this));
-
-  }
-
-  componentDidMount() {
-    this.getTypesCall();
-    this.fetchUserData.bind(this)
-  }
+    let content = [
+      <NameAndAgeStep
+        age={this.props.age}
+        name={this.props.name}
+        onChange={this.props.onChangeAnimalField}
+      />,
   
+      <SexColourSizeAndTypeStep
+        size={this.props.size}
+        colour={this.props.colour}
+        sex={this.props.sex}
+        type={this.props.type}
+        types={this.props.types}
+        onChange={this.props.onChangeAnimalField}
+      />,
+      <ImageStep onChange={this.props.onChangeAnimalField} />,
+      <FinalStep
+        autonomousCommunity={this.props.autonomousCommunity}
+        autonomousCommunities={this.props.autonomousCommunities}
+        province={this.props.province}
+        provinces={this.props.provinces}
+        city={this.props.city}
+        cities={this.props.cities}
+        onAutonomousCommunityChange={this.onChangeAnimalField}
+        onProvinceChange={this.onChangeAnimalField}
+        onCityChange={this.props.onChangeAnimalField}
+        onChange={this.props.onChangeAnimalField}
+        getCityFromProvince={this.props.getCityFromProvince}
+        getProvincesFromAC={this.props.getProvincesFromAC}
+      />,
+    ];
   
-  render(){
-    return( 
-      <View style={styles.container} >
+    return (
+      <View style={styles.container}>
         <Stepper
           active={this.state.active}
-          content={this.content}
+          content={content}
           onNext={() => this.nextHandler()}
-          onBack={() => this.setState({ active: this.state.active - 1 })}
+          onBack={() => this.setState({active: this.state.active - 1})}
           onFinish={() => {
             Alert.alert(
-              "Animal creado",
-              "Tu animal ha sido añadido con éxito",
+              'Confirmación',
+              'El animal ha sido creado con exito',
+              [
+                {
+                  text: 'Ok',
+                  onPress: () => this.props.onCreate(),
+                },
+              ],
+              {cancelable: false},
             );
-            this.nextHandler()
-            }
-          }
+            this.nextHandler();
+          }}
         />
-
       </View>
-    )
+    );
   }
+
   
-  content = [
-    <Step1/>,
-    <Step2/>,
-    <Step3/>,
-    <FinalStep/>
-  ];
-
-  isValidNumber(number){
-    intNumber = parseInt(number)
-    return !isNaN(intNumber) && intNumber >= 0 && intNumber <= 344;
+  isValidNumber(number) {
+    intNumber = parseInt(number);
+    return !isNaN(intNumber) && intNumber >= 0 && intNumber <= 500;
   }
 
-  nextHandler(){
+  nextHandler() {
     switch (this.state.active) {
       case 0:
-        let name = FormManager.getFormManager().getField('name'); 
-        if(name == "" )
-            Alert.alert("Error", "El campo nombre no puede estar vacío")
-        else
-        {
-          age = FormManager.getFormManager().getField('age');
-          if (!this.isValidNumber(age))
-          {
-            Alert.alert("Error", "Debe rellenar correctamente el campo edad")
-          }else
-          {
-            this.setState({ active: this.state.active + 1})
+        let name = this.props.name;
+        if (name == '')
+          Alert.alert('Error', 'El campo nombre no puede estar vacío');
+        else {
+          age = this.props.age;
+          if (!this.isValidNumber(age)) {
+            Alert.alert('Error', 'Debe rellenar correctamente el campo edad');
+          } else {
+            this.setState({active: this.state.active + 1});
           }
         }
-      break;
+        break;
       case 1:
-      
-        this.setState({ active: this.state.active + 1})
+        this.setState({active: this.state.active + 1});
 
-      break;
-      case 2: 
-      
-        this.setState({ active: this.state.active + 1})
-      
-      break;
+        break;
+      case 2:
+        this.setState({active: this.state.active + 1});
+
+        break;
       case 3:
-        let cityId = FormManager.getFormManager().getField('cityId'); 
-        console.log(cityId)
-        if(cityId == -1)
-        {
-          Alert.alert("Error", "Debe rellenar todos los campos")
-
-        }else
-          {
-            let formManager = FormManager.getFormManager()
-             	let name = formManager.getField('name')
-              let age = formManager.getField('age')
-              let sex = formManager.getField('sex')
-              let image = formManager.getField('image')
-              let size = formManager.getField('size')
-              let colour = formManager.getField('colour')
-              let status = formManager.getField('status')
-              let cityId = formManager.getField('cityId')
-              let typeId = formManager.getField('typeId')
-              let value = formManager.getField('value')
-              this.addAnimalCall(name, sex, age, colour, size, cityId, typeId, image)
-          }        
+        let cityId = this.props.cityId;
+        if (cityId == -1) {
+          Alert.alert('Error', 'Debe rellenar todos los campos');
+        } else {
+          let name = this.props.name;
+          let age = this.props.age;
+          let sex = this.props.sex;
+          let image = this.props.image;
+          let size = this.props.size;
+          let colour = this.props.colour;
+          let cityId = this.props.cityId;
+          let typeId = this.props.typeId;
+          this.props.onFinish(
+            name,
+            sex,
+            age,
+            colour,
+            size,
+            cityId,
+            typeId,
+            image,
+          );
+        }
         break;
       default:
         break;
@@ -197,7 +153,7 @@ export default class AnimalCreationForm extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-   width: '100%',
+    width: '100%',
     marginVertical: 12,
   },
   button: {
@@ -217,5 +173,5 @@ const styles = StyleSheet.create({
   },
   cameraButton: {
     marginTop: 12,
-  }
+  },
 });

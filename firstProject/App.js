@@ -37,7 +37,7 @@ import LostAnimalsListScreen from './screens/LostAnimalsListScreen.js';
 import MyRequestScreen from './screens/MyRequestScreen.js';
 import EditRequestScreen from './screens/EditRequestScreen.js';
 import MyLostAnimals from './screens/MyLostAnimals.js';
-import EditPublicationScreen from './screens/EditPublicationScreen.js'
+import EditPublicationScreen from './screens/EditPublicationScreen.js';
 const Stack = createStackNavigator();
 export default class App extends Component {
   constructor(props) {
@@ -62,189 +62,151 @@ export default class App extends Component {
       return <SplashScreen />;
     } else {
       return (
-          <NavigationContainer>
-            <Stack.Navigator>
-              {this.state.isUserSignedIn == null ? (
-                <>
-                  <Stack.Screen
-                    name="WelcomeScreen"
-                    component={WelcomeScreen}
-                    options={{headerShown: false}}
-                  />
-                  <Stack.Screen
-                    name="LoginScreen"
-                    component={LoginScreen}
-                    options={{headerShown: false}}
-                  />
-                  <Stack.Screen
-                    name="RegistrationScreen"
-                    component={RegistrationScreen}
-                    options={{headerShown: false}}
-                  />
-                </>
-              ) : (
-                <>
-                  <Stack.Screen
-                    name="MainScreen"
-                    component={MainScreen}
-                    options={{headerShown: false}}
-                  />
-                    <Stack.Screen
-                    name="LastnamesChangeScreen"
-                    component={LastnamesChangeScreen}
-                    options={{headerShown: false}}
-                  />
-                   <Stack.Screen
-                    name="MyProfileScreen"
-                    component={MyProfileScreen}
-                    options={{headerShown: false}}
-                  />
-                  <Stack.Screen
-                    name="NameChangeScreen"
-                    component={NameChangeScreen}
-                    options={{headerShown: false}}
-                  />
-                  <Stack.Screen
-                    name="UsernameChangeScreen"
-                    component={UsernameChangeScreen}
-                    options={{headerShown: false}}
-                  />
-                   <Stack.Screen
-                    name="EmailChangeScreen"
-                    component={EmailChangeScreen}
-                    options={{headerShown: false}}
-                  /> 
-                  <Stack.Screen
+        <NavigationContainer>
+          <Stack.Navigator>
+            {this.state.isUserSignedIn == null ? (
+              <>
+                <Stack.Screen
+                  name="WelcomeScreen"
+                  component={WelcomeScreen}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="LoginScreen"
+                  component={LoginScreen}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="RegistrationScreen"
+                  component={RegistrationScreen}
+                  options={{headerShown: false}}
+                />
+              </>
+            ) : (
+              <>
+                <Stack.Screen
+                  name="MainScreen"
+                  component={MainScreen}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="LastnamesChangeScreen"
+                  component={LastnamesChangeScreen}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="NameChangeScreen"
+                  component={NameChangeScreen}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="UsernameChangeScreen"
+                  component={UsernameChangeScreen}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="EmailChangeScreen"
+                  component={EmailChangeScreen}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
                   name="PasswordChangeScreen"
                   component={PasswordChangeScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="PhoneChangeScreen"
                   component={PhoneChangeScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
-                  name="MyAnimalsScreen"
-
-                  component={MyAnimalsScreen}
-                  options={{headerShown: false}}
-                  />
-                  <Stack.Screen
-                  name="CreateAnimalScreen"
-                  component={CreateAnimalScreen}
-                  options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="EditAnimalScreen"
                   component={EditAnimalScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="AnimalNameChangeScreen"
                   component={AnimalNameChangeScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="AnimalAgeChangeScreen"
                   component={AnimalAgeChangeScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="AnimalSexChangeScreen"
                   component={AnimalSexChangeScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="AnimalColourChangeScreen"
                   component={AnimalColourChangeScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="AnimalStatusChangeScreen"
                   component={AnimalStatusChangeScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="AnimalSizeChangeScreen"
                   component={AnimalSizeChangeScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="AnimalTypeChangeScreen"
                   component={AnimalTypeChangeScreen}
                   options={{headerShown: false}}
-                  />
-                   <Stack.Screen
+                />
+                <Stack.Screen
                   name="NewSearchAnimalScreen"
                   component={NewSearchAnimalScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="AnimalCityChangeScreen"
                   component={AnimalCityChangeScreen}
                   options={{headerShown: false}}
-                  />
-                  
-                  <Stack.Screen
+                />
+
+                <Stack.Screen
                   name="AnimalImageChangeScreen"
                   component={AnimalImageChangeScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="AnimalsFilterScreen"
                   component={AnimalsFilterScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="AnimalDetailScreen"
                   component={AnimalDetailScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+                <Stack.Screen
                   name="EmailScreen"
                   component={EmailScreen}
                   options={{headerShown: false}}
-                  />
-                  <Stack.Screen
-                  name="LostAnimalScreen"
-                  component={LostAnimalScreen}
-                  options={{headerShown: false}}
-                  />
-                   <Stack.Screen
-                  name="LostAnimalsListScreen"
-                  component={LostAnimalsListScreen}
-                  options={{headerShown: false}}
-                  />
-                  <Stack.Screen
-                  name="MyRequestScreen"
-                  component={MyRequestScreen}
-                  options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+
+                <Stack.Screen
                   name="EditRequestScreen"
                   component={EditRequestScreen}
                   options={{headerShown: false}}
-                  />
-                     <Stack.Screen
-                  name="MyLostAnimals"
-                  component={MyLostAnimals}
-                  options={{headerShown: false}}
-                  />
-                  <Stack.Screen
+                />
+
+                <Stack.Screen
                   name="EditPublicationScreen"
                   component={EditPublicationScreen}
                   options={{headerShown: false}}
-                  />
-                   
-                </>
-              )}
-            </Stack.Navigator>
-          </NavigationContainer>
+                />
+              </>
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
       );
-
-
-      }
-    
+    }
   }
 }

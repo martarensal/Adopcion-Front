@@ -36,7 +36,6 @@ export default class EditPublicationScreen extends React.Component {
         });
       },
     );
-    console.log(this.props.route.params.publication)
   }
 
   render() {
@@ -47,7 +46,7 @@ export default class EditPublicationScreen extends React.Component {
           <View style={styles.container}>
             
             <List.Item
-              title="Nombre"
+              title="Descripción"
               description={this.props.route.params.publication.description}
               onPress={() => {
                 this.props.navigation.navigate('PublicationDescriptionChangeScreen', {

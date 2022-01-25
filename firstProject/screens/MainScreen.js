@@ -17,6 +17,8 @@ import LostAnimalScreen from './LostAnimalScreen';
 import MyRequestScreen from './MyRequestScreen';
 import AnimalsRequestReceived from './AnimalsRequestReceived';
 import MyLostAnimals from './MyLostAnimals';
+import LostAnimalsListScreen from './LostAnimalsListScreen';
+import NewSearchAnimalScreen from './NewSearchAnimalScreen'
 
 var SecurityUtils = require('../utils/SecurityUtils.js');
 const Drawer = createDrawerNavigator();
@@ -29,7 +31,6 @@ export default class MainScreen extends React.Component {
       loading: false,
     };
     this.startData = this.startData.bind(this);
-    this.customDrawer = this.customDrawer.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
@@ -46,15 +47,6 @@ export default class MainScreen extends React.Component {
       },
     ]);
   };
-
-  customDrawer(draw) {
-    return (
-      <DrawerContentScrollView {...draw}>
-        <DrawerItemList {...draw} />
-        <DrawerItem label="Cerrar Sesión" onPress={this.handleLogout} />
-      </DrawerContentScrollView>
-    );
-  }
 
   handleGetUserResponse(response) {
     response.json().then(data => this.setState({user: data, loading: false}));
@@ -136,28 +128,35 @@ export default class MainScreen extends React.Component {
     } else {
       return (
         <Drawer.Navigator
-          edgeWidth={60}
-          drawerContent={cositas => <this.customDrawer {...cositas} />}>
+          edgeWidth={60}>
           <Drawer.Screen name="Inicio" component={this.startData} />
-          <Drawer.Screen name="Mi perfil" component={MyProfileScreen} />
-          <Drawer.Screen name="Mis animales" component={MyAnimalsScreen} />
-          <Drawer.Screen name="Mis solicitudes" component={MyRequestScreen} />
+          <Drawer.Screen name="MyProfileScreen" component={MyProfileScreen} />
+          <Drawer.Screen name="MyAnimalsScreen" component={MyAnimalsScreen} />
+          <Drawer.Screen name="MyRequestScreen" component={MyRequestScreen} />
           <Drawer.Screen
-            name="Mis animales perdidos"
+            name="MyLostAnimals"
             component={MyLostAnimals}
           />
           <Drawer.Screen
-            name="Añadir animal"
+            name="CreateAnimalScreen"
             initialParams={{username: this.state.user.username}}
             component={CreateAnimalScreen}
           />
           <Drawer.Screen
-            name="Publicar animal perdido"
+            name="LostAnimalScreen"
             component={LostAnimalScreen}
           />
           <Drawer.Screen
-            name="Animales solicitados por mi"
+            name="AnimalsRequestReceived"
             component={AnimalsRequestReceived}
+          />
+           <Drawer.Screen
+            name="LostAnimalsListScreen"
+            component={LostAnimalsListScreen}
+          />
+          <Drawer.Screen
+            name="NewSearchAnimalScreen"
+            component={NewSearchAnimalScreen}
           />
         </Drawer.Navigator>
       );

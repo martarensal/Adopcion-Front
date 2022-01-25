@@ -26,7 +26,7 @@ export default class AnimalImageChangeScreen extends React.Component {
   handleChangeAnimalImageResponse(response) {
     console.log('Imagen del animal modificada');
     console.log(JSON.stringify(response));
-    this.props.navigation.navigate('MyAnimalsScreen');
+    this.props.navigation.goBack();
   }
 
   changeAnimalImage(animalImageChangeRequest) {

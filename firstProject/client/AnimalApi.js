@@ -231,3 +231,16 @@ export function deletePublication(idPublication, token) {
     }),
   });
 }
+
+export function modifyDescription(PublicationDescriptionChangeRequest, idPublication, token) {
+  console.log(PublicationDescriptionChangeRequest);
+  return fetch(`${BASE_URL}/publications/${idPublication}/description`, {
+    method: 'PUT',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+    body: JSON.stringify(AnimalNameChangeRequest),
+  });
+}

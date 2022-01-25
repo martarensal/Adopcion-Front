@@ -2,7 +2,6 @@ import React, {Fragment, useState} from 'react';
 import {StyleSheet, ScrollView, Text, Image} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {TextInput, Button, HelperText} from 'react-native-paper';
-import FormManager from './FormManager';
 import {
   getAC,
   getProvincesFromAC,
