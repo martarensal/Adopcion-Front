@@ -6,7 +6,6 @@ import {addAnimal} from '../client/AnimalApi';
 import {DrawerActions} from '@react-navigation/native';
 var SecurityUtils = require('../utils/SecurityUtils');
 import {ScrollView} from 'react-native-gesture-handler';
-import FormManager from '../components/FormManager';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {getTypes} from '../client/TypeApi';
 import {
