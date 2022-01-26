@@ -15,7 +15,6 @@ import Stepper from 'react-native-stepper-ui';
 import NameAndAgeStep from '../components/NameAndAgeStep.js';
 import SexColourSizeAndTypeStep from '../components/SexColourSizeAndTypeStep.js';
 import ImageStep from '../components/ImageStep.js';
-import FinalStep from '../components/FinalStep.js';
 import AnimalCityPicker from '../components/AnimalCityPicker'
 
 var validate = require('validate.js');

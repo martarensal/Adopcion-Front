@@ -16,7 +16,6 @@ import AnimalColourPicker from '../components/AnimalColourPicker.js';
 import AnimalSizePicker from '../components/AnimalSizePicker.js';
 import AnimalTypePicker from '../components/AnimalTypePicker.js';
 import AnimalCityPicker from '../components/AnimalCityPicker.js';
-import FinalStep from '../components/FinalStep.js';
 import AnimalAgePicker from '../components/AnimalAgePicker.js';
 import {searchAnimals} from '../client/AnimalApi';
 import { DrawerActions } from '@react-navigation/native';
