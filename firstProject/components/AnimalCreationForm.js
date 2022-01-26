@@ -16,6 +16,7 @@ import NameAndAgeStep from '../components/NameAndAgeStep.js';
 import SexColourSizeAndTypeStep from '../components/SexColourSizeAndTypeStep.js';
 import ImageStep from '../components/ImageStep.js';
 import FinalStep from '../components/FinalStep.js';
+import AnimalCityPicker from '../components/AnimalCityPicker'
 
 var validate = require('validate.js');
 
@@ -32,6 +33,8 @@ export default class AnimalCreationForm extends React.Component {
   }
 
   render() {
+        console.log(JSON.stringify(this.props, null, 3))
+
 
     let content = [
       <NameAndAgeStep
@@ -39,8 +42,7 @@ export default class AnimalCreationForm extends React.Component {
         name={this.props.name}
         onChange={this.props.onChangeAnimalField}
       />,
-  
-      <SexColourSizeAndTypeStep
+       <SexColourSizeAndTypeStep
         size={this.props.size}
         colour={this.props.colour}
         sex={this.props.sex}
@@ -49,19 +51,24 @@ export default class AnimalCreationForm extends React.Component {
         onChange={this.props.onChangeAnimalField}
       />,
       <ImageStep onChange={this.props.onChangeAnimalField} />,
-      <FinalStep
-        autonomousCommunity={this.props.autonomousCommunity}
-        autonomousCommunities={this.props.autonomousCommunities}
-        province={this.props.province}
-        provinces={this.props.provinces}
-        city={this.props.city}
-        cities={this.props.cities}
-        onAutonomousCommunityChange={this.onChangeAnimalField}
-        onProvinceChange={this.onChangeAnimalField}
-        onCityChange={this.props.onChangeAnimalField}
-        onChange={this.props.onChangeAnimalField}
-        getCityFromProvince={this.props.getCityFromProvince}
-        getProvincesFromAC={this.props.getProvincesFromAC}
+      <AnimalCityPicker
+           autonomousCommunity={this.props.autonomousCommunity}
+            autonomousCommunities={this.props.autonomousCommunities}
+            province={this.props.province}
+            provinces={this.props.provinces}
+            city={this.props.city}
+            cities={this.props.cities}
+            onAutonomousCommunityChange={autonomousCommunity => {
+              this.props.onChangeAnimalField('autonomousCommunity', autonomousCommunity);
+              this.props.getProvincesFromAC();
+            }}
+            onProvinceChange={province => {
+              this.props.onChangeAnimalField('province', province);
+              this.props.getCityFromProvince();
+            }}
+            onCityChange={city => {
+              this.props.onChangeAnimalField('city',  city);
+            }} 
       />,
     ];
   
@@ -131,8 +138,7 @@ export default class AnimalCreationForm extends React.Component {
           let image = this.props.image;
           let size = this.props.size;
           let colour = this.props.colour;
-          let type = this.props.type.id;
-          console.log(this.props.city)
+          let type = this.props.type;
           this.props.onFinish(name, sex, age, colour, size, city, type, image);
         }
         break;

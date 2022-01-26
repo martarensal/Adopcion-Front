@@ -111,6 +111,7 @@ export default class NewSearchAnimalScreen extends Component {
       provinces: [],
       cities: [],
       types: [],
+      animalTypes:[],
 
     };
 
@@ -177,18 +178,8 @@ export default class NewSearchAnimalScreen extends Component {
     });
   };
  componentDidMount() {
-    this._unsubscribe = this.props.navigation.addListener(
-      'focus',
-      this.getAnimalTypeFromAPI.bind(this),
-    );
-     this._unsubscribe = this.props.navigation.addListener(
-      'focus',
-      this.getACCall.bind(this),
-    );
-  }
-
-  componentWillUnmount() {
-    this._unsubscribe();
+    this.getAnimalTypeFromAPI();   
+    this.getACCall();
   }
 
   setSections = sections => {
@@ -256,18 +247,19 @@ export default class NewSearchAnimalScreen extends Component {
             autonomousCommunities={this.state.autonomousCommunities}
             province={this.state.province}
             provinces={this.state.provinces}
-            city={this.state.city}
+            city={this.state.idCity}
             cities={this.state.cities}
             onAutonomousCommunityChange={autonomousCommunity => {
-              this.setState({autonomousCommunity: autonomousCommunity.autonomousCommunity});
+              this.setState({autonomousCommunity: autonomousCommunity});
               this.getProvincesFromAC();
             }}
             onProvinceChange={province => {
-              this.setState({province: province.province});
+              this.setState({province: province});
               this.getCityFromProvince();
             }}
             onCityChange={city => {
-              this.setState({idCity: city.id});
+              this.setState({idCity: city});
+              console.log(city)
             }}
           />
         ),
@@ -279,7 +271,7 @@ export default class NewSearchAnimalScreen extends Component {
             type={this.state.idType}
             types={this.state.animalTypes}
             onChange={type => {
-              this.setState({idType: type.id});
+              this.setState({idType: type});
             }}
           />
         ),

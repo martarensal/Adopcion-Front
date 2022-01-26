@@ -15,7 +15,7 @@ export default class AnimalCityPicker extends React.Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
     return (
       <ScrollView>
@@ -34,13 +34,13 @@ export default class AnimalCityPicker extends React.Component {
               <Picker.Item
                 key={AC.autonomousCommunity + '_picker'}
                 label={AC.autonomousCommunity}
-                value={AC}
+                value={AC.autonomousCommunity}
               />
             );
           })}
         </Picker>
 
-        <Text style={styles.text}>Provincia  </Text>
+        <Text style={styles.text}>Provincia </Text>
         <Picker
           selectedValue={this.props.province}
           onValueChange={this.props.onProvinceChange}>
@@ -54,16 +54,15 @@ export default class AnimalCityPicker extends React.Component {
               <Picker.Item
                 key={province.province + '_picker'}
                 label={province.province}
-                value={province}
+                value={province.province}
               />
             );
           })}
         </Picker>
         <Text style={styles.text}>Ciudad </Text>
-         <Picker
+        <Picker
           selectedValue={this.props.city}
-          onValueChange={this.props.onCityChange}
-          >
+          onValueChange={this.props.onCityChange}>
           <Picker.Item
             key="undefined_picker"
             label="-- NO SELECCIONADO --"
@@ -74,11 +73,11 @@ export default class AnimalCityPicker extends React.Component {
               <Picker.Item
                 key={city.name + '_picker'}
                 label={city.name}
-                value={city}
+                value={city.id}
               />
             );
           })}
-                  </Picker>
+        </Picker>
       </ScrollView>
     );
   }
@@ -90,7 +89,7 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   text: {
-      fontFamily: 'RobotoSlab-Regular',
+    fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 15,
     alignContent: 'center',

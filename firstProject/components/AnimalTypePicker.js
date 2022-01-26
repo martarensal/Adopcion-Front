@@ -28,7 +28,7 @@ export default class AnimalTypePicker extends React.Component {
               <Picker.Item
                 key={type.name + '_picker'}
                 label={type.name}
-                value={type}
+                value={type.id}
               />
             );
           })}

@@ -36,7 +36,6 @@ export default class SexColourSizeAndTypeStep extends React.Component {
     this.props.onChange(field, value);
   }
   render() {
-
     return (
       <View style={styles.container}>
         {STEP2_FORM_FIELDS.map(formField => (

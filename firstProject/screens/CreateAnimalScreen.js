@@ -27,6 +27,7 @@ export default class CreateAnimalScreen extends React.Component {
       provinces: [],
       cities: [],
       animalTypes: [],
+      image:'',
     };
 
     this.onChangeAnimalField = this.onChangeAnimalField.bind(this);
@@ -120,10 +121,10 @@ export default class CreateAnimalScreen extends React.Component {
     }
   }
 
-  addAnimalCall(name, sex, age, colour, size, idCity, idType, image) {
+  addAnimalCall(name, sex, age, colour, size, city, idType, image) {
     let body = {
       age: age,
-      city_id: idCity,
+      city_id: city,
       colour: colour,
       image: image,
       name: name,
@@ -173,7 +174,8 @@ export default class CreateAnimalScreen extends React.Component {
               image={this.state.image}
               idType={this.state.type}
               types={this.state.animalTypes}
-              idCity={this.state.city}
+              type={this.state.type}
+              city={this.state.city}
               cities={this.state.cities}
               province={this.state.province}
               provinces={this.state.provinces}
