@@ -1,6 +1,5 @@
 import React from 'react';
 import {Appbar} from 'react-native-paper';
-
 import {StyleSheet, View, Text, Image} from 'react-native';
 import AnimalCreationForm from '../components/AnimalCreationForm';
 import {addAnimal} from '../client/AnimalApi';
@@ -28,7 +27,6 @@ export default class CreateAnimalScreen extends React.Component {
       provinces: [],
       cities: [],
       animalTypes: [],
-
     };
 
     this.onChangeAnimalField = this.onChangeAnimalField.bind(this);
@@ -43,7 +41,7 @@ export default class CreateAnimalScreen extends React.Component {
   }
 
   async handleGetAnimalTypeResponse(response) {
-    console.log(response)
+    console.log(response);
     var types = [];
     const jsonResponse = await response.json();
     this.setState({
@@ -104,9 +102,12 @@ export default class CreateAnimalScreen extends React.Component {
   };
 
   onChangeAnimalField(field, value) {
-    this.setState({
-      [field]: value,
-    }, () => console.log(this.state));
+    this.setState(
+      {
+        [field]: value,
+      },
+      () => console.log(this.state),
+    );
   }
 
   handleCreateNewAnimalResponse(response) {
@@ -119,24 +120,24 @@ export default class CreateAnimalScreen extends React.Component {
     }
   }
 
-  addAnimalCall(name, sex, age, colour, size, city, type, image) {
+  addAnimalCall(name, sex, age, colour, size, idCity, idType, image) {
     let body = {
       age: age,
-      city_id: city,
+      city_id: idCity,
       colour: colour,
       image: image,
       name: name,
       sex: sex,
       size: size,
       status: 'homeless',
-      type_id: type,
+      type_id: idType,
     };
-
-    SecurityUtils.authorizeApi([body, this.props.username], addAnimal).then(
-      this.handleCreateNewAnimalResponse.bind(this),
-    );
+    console.log(JSON.stringify(body, null, 2));
+    SecurityUtils.authorizeApi(
+      [body, this.props.route.params.username],
+      addAnimal,
+    ).then(this.handleCreateNewAnimalResponse.bind(this));
   }
-
 
   render() {
     if (this.state.loadingDataType && this.state.loadingDataCommunity)
@@ -153,7 +154,6 @@ export default class CreateAnimalScreen extends React.Component {
             <Appbar.Action
               icon="menu"
               onPress={() => {
-                console.log('ABRIENDO DRAWER');
                 this.props.navigation.dispatch(DrawerActions.toggleDrawer());
               }}
             />
@@ -170,14 +170,14 @@ export default class CreateAnimalScreen extends React.Component {
               size={this.state.size}
               colour={this.state.colour}
               sex={this.state.sex}
-              type={this.state.type}
-              autonomousCommunity={this.state.autonomousCommunity}
-              province={this.state.province}
-              city={this.state.city}
-
+              image={this.state.image}
+              idType={this.state.type}
               types={this.state.animalTypes}
+              idCity={this.state.city}
               cities={this.state.cities}
+              province={this.state.province}
               provinces={this.state.provinces}
+              autonomousCommunity={this.state.autonomousCommunity}
               autonomousCommunities={this.state.autonomousCommunities}
               getCityFromProvince={this.getCityFromProvince}
               getProvincesFromAC={this.getProvincesFromAC}
@@ -210,10 +210,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     width: '80%',
-    //maxWidth: 340,
     alignSelf: 'center',
-    //alignItems: 'center',
-    //justifyContent: 'center',
     backgroundColor: 'white',
   },
   text: {

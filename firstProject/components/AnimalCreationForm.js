@@ -93,7 +93,7 @@ export default class AnimalCreationForm extends React.Component {
 
   
   isValidNumber(number) {
-    intNumber = parseInt(number);
+    let intNumber = parseInt(number);
     return !isNaN(intNumber) && intNumber >= 0 && intNumber <= 500;
   }
 
@@ -104,7 +104,7 @@ export default class AnimalCreationForm extends React.Component {
         if (name == '')
           Alert.alert('Error', 'El campo nombre no puede estar vacío');
         else {
-          age = this.props.age;
+          let age = this.props.age;
           if (!this.isValidNumber(age)) {
             Alert.alert('Error', 'Debe rellenar correctamente el campo edad');
           } else {
@@ -121,8 +121,8 @@ export default class AnimalCreationForm extends React.Component {
 
         break;
       case 3:
-        let cityId = this.props.cityId;
-        if (cityId == -1) {
+        let city = this.props.city;
+        if (city == -1) {
           Alert.alert('Error', 'Debe rellenar todos los campos');
         } else {
           let name = this.props.name;
@@ -131,18 +131,9 @@ export default class AnimalCreationForm extends React.Component {
           let image = this.props.image;
           let size = this.props.size;
           let colour = this.props.colour;
-          let cityId = this.props.cityId;
-          let typeId = this.props.typeId;
-          this.props.onFinish(
-            name,
-            sex,
-            age,
-            colour,
-            size,
-            cityId,
-            typeId,
-            image,
-          );
+          let type = this.props.type.id;
+          console.log(this.props.city)
+          this.props.onFinish(name, sex, age, colour, size, city, type, image);
         }
         break;
       default:

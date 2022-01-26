@@ -31,10 +31,11 @@ export default class MainScreen extends React.Component {
       loading: false,
     };
     this.startData = this.startData.bind(this);
+        this.customDrawer = this.customDrawer.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
-  handleLogout = () => {
+ handleLogout = () => {
     Alert.alert('Cerrar Sesión', '¿Está seguro que quiere cerrar sesión?', [
       {
         text: 'Sí',
@@ -48,10 +49,19 @@ export default class MainScreen extends React.Component {
     ]);
   };
 
+
+  customDrawer(draw) {
+    return (
+      <DrawerContentScrollView {...draw}>
+        <DrawerItemList {...draw} />
+        <DrawerItem label="Cerrar Sesión" onPress={this.handleLogout} />
+      </DrawerContentScrollView>
+    );
+  }
+
   handleGetUserResponse(response) {
     response.json().then(data => this.setState({user: data, loading: false}));
   }
-
   fetchUserData() {
     this.setState({loading: true});
     SecurityUtils.tokenInfo().then(info => {
@@ -60,14 +70,12 @@ export default class MainScreen extends React.Component {
       );
     });
   }
-
   componentDidMount() {
     this._unsubscribe = this.props.navigation.addListener(
       'focus',
       this.fetchUserData.bind(this),
     );
   }
-
   componentWillUnmount() {
     this._unsubscribe();
   }
@@ -121,6 +129,7 @@ export default class MainScreen extends React.Component {
       </View>
     );
   }
+  
 
   render() {
     if (this.state.loading) {
@@ -128,7 +137,7 @@ export default class MainScreen extends React.Component {
     } else {
       return (
         <Drawer.Navigator
-          edgeWidth={60}>
+          edgeWidth={60} drawerContent={cositas => <this.customDrawer {...cositas}/>}>
           <Drawer.Screen name="Inicio" component={this.startData} />
           <Drawer.Screen name="MyProfileScreen" component={MyProfileScreen} />
           <Drawer.Screen name="MyAnimalsScreen" component={MyAnimalsScreen} />

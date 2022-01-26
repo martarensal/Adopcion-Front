@@ -36,9 +36,6 @@ export default class SexColourSizeAndTypeStep extends React.Component {
     this.props.onChange(field, value);
   }
   render() {
-    console.log()
-    console.log(JSON.stringify(this.props, 2))
-    
 
     return (
       <View style={styles.container}>

@@ -176,10 +176,19 @@ export default class NewSearchAnimalScreen extends Component {
       ).then(this.handleGetCityResponse.bind(this));
     });
   };
+ componentDidMount() {
+    this._unsubscribe = this.props.navigation.addListener(
+      'focus',
+      this.getAnimalTypeFromAPI.bind(this),
+    );
+     this._unsubscribe = this.props.navigation.addListener(
+      'focus',
+      this.getACCall.bind(this),
+    );
+  }
 
-  componentDidMount() {
-    this.getAnimalTypeFromAPI();
-    this.getACCall();
+  componentWillUnmount() {
+    this._unsubscribe();
   }
 
   setSections = sections => {
@@ -250,15 +259,15 @@ export default class NewSearchAnimalScreen extends Component {
             city={this.state.city}
             cities={this.state.cities}
             onAutonomousCommunityChange={autonomousCommunity => {
-              this.setState({autonomousCommunity: autonomousCommunity});
+              this.setState({autonomousCommunity: autonomousCommunity.autonomousCommunity});
               this.getProvincesFromAC();
             }}
             onProvinceChange={province => {
-              this.setState({province: province});
+              this.setState({province: province.province});
               this.getCityFromProvince();
             }}
             onCityChange={city => {
-              this.setState({city: city});
+              this.setState({idCity: city.id});
             }}
           />
         ),
@@ -270,7 +279,7 @@ export default class NewSearchAnimalScreen extends Component {
             type={this.state.idType}
             types={this.state.animalTypes}
             onChange={type => {
-              this.setState({idType: type});
+              this.setState({idType: type.id});
             }}
           />
         ),
@@ -316,7 +325,6 @@ export default class NewSearchAnimalScreen extends Component {
       },
     ];
 
-    console.log(JSON.stringify(this.state, null, 4));
     if (this.state.loadingDataType && this.state.loadingDataCommunity)
       return (
         <View style={styles.container}>

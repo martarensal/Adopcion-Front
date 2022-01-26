@@ -36,6 +36,8 @@ export default class EditAnimalScreen extends React.Component {
         });
       },
     );
+
+    
   }
 
   render() {

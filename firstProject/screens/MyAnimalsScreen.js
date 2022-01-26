@@ -83,10 +83,16 @@ export default class MyAnimalsScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchUserDataWithAnimals();
+    this._unsubscribe = this.props.navigation.addListener(
+      'focus',this.fetchUserDataWithAnimals.bind(this),
+    );
+    
     this._outOfFocus = this.props.navigation.addListener('blur', () =>
       this.setState({animals: [], page: 0}),
     );
+  }
+  componentWillUnmount(){
+      this._unsubscribe();
   }
 
   render() {

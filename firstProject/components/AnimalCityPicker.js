@@ -15,7 +15,7 @@ export default class AnimalCityPicker extends React.Component {
   constructor(props) {
     super(props);
   }
-
+  
   render() {
     return (
       <ScrollView>
@@ -34,7 +34,7 @@ export default class AnimalCityPicker extends React.Component {
               <Picker.Item
                 key={AC.autonomousCommunity + '_picker'}
                 label={AC.autonomousCommunity}
-                value={AC.autonomousCommunity}
+                value={AC}
               />
             );
           })}
@@ -54,13 +54,12 @@ export default class AnimalCityPicker extends React.Component {
               <Picker.Item
                 key={province.province + '_picker'}
                 label={province.province}
-                value={province.province}
+                value={province}
               />
             );
           })}
         </Picker>
         <Text style={styles.text}>Ciudad </Text>
-
          <Picker
           selectedValue={this.props.city}
           onValueChange={this.props.onCityChange}
@@ -75,7 +74,7 @@ export default class AnimalCityPicker extends React.Component {
               <Picker.Item
                 key={city.name + '_picker'}
                 label={city.name}
-                value={city.name}
+                value={city}
               />
             );
           })}
