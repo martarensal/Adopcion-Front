@@ -15,7 +15,7 @@ export default class NameChangeScreen extends React.Component {
   handleChangeLastnameResponse(response) {
     console.log('Apellidos modificado');
     console.log(JSON.stringify(response));
-    this.props.navigation.navigate('MyProfileScreen');
+      this.props.navigation.goBack();
   }
 
   changeUserLastname(userLastnameChangeRequest) {

@@ -17,7 +17,7 @@ export default class EmailChangeScreen extends React.Component {
   handleChangeEmailResponse(response) {
     console.log('Email modificado');
     console.log(JSON.stringify(response));
-    this.props.navigation.navigate('MyProfileScreen');
+    this.props.navigation.goBack();
   }
 
   changeUserEmail(userEmailChangeRequest) {

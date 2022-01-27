@@ -66,18 +66,7 @@ export default class AnimalStatusChangeScreen extends React.Component {
             disabled={!this.state.newValue}
             dark={true}
             onPress={() =>
-              Alert.alert(
-                'Confirmación',
-                'El estado del animal ha sido modificado con éxito',
-                [
-                  {
-                    text: 'Ok',
-                    onPress: () =>
-                      this.props.navigation.navigate('MyAnimalsScreen'),
-                  },
-                ],
-                {cancelable: false},
-              )
+              this.props.navigation.goBack()
             }>
             {' '}
             Enviar{' '}

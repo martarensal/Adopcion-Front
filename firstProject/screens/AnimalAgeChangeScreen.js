@@ -15,7 +15,7 @@ export default class AnimalageChangeScreen extends React.Component {
   handleChangeAnimalAgeResponse(response) {
     console.log('Edad animal modificado');
     console.log(JSON.stringify(response));
-    this.props.navigation.navigate('MyAnimalsScreen');
+    this.props.navigation.goBack();
   }
 
   changeAnimalAge(animalAgeChangeRequest) {

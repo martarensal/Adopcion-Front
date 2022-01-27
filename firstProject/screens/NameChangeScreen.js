@@ -15,7 +15,7 @@ export default class NameChangeScreen extends React.Component {
   handleChangenameResponse(response) {
     console.log('Nombre modificado');
     console.log(JSON.stringify(response));
-    this.props.navigation.navigate('MyProfileScreen');
+    this.props.navigation.goBack();
   }
 
   changeUserName(userNameChangeRequest) {
@@ -23,8 +23,8 @@ export default class NameChangeScreen extends React.Component {
       newName: userNameChangeRequest.newValue,
     };
     SecurityUtils.tokenInfo().then(info => {
-        console.log(body);
-        console.log(info);
+      console.log(body);
+      console.log(info);
       SecurityUtils.authorizeApi([body, info.sub], modifyUserName).then(
         this.handleChangenameResponse.bind(this),
       );
@@ -34,13 +34,13 @@ export default class NameChangeScreen extends React.Component {
   render() {
     return (
       <>
-             <HeaderAppbar/>
-      <View style={styles.container}>
-        <ChangeForm
-          value={this.props.route.params.name}
-          handlePress={this.changeUserName}
-        />
-      </View>
+        <HeaderAppbar />
+        <View style={styles.container}>
+          <ChangeForm
+            value={this.props.route.params.name}
+            handlePress={this.changeUserName}
+          />
+        </View>
       </>
     );
   }

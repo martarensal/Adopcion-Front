@@ -121,7 +121,7 @@ export default class MyAnimalsScreen extends React.Component {
                   </Text>
                   <TouchableOpacity
                     onPress={() =>
-                      this.props.navigation.navigate('CreateAnimalScreen', {
+                      this.props.navigation.navigate('Añadir animal', {
                         username: this.state.user.username,
                       })
                     }>

@@ -107,7 +107,7 @@ export default class MainScreen extends React.Component {
               color='#F5C401'
 
             onPress={() =>
-              this.props.navigation.navigate('NewSearchAnimalScreen')
+              this.props.navigation.navigate('Buscar animal')
             }>
             Buscar animal
           </Button>
@@ -119,7 +119,7 @@ export default class MainScreen extends React.Component {
                 color='#F5C401'
 
             onPress={() =>
-              this.props.navigation.navigate('LostAnimalsListScreen')
+              this.props.navigation.navigate('Lista animales perdidos')
             }>
             Animales perdidos
           </Button>
@@ -139,32 +139,32 @@ export default class MainScreen extends React.Component {
         <Drawer.Navigator
           edgeWidth={60} drawerContent={cositas => <this.customDrawer {...cositas}/>}>
           <Drawer.Screen name="Inicio" component={this.startData} />
-          <Drawer.Screen name="MyProfileScreen" component={MyProfileScreen} />
-          <Drawer.Screen name="MyAnimalsScreen" component={MyAnimalsScreen} />
-          <Drawer.Screen name="MyRequestScreen" component={MyRequestScreen} />
+          <Drawer.Screen name="Mi perfil" component={MyProfileScreen} />
+          <Drawer.Screen name="Mis animales" component={MyAnimalsScreen} />
+          <Drawer.Screen name="Mis solicitudes" component={MyRequestScreen} />
           <Drawer.Screen
-            name="MyLostAnimals"
+            name="Mis animales perdidos"
             component={MyLostAnimals}
           />
           <Drawer.Screen
-            name="CreateAnimalScreen"
+            name="Añadir animal"
             initialParams={{username: this.state.user.username}}
             component={CreateAnimalScreen}
           />
           <Drawer.Screen
-            name="LostAnimalScreen"
+            name="Añadir animal perdido"
             component={LostAnimalScreen}
           />
           <Drawer.Screen
-            name="AnimalsRequestReceived"
+            name="Solicitudes recibidas"
             component={AnimalsRequestReceived}
           />
            <Drawer.Screen
-            name="LostAnimalsListScreen"
+            name="Lista animales perdidos"
             component={LostAnimalsListScreen}
           />
           <Drawer.Screen
-            name="NewSearchAnimalScreen"
+            name="Buscar animal"
             component={NewSearchAnimalScreen}
           />
         </Drawer.Navigator>

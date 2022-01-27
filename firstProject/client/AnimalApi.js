@@ -63,7 +63,7 @@ export function modifyAnimalSex(animalSexChangeRequest, idAnimal, token) {
   });
 }
 
-export function modifyAnimalColour(animalColourChangeRequest, idAnimal, token) {
+export function modifyAnimalColour( idAnimal, animalColourChangeRequest, token) {
   return fetch(`${BASE_URL}/animals/${idAnimal}/colour`, {
     method: 'PUT',
     headers: new Headers({
@@ -134,6 +134,17 @@ export function modifyAnimalImage(animalImageChangeRequest, idAnimal, token) {
       'X-API-KEY': token,
     }),
     body: JSON.stringify(animalImageChangeRequest),
+  });
+}
+
+export function getAnimal(idAnimal, token) {
+  return fetch(`${BASE_URL}/animals/${idAnimal}`, {
+    method: 'GET',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
   });
 }
 

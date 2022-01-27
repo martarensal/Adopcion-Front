@@ -15,7 +15,7 @@ export default class AnimalNameChangeScreen extends React.Component {
   handleChangeAnimalNameResponse(response) {
     console.log('Nombre animal modificado');
     console.log(JSON.stringify(response));
-    this.props.navigation.navigate('MyAnimalsScreen');
+    this.props.navigation.navigate('Mis animales');
   }
 
   changeAnimalName(animalNameChangeRequest) {

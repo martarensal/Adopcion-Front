@@ -14,7 +14,7 @@ export default class PasswordChangeScreen extends React.Component {
   handleChangePasswordResponse(response) {
     console.log('Contraseña modificada');
     console.log(JSON.stringify(response));
-    this.props.navigation.navigate('MyProfileScreen');
+    this.props.navigation.goBack();
   }
 
   changeUserPassword(userPasswordChangeRequest) {

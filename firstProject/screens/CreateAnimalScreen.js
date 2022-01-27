@@ -164,7 +164,7 @@ export default class CreateAnimalScreen extends React.Component {
             <Text style={styles.text}>Nuevo animal</Text>
             <AnimalCreationForm
               username={this.props.route.params.username}
-              onCreate={() => this.props.navigation.navigate('MyAnimalsScreen')}
+              onCreate={() => this.props.navigation.navigate('Mis animales')}
               age={this.state.age}
               name={this.state.name}
               size={this.state.size}

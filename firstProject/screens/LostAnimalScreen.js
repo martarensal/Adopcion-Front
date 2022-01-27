@@ -38,7 +38,7 @@ export default class LostAnimalScreen extends React.Component {
                   {
                     text: 'Ok',
                     onPress: () =>
-                      this.props.navigation.navigate('MyLostAnimals'),
+                      this.props.navigation.navigate('Mis animales perdidos'),
                   },
                 ],
                 {cancelable: false},

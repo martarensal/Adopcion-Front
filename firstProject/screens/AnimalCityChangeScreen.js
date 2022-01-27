@@ -198,18 +198,7 @@ export default class AnimalCityChangeScreen extends React.Component {
             disabled={!this.state.newValue}
             dark={true}
             onPress={() =>
-              Alert.alert(
-                'Confirmación',
-                'La ciudad del animal ha sido modificada con éxito',
-                [
-                  {
-                    text: 'Ok',
-                    onPress: () =>
-                      this.props.navigation.navigate('MyAnimalsScreen'),
-                  },
-                ],
-                {cancelable: false},
-              )
+                 this.props.navigation.goBack()
             }>
             {' '}
             Enviar{' '}

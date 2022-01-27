@@ -116,7 +116,7 @@ export default class MyLostAnimals extends React.Component {
                   </Text>
                   <TouchableOpacity
                     onPress={() =>
-                      this.props.navigation.navigate('LostAnimalScreen', {
+                      this.props.navigation.navigate('Añadir animal perdido', {
                         username: this.state.user.username,
                       })
                     }>

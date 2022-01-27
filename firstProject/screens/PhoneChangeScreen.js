@@ -14,7 +14,7 @@ export default class PhoneChangeScreen extends React.Component {
   handleChangephoneResponse(response) {
     console.log('Teléfono modificado');
     console.log(JSON.stringify(response));
-    this.props.navigation.navigate('MyProfileScreen');
+    this.props.navigation.goBack();
   }
 
   changeUserPhone(userPhoneChangeRequest) {
@@ -22,8 +22,8 @@ export default class PhoneChangeScreen extends React.Component {
       newPhone: userPhoneChangeRequest.newValue,
     };
     SecurityUtils.tokenInfo().then(info => {
-        console.log(body);
-        console.log(info);
+      console.log(body);
+      console.log(info);
       SecurityUtils.authorizeApi([body, info.sub], modifyUserPhone).then(
         this.handleChangephoneResponse.bind(this),
       );
@@ -33,13 +33,13 @@ export default class PhoneChangeScreen extends React.Component {
   render() {
     return (
       <>
-      <HeaderAppbar/>
-      <View style={styles.container}>
-        <ChangeForm
-          value={this.props.route.params.phone}
-          handlePress={this.changeUserPhone}
-        />
-      </View>
+        <HeaderAppbar />
+        <View style={styles.container}>
+          <ChangeForm
+            value={this.props.route.params.phone}
+            handlePress={this.changeUserPhone}
+          />
+        </View>
       </>
     );
   }

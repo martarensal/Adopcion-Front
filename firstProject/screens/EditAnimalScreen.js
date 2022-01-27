@@ -11,6 +11,10 @@ import {List} from 'react-native-paper';
 import {Appbar} from 'react-native-paper';
 import {DrawerActions} from '@react-navigation/native';
 import HeaderAppbar from '../components/HeaderAppbar';
+import {getAnimal} from '../client/AnimalApi';
+
+var SecurityUtils = require('../utils/SecurityUtils');
+
 
 export default class EditAnimalScreen extends React.Component {
   constructor(props) {
@@ -19,10 +23,18 @@ export default class EditAnimalScreen extends React.Component {
       base64: 'data:image/png;base64,',
       width: 0,
       height: 0,
+      animal: {},
     };
   }
-  componentDidMount() {
-    Image.getSize(
+    handleGetAnimalResponse(response) {
+    response.json().then(data => {
+      console.log(data);
+      this.setState({animal: data, loading: false});
+    });
+  }
+
+  fetchAnimalData() {
+     Image.getSize(
       this.state.base64 + this.props.route.params.animal.image,
       (width, height) => {
         screen_percentage = 0.55;
@@ -36,8 +48,22 @@ export default class EditAnimalScreen extends React.Component {
         });
       },
     );
+    this.setState({loading: true});
+      SecurityUtils.authorizeApi([this.props.route.params.animal.id], getAnimal).then(
+        this.handleGetAnimalResponse.bind(this),
+      );
+  }
 
-    
+  componentDidMount() {
+   
+    this._unsubscribe = this.props.navigation.addListener(
+      'focus',
+      this.fetchAnimalData.bind(this),
+    );
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
   }
 
   render() {
@@ -48,15 +74,17 @@ export default class EditAnimalScreen extends React.Component {
           <View style={styles.container}>
             <Text style={styles.title}>
               {' '}
-              Editar perfil de {this.props.route.params.animal.name}{' '}
+              Editar perfil de {this.state.animal.name/*this.props.route.params.animal.name*/}{' '}
             </Text>
             <List.Item
               title="Nombre"
-              description={this.props.route.params.animal.name}
+              description={this.state.animal.name/*this.props.route.params.animal.name*/}
               onPress={() => {
                 this.props.navigation.navigate('AnimalNameChangeScreen', {
-                  id: this.props.route.params.animal.id,
-                  name: this.props.route.params.animal.name,
+                  id: this.state.animal.id,
+                  name: this.state.animal.name,
+                  /*id: this.props.route.params.animal.id,
+                  name: this.props.route.params.animal.name,*/
                 });
               }}
             />
@@ -64,8 +92,10 @@ export default class EditAnimalScreen extends React.Component {
               title="Foto"
               onPress={() => {
                 this.props.navigation.navigate('AnimalImageChangeScreen', {
-                  id: this.props.route.params.animal.id,
-                  image: this.props.route.params.animal.image,
+                  id: this.state.animal.id,
+                  image: this.state.animal.image,
+                  /*id: this.props.route.params.animal.id,
+                  image: this.props.route.params.animal.image,*/
                 });
               }}
             />
@@ -82,71 +112,81 @@ export default class EditAnimalScreen extends React.Component {
             />
             <List.Item
               title="Edad"
-              description={this.props.route.params.animal.age}
+              description={this.state.animal.age/*this.props.route.params.animal.age*/}
               onPress={() => {
                 this.props.navigation.navigate('AnimalAgeChangeScreen', {
-                  id: this.props.route.params.animal.id,
-                  age: this.props.route.params.animal.age,
+                  id: this.state.animal.id,
+                  age: this.state.animal.age,
+                  /*id: this.props.route.params.animal.id,
+                  age: this.props.route.params.animal.age,*/
                 });
               }}
             />
             <List.Item
               title="Sexo"
-              description={this.props.route.params.animal.sex}
+              description={this.state.animal.sex/*this.props.route.params.animal.sex*/}
               onPress={() => {
                 this.props.navigation.navigate('AnimalSexChangeScreen', {
-                  id: this.props.route.params.animal.id,
-                  sex: this.props.route.params.animal.sex,
+                 id: this.state.animal.id,
+                  sex: this.state.animal.sex,
                 });
               }}
             />
             <List.Item
               title="Color"
-              description={this.props.route.params.animal.colour}
+              description={this.state.animal.colour/*this.props.route.params.animal.colour*/}
               onPress={() => {
                 this.props.navigation.navigate('AnimalColourChangeScreen', {
-                  id: this.props.route.params.animal.id,
-                  colour: this.props.route.params.animal.colour,
+                  id: this.state.animal.colour,
+                  colour: this.state.animal.colour,
+                  /*id: this.props.route.params.animal.id,
+                  colour: this.props.route.params.animal.colour,*/
                 });
               }}
             />
             <List.Item
               title="Estado"
-              description={this.props.route.params.animal.status}
+              description={this.state.animal.status/*this.props.route.params.animal.status*/}
               onPress={() => {
                 this.props.navigation.navigate('AnimalStatusChangeScreen', {
-                  id: this.props.route.params.animal.id,
-                  status: this.props.route.params.animal.status,
+                  id: this.state.animal.id,
+                  status: this.state.animal.status,
+                  /*id: this.props.route.params.animal.id,
+                  status: this.props.route.params.animal.status,*/
                 });
               }}
             />
             <List.Item
               title="Tamaño"
-              description={this.props.route.params.animal.size}
+              description={this.state.animal.size/*this.props.route.params.animal.size*/}
               onPress={() => {
                 this.props.navigation.navigate('AnimalSizeChangeScreen', {
-                  id: this.props.route.params.animal.id,
-                  size: this.props.route.params.animal.size,
+                  id: this.state.animal.id,
+                  size: this.state.animal.size,
                 });
               }}
             />
             <List.Item
               title="Ciudad"
-              description={this.props.route.params.animal.city}
+              description={this.state.animal.city/*this.props.route.params.animal.city*/}
               onPress={() => {
                 this.props.navigation.navigate('AnimalCityChangeScreen', {
-                  id: this.props.route.params.animal.id,
-                  city: this.props.route.params.animal.city,
+                  id: this.state.animal.id,
+                  city: this.state.animal.city,
+                  /*id: this.props.route.params.animal.id,
+                  city: this.props.route.params.animal.city,*/
                 });
               }}
             />
             <List.Item
               title="Tipo"
-              description={this.props.route.params.animal.type}
+              description={this.state.animal.type/*this.props.route.params.animal.type*/}
               onPress={() => {
                 this.props.navigation.navigate('AnimalTypeChangeScreen', {
-                  id: this.props.route.params.animal.id,
-                  type: this.props.route.params.animal.type,
+                  id: this.state.animal.id,
+                  type: this.state.animal.type,
+                  /*id: this.props.route.params.animal.id,
+                  type: this.props.route.params.animal.type,*/
                 });
               }}
             />

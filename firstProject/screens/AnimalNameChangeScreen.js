@@ -15,7 +15,7 @@ export default class AnimalNameChangeScreen extends React.Component {
   handleChangeAnimalNameResponse(response) {
     console.log('Nombre animal modificado');
     console.log(JSON.stringify(response));
-    this.props.navigation.navigate('MyAnimalsScreen');
+    this.props.navigation.goBack();
   }
 
   changeAnimalName(animalNameChangeRequest) {
@@ -23,21 +23,23 @@ export default class AnimalNameChangeScreen extends React.Component {
       newAnimalName: animalNameChangeRequest.newValue,
     };
     SecurityUtils.tokenInfo().then(info => {
-      SecurityUtils.authorizeApi([body, this.props.route.params.id], modifyAnimalName).then(
-          this.handleChangeAnimalNameResponse.bind(this));
+      SecurityUtils.authorizeApi(
+        [body, this.props.route.params.id],
+        modifyAnimalName,
+      ).then(this.handleChangeAnimalNameResponse.bind(this));
     });
   }
 
   render() {
     return (
       <>
-      <HeaderAppbar/>
-      <View style={styles.container}>
-        <ChangeForm
-          value={this.props.route.params.name}
-          handlePress={this.changeAnimalName}
-        />
-      </View>
+        <HeaderAppbar />
+        <View style={styles.container}>
+          <ChangeForm
+            value={this.props.route.params.name}
+            handlePress={this.changeAnimalName}
+          />
+        </View>
       </>
     );
   }
