@@ -19,7 +19,6 @@ export default class MyProfileScreen extends Component {
 
   handleGetUserResponse(response) {
     response.json().then(data => {
-      console.log(data);
       this.setState({user: data, loading: false});
     });
   }
@@ -27,7 +26,6 @@ export default class MyProfileScreen extends Component {
   fetchUserData() {
     this.setState({loading: true});
     SecurityUtils.tokenInfo().then(info => {
-      console.log(info);
       SecurityUtils.authorizeApi([info.sub], getUser).then(
         this.handleGetUserResponse.bind(this),
       );

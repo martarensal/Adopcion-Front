@@ -140,13 +140,9 @@ export default class CreateAnimalScreen extends React.Component {
   }
 
   render() {
-    if (this.state.loadingDataType && this.state.loadingDataCommunity)
-      return (
-        <View style={styles.container}>
-          <LoadingIndicator />
-        </View>
-      );
-
+    if (this.state.loadingDataType && this.state.loadingDataCommunity){
+     return <LoadingIndicator />;
+    } else {
     return (
       <>
         <View style={styles.background}>
@@ -189,6 +185,7 @@ export default class CreateAnimalScreen extends React.Component {
         </View>
       </>
     );
+  }
   }
 }
 

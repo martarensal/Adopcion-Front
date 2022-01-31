@@ -11,7 +11,6 @@ export function addAnimal(animalCreationRequest, username, token) {
     body: JSON.stringify(animalCreationRequest),
   });
 }
-
 export function getPaginatedAnimalsFromUser(page, size, username, token) {
   return fetch(
     `${BASE_URL}/users/${username}/animals?page=${page}&size=${size}`,
@@ -218,7 +217,7 @@ export function getPaginatedPublications(page, size, token) {
   );
 }
 
-export function getMyPublications(username, page, size, token) {
+export function getPaginatedPublicationsFromUser(page, size, username, token) {
   return fetch(
     `${BASE_URL}/user/${username}/publications?page=${page}&size=${size}`,
     {

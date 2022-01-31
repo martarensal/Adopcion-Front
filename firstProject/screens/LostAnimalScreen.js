@@ -43,8 +43,6 @@ export default class LostAnimalScreen extends React.Component {
                 ],
                 {cancelable: false},
               )
-      
-      console.log(JSON.stringify(response));
       console.log('Publicacion creada');
     } else {
       console.log(JSON.stringify(response));
@@ -82,7 +80,7 @@ export default class LostAnimalScreen extends React.Component {
               dark={true}
               color="#F5C401"
               onPress={this.addPublication}>
-              Publicar animal
+              Publicar
             </Button>
           </View>
         </View>
@@ -104,12 +102,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 20,
     width: '100%',
     maxWidth: 340,
     alignSelf: 'center',
     alignItems: 'center',
-    //justifyContent: 'center',
     backgroundColor: 'white',
   },
   background: {
@@ -127,5 +123,6 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 15,
     width: '100%',
+    justifyContent:'flex-end',
   },
 });

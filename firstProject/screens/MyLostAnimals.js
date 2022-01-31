@@ -14,7 +14,7 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DrawerActions} from '@react-navigation/native';
 var SecurityUtils = require('../utils/SecurityUtils');
-import {getMyPublications,deletePublication} from '../client/AnimalApi';
+import {getPaginatedPublicationsFromUser,deletePublication} from '../client/AnimalApi';
 var SecurityUtils = require('../utils/SecurityUtils');
 
 export default class MyLostAnimals extends React.Component {
@@ -25,8 +25,8 @@ export default class MyLostAnimals extends React.Component {
       publications: [],
       paginationInfo: {},
       loading: true,
-      user: {},
       page: 0,
+      user: {},
       width: 80,
       height: 80,
       base64: 'data:image/png;base64,',
@@ -34,17 +34,15 @@ export default class MyLostAnimals extends React.Component {
 
     this.deletePublication = this.deletePublication.bind(this);
     this.handleDetelePublicationResponse = this.handleDetelePublicationResponse.bind(this)
-    this.fetchUserData = this.fetchUserData.bind(this)
-    this.fetchPublications = this.fetchPublications.bind(this)
-    this.handleGetUserResponse = this.handleGetUserResponse.bind(this)
+    this.fetchUserDataWithPublications = this.fetchUserDataWithPublications.bind(this)
   }
 
   handleDetelePublicationResponse(response) {
-    if (response.ok) {
-      console.log('Publicacion borrado');
-      this.setState({publications: {}});
+      if (response.ok) {
+      this.setState({publications: [], page: 0});
+      this.fetchUserDataWithPublications();
     } else {
-      console.log('Error');
+      console.log(JSON.stringify(response));
     }
   }
   deletePublication(idPublication) {
@@ -53,7 +51,14 @@ export default class MyLostAnimals extends React.Component {
       this.handleDetelePublicationResponse,
     );
   }
-  handleGetPublicationResponse(response) {
+
+  showMoreLostAnimals() {
+    this.setState({page: this.state.page + 1}, () =>
+      this.fetchUserDataWithPublications(),
+    );
+  }
+
+  handleGetPublicationsResponse(response) {
     response.json().then(data =>
       this.setState({
         publications: this.state.publications.concat(data.pages),
@@ -62,19 +67,18 @@ export default class MyLostAnimals extends React.Component {
       }),
     );
   }
-
-  fetchPublications(data) {
-    this.setState({user: data})
-    SecurityUtils.authorizeApi([data.username, 0, 25], getMyPublications).then(
-      this.handleGetPublicationResponse.bind(this),
-    );
-  }
   handleGetUserResponse(response) {
-    response.json().then(data => this.fetchPublications(data));
+    response.json().then(data => {
+      this.setState({user: data});
+      SecurityUtils.authorizeApi(
+        [this.state.page, 6, data.username],
+        getPaginatedPublicationsFromUser,
+      ).then(this.handleGetPublicationsResponse.bind(this));
+    });
   }
 
-  fetchUserData() {
-    this.setState({loading: true});
+  fetchUserDataWithPublications() {
+     if (this.state.page === 0) this.setState({loading: true});
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi([info.sub], getUser).then(
         this.handleGetUserResponse.bind(this),
@@ -84,7 +88,7 @@ export default class MyLostAnimals extends React.Component {
   componentDidMount() {
     this._unsubscribe = this.props.navigation.addListener(
       'focus',
-      this.fetchUserData.bind(this),
+      this.fetchUserDataWithPublications.bind(this),
     );
   }
 
@@ -93,6 +97,9 @@ export default class MyLostAnimals extends React.Component {
   }
 
   render() {
+     if (this.state.loading) {
+      return <LoadingIndicator />;
+    } else {
     return (
       <>
         <Appbar style={styles.barra}>
@@ -129,7 +136,7 @@ export default class MyLostAnimals extends React.Component {
             ) : ( 
               this.state.publications.map(publication => {
               return (
-                <Card key={publication.publicationDate}>
+                <Card key={publication.id}>
                   <Divider style={styles.divider} />
 
                   <Card.Title
@@ -190,17 +197,24 @@ export default class MyLostAnimals extends React.Component {
                );
               })
             )}
+            {this.state.page !== this.state.paginationInfo.totalPages - 1 &&
+            this.state.paginationInfo.totalElements !== 0 ? (
+              <Button color="#F05524" onPress={this.showMoreLostAnimals.bind(this)}>
+                MOSTRAR MÁS
+              </Button>
+            ) : undefined}
+            
           </View>
         </ScrollView>
       </>
     );
   }
+    }
+
 }
 
 const styles = StyleSheet.create({
-  cardStyle: {
-    marginBottom: 60,
-  },
+ 
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -209,9 +223,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  divider: {
-    marginBottom: 40,
-  },
+ 
   barra: {
     backgroundColor: '#E67E00',
   },
@@ -255,5 +267,13 @@ const styles = StyleSheet.create({
     height: 30,
     marginRight: 10,
     marginTop: 30,
+  },
+   label: {
+    marginLeft: 25,
+    marginVertical: 15,
+  },
+  link: {
+    marginLeft: 25,
+    color: '#E67E00',
   },
 });
