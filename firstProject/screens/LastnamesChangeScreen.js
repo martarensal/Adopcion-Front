@@ -9,7 +9,7 @@ var SecurityUtils = require('../utils/SecurityUtils');
 export default class NameChangeScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.changeUserLastname = this.changeUserLastname .bind(this);
+    this.changeUserLastname = this.changeUserLastname.bind(this);
   }
 
   handleChangeLastnameResponse(response) {

@@ -5,18 +5,23 @@ import HeaderAppbar from '../components/HeaderAppbar';
 import {modifyUserUsername} from '../client/UsersApi';
 import LoadingIndicator from '../components/LoadingIndicator';
 
+
 var SecurityUtils = require('../utils/SecurityUtils');
 
 export default class UsernameChangeScreen extends React.Component {
   constructor(props) {
     super(props);
+    super(props);
+    this.state = {
+      isErrorVisible: false,
+    };
     this.changeUserUsername = this.changeUserUsername.bind(this);
   }
 
   handleChangeusernameResponse(response) {
-    console.log('Nombre de usuario modificado');
-    console.log(JSON.stringify(response));
-    this.props.navigation.goBack();
+      console.log('Nombre de usuario modificado');
+      console.log(JSON.stringify(response));
+      this.props.navigation.goBack();   
   }
 
   changeUserUsername(userUsernameChangeRequest) {
@@ -34,7 +39,7 @@ export default class UsernameChangeScreen extends React.Component {
     return (
       <>
         <HeaderAppbar />
-        <View style={styles.container}>
+         <View style={styles.container}>
           <ChangeForm
             value={this.props.route.params.username}
             handlePress={this.changeUserUsername}

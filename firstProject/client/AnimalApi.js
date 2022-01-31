@@ -63,7 +63,7 @@ export function modifyAnimalSex(animalSexChangeRequest, idAnimal, token) {
   });
 }
 
-export function modifyAnimalColour( idAnimal, animalColourChangeRequest, token) {
+export function modifyAnimalColour(animalColourChangeRequest, idAnimal, token) {
   return fetch(`${BASE_URL}/animals/${idAnimal}/colour`, {
     method: 'PUT',
     headers: new Headers({

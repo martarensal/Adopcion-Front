@@ -74,17 +74,15 @@ export default class EditAnimalScreen extends React.Component {
           <View style={styles.container}>
             <Text style={styles.title}>
               {' '}
-              Editar perfil de {this.state.animal.name/*this.props.route.params.animal.name*/}{' '}
+              Editar perfil de {this.state.animal.name}{' '}
             </Text>
             <List.Item
               title="Nombre"
-              description={this.state.animal.name/*this.props.route.params.animal.name*/}
+              description={this.state.animal.name}
               onPress={() => {
                 this.props.navigation.navigate('AnimalNameChangeScreen', {
                   id: this.state.animal.id,
                   name: this.state.animal.name,
-                  /*id: this.props.route.params.animal.id,
-                  name: this.props.route.params.animal.name,*/
                 });
               }}
             />
@@ -94,8 +92,6 @@ export default class EditAnimalScreen extends React.Component {
                 this.props.navigation.navigate('AnimalImageChangeScreen', {
                   id: this.state.animal.id,
                   image: this.state.animal.image,
-                  /*id: this.props.route.params.animal.id,
-                  image: this.props.route.params.animal.image,*/
                 });
               }}
             />
@@ -112,19 +108,17 @@ export default class EditAnimalScreen extends React.Component {
             />
             <List.Item
               title="Edad"
-              description={this.state.animal.age/*this.props.route.params.animal.age*/}
+              description={this.state.animal.age}
               onPress={() => {
                 this.props.navigation.navigate('AnimalAgeChangeScreen', {
                   id: this.state.animal.id,
                   age: this.state.animal.age,
-                  /*id: this.props.route.params.animal.id,
-                  age: this.props.route.params.animal.age,*/
                 });
               }}
             />
             <List.Item
               title="Sexo"
-              description={this.state.animal.sex/*this.props.route.params.animal.sex*/}
+              description={this.state.animal.sex}
               onPress={() => {
                 this.props.navigation.navigate('AnimalSexChangeScreen', {
                  id: this.state.animal.id,
@@ -134,31 +128,27 @@ export default class EditAnimalScreen extends React.Component {
             />
             <List.Item
               title="Color"
-              description={this.state.animal.colour/*this.props.route.params.animal.colour*/}
+              description={this.state.animal.colour}
               onPress={() => {
                 this.props.navigation.navigate('AnimalColourChangeScreen', {
-                  id: this.state.animal.colour,
-                  colour: this.state.animal.colour,
-                  /*id: this.props.route.params.animal.id,
-                  colour: this.props.route.params.animal.colour,*/
+                  id: this.state.animal.id,
+                  colour: this.state.animal.colour,               
                 });
               }}
             />
             <List.Item
               title="Estado"
-              description={this.state.animal.status/*this.props.route.params.animal.status*/}
+              description={this.state.animal.status}
               onPress={() => {
                 this.props.navigation.navigate('AnimalStatusChangeScreen', {
                   id: this.state.animal.id,
                   status: this.state.animal.status,
-                  /*id: this.props.route.params.animal.id,
-                  status: this.props.route.params.animal.status,*/
                 });
               }}
             />
             <List.Item
               title="Tamaño"
-              description={this.state.animal.size/*this.props.route.params.animal.size*/}
+              description={this.state.animal.size}
               onPress={() => {
                 this.props.navigation.navigate('AnimalSizeChangeScreen', {
                   id: this.state.animal.id,
