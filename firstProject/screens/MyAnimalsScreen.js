@@ -20,7 +20,7 @@ export default class MyAnimalsScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      animals: {},
+      animals: [],
       paginationInfo: {},
       loading: true,
       page: 0,
@@ -37,18 +37,23 @@ export default class MyAnimalsScreen extends React.Component {
   }
 
   handleDeteleAnimalResponse(response) {
-    if (response.ok) {
-      console.log('Animal borrado');
-      this.setState({animals: {}});
+     if (response.ok) {
+      this.setState({animals: [], page: 0});
       this.fetchUserDataWithAnimals();
     } else {
-      console.log('Error');
+      console.log(JSON.stringify(response));
     }
   }
   deleteAnimal(idAnimal) {
     this.setState({loading: true});
     SecurityUtils.authorizeApi([idAnimal], deleteAnimal).then(
       this.handleDeteleAnimalResponse,
+    );
+  }
+
+  showMoreAnimals() {
+    this.setState({page: this.state.page + 1}, () =>
+      this.fetchUserDataWithAnimals(),
     );
   }
 
@@ -73,8 +78,8 @@ export default class MyAnimalsScreen extends React.Component {
   }
 
   fetchUserDataWithAnimals() {
-    this.setState({animals: []});
-
+    //this.setState({animals: []});
+ if (this.state.page === 0) this.setState({loading: true});
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi([info.sub], getUser).then(
         this.handleGetUserResponse.bind(this),
@@ -196,6 +201,15 @@ export default class MyAnimalsScreen extends React.Component {
                   </Card>
                 );
               })
+            )}
+
+            {this.state.page !== this.state.paginationInfo.totalPages - 1 &&
+            this.state.paginationInfo.totalElements !== 0 ? (
+              <Button onPress={this.showMoreAnimals.bind(this)}>
+                MOSTRAR MÁS
+              </Button>
+            ) : (
+              undefined
             )}
           </View>
         </ScrollView>
