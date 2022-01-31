@@ -37,7 +37,7 @@ export default class MyAnimalsScreen extends React.Component {
   }
 
   handleDeteleAnimalResponse(response) {
-     if (response.ok) {
+    if (response.ok) {
       this.setState({animals: [], page: 0});
       this.fetchUserDataWithAnimals();
     } else {
@@ -71,15 +71,14 @@ export default class MyAnimalsScreen extends React.Component {
     response.json().then(data => {
       this.setState({user: data});
       SecurityUtils.authorizeApi(
-        [this.state.page, 5, data.username],
+        [this.state.page, 6, data.username],
         getPaginatedAnimalsFromUser,
       ).then(this.handleGetAnimalsResponse.bind(this));
     });
   }
 
   fetchUserDataWithAnimals() {
-    //this.setState({animals: []});
- if (this.state.page === 0) this.setState({loading: true});
+    if (this.state.page === 0) this.setState({loading: true});
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi([info.sub], getUser).then(
         this.handleGetUserResponse.bind(this),
@@ -89,32 +88,34 @@ export default class MyAnimalsScreen extends React.Component {
 
   componentDidMount() {
     this._unsubscribe = this.props.navigation.addListener(
-      'focus',this.fetchUserDataWithAnimals.bind(this),
+      'focus',
+      this.fetchUserDataWithAnimals.bind(this),
     );
-    
+
     this._outOfFocus = this.props.navigation.addListener('blur', () =>
       this.setState({animals: [], page: 0}),
     );
   }
-  componentWillUnmount(){
-      this._unsubscribe();
+  componentWillUnmount() {
+    this._unsubscribe();
   }
 
   render() {
+    if (this.state.loading) {
+      return <LoadingIndicator />;
+    } else {
     return (
       <>
         <Appbar style={styles.barra}>
           <Appbar.Action
             icon="menu"
-            onPress={() =>{
-              console.log("ABRIENDO DRAWER")
-              this.props.navigation.dispatch(DrawerActions.toggleDrawer())
-            }
-            }
+            onPress={() => {
+              this.props.navigation.dispatch(DrawerActions.toggleDrawer());
+            }}
           />
           <Text style={styles.logo}>SavePet</Text>
         </Appbar>
-        
+
         <ScrollView style={styles.background}>
           <Text style={styles.title}> Mis animales</Text>
           <View style={styles.container}>
@@ -166,7 +167,7 @@ export default class MyAnimalsScreen extends React.Component {
                     />
 
                     <Card.Actions>
-                      <Button 
+                      <Button
                         color="#E67E00"
                         onPress={() =>
                           this.props.navigation.navigate('EditAnimalScreen', {
@@ -175,7 +176,7 @@ export default class MyAnimalsScreen extends React.Component {
                         }>
                         Editar
                       </Button>
-                      <Button 
+                      <Button
                         color="red"
                         onPress={() =>
                           Alert.alert(
@@ -205,16 +206,15 @@ export default class MyAnimalsScreen extends React.Component {
 
             {this.state.page !== this.state.paginationInfo.totalPages - 1 &&
             this.state.paginationInfo.totalElements !== 0 ? (
-              <Button onPress={this.showMoreAnimals.bind(this)}>
+              <Button color="#F05524" onPress={this.showMoreAnimals.bind(this)}>
                 MOSTRAR MÁS
               </Button>
-            ) : (
-              undefined
-            )}
+            ) : undefined}
           </View>
         </ScrollView>
       </>
     );
+  }
   }
 }
 
@@ -279,6 +279,6 @@ const styles = StyleSheet.create({
   },
   link: {
     marginLeft: 25,
-    color:'#E67E00',
-  }
+    color: '#E67E00',
+  },
 });
