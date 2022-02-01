@@ -75,7 +75,7 @@ export default class LostAnimalsListScreen extends React.Component {
         </Appbar>
         <ScrollView style={styles.background}>
           <View style={styles.container}>
-            <Text style={styles.title}> Animales perdidos</Text>
+            <Text style={styles.titleText}> Animales perdidos</Text>
 
             {this.state.publications.map(publication => {
               return (
@@ -161,6 +161,15 @@ const styles = StyleSheet.create({
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 15,
+  },
+  titleText:{
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 22,
+    alignSelf:'center',
+    marginBottom: 15,
+    marginTop: 20,
+
   },
   title: {
     fontFamily: 'RobotoSlab-Regular',

@@ -15,7 +15,6 @@ import {getAnimal} from '../client/AnimalApi';
 
 var SecurityUtils = require('../utils/SecurityUtils');
 
-
 export default class EditAnimalScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -26,16 +25,17 @@ export default class EditAnimalScreen extends React.Component {
       animal: {},
     };
   }
-    handleGetAnimalResponse(response) {
+  handleGetAnimalResponse(response) {
     response.json().then(data => {
-      console.log(data);
-      this.setState({animal: data, loading: false});
+      this.setState({animal: data, loading: false}, () => {
+        this.calculateImageSize();
+      });
     });
   }
 
-  fetchAnimalData() {
-     Image.getSize(
-      this.state.base64 + this.props.route.params.animal.image,
+  calculateImageSize() {
+    Image.getSize(
+      this.state.base64 + this.state.animal.image,
       (width, height) => {
         screen_percentage = 0.55;
         this.setState({
@@ -48,14 +48,16 @@ export default class EditAnimalScreen extends React.Component {
         });
       },
     );
+  }
+  fetchAnimalData() {
     this.setState({loading: true});
-      SecurityUtils.authorizeApi([this.props.route.params.animal.id], getAnimal).then(
-        this.handleGetAnimalResponse.bind(this),
-      );
+    SecurityUtils.authorizeApi(
+      [this.props.route.params.animal.id],
+      getAnimal,
+    ).then(this.handleGetAnimalResponse.bind(this));
   }
 
   componentDidMount() {
-   
     this._unsubscribe = this.props.navigation.addListener(
       'focus',
       this.fetchAnimalData.bind(this),
@@ -73,8 +75,7 @@ export default class EditAnimalScreen extends React.Component {
         <ScrollView style={styles.background}>
           <View style={styles.container}>
             <Text style={styles.title}>
-              {' '}
-              Editar perfil de {this.state.animal.name}{' '}
+              Editar perfil de {this.state.animal.name}
             </Text>
             <List.Item
               title="Nombre"
@@ -103,7 +104,7 @@ export default class EditAnimalScreen extends React.Component {
                 marginLeft: 25,
               }}
               source={{
-                uri: this.state.base64 + this.props.route.params.animal.image,
+                uri: this.state.base64 + this.state.animal.image,
               }}
             />
             <List.Item
@@ -121,7 +122,7 @@ export default class EditAnimalScreen extends React.Component {
               description={this.state.animal.sex}
               onPress={() => {
                 this.props.navigation.navigate('AnimalSexChangeScreen', {
-                 id: this.state.animal.id,
+                  id: this.state.animal.id,
                   sex: this.state.animal.sex,
                 });
               }}
@@ -132,7 +133,7 @@ export default class EditAnimalScreen extends React.Component {
               onPress={() => {
                 this.props.navigation.navigate('AnimalColourChangeScreen', {
                   id: this.state.animal.id,
-                  colour: this.state.animal.colour,               
+                  colour: this.state.animal.colour,
                 });
               }}
             />
@@ -158,25 +159,21 @@ export default class EditAnimalScreen extends React.Component {
             />
             <List.Item
               title="Ciudad"
-              description={this.state.animal.city/*this.props.route.params.animal.city*/}
+              description={this.state.animal.city}
               onPress={() => {
                 this.props.navigation.navigate('AnimalCityChangeScreen', {
                   id: this.state.animal.id,
                   city: this.state.animal.city,
-                  /*id: this.props.route.params.animal.id,
-                  city: this.props.route.params.animal.city,*/
                 });
               }}
             />
             <List.Item
               title="Tipo"
-              description={this.state.animal.type/*this.props.route.params.animal.type*/}
+              description={this.state.animal.type}
               onPress={() => {
                 this.props.navigation.navigate('AnimalTypeChangeScreen', {
                   id: this.state.animal.id,
                   type: this.state.animal.type,
-                  /*id: this.props.route.params.animal.id,
-                  type: this.props.route.params.animal.type,*/
                 });
               }}
             />
