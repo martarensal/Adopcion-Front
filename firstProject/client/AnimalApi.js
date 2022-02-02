@@ -242,8 +242,9 @@ export function deletePublication(idPublication, token) {
   });
 }
 
-export function modifyDescription(PublicationDescriptionChangeRequest, idPublication, token) {
-  console.log(PublicationDescriptionChangeRequest);
+export function modifyPublicationDescription(DescriptionChangeRequest, idPublication, token) {
+  console.log(DescriptionChangeRequest);
+  console.log(idPublication)
   return fetch(`${BASE_URL}/publications/${idPublication}/description`, {
     method: 'PUT',
     headers: new Headers({
@@ -251,6 +252,18 @@ export function modifyDescription(PublicationDescriptionChangeRequest, idPublica
       Accept: 'application/json',
       'X-API-KEY': token,
     }),
-    body: JSON.stringify(AnimalNameChangeRequest),
+    body: JSON.stringify(DescriptionChangeRequest),
+  });
+}
+
+export function modifyPublicationImage(publicationImageChangeRequest, idPublication, token) {
+  return fetch(`${BASE_URL}/publications/${idPublication}/image`, {
+    method: 'PUT',
+    headers: new Headers({
+      'content-type': 'application/json',
+      Accept: 'application/json',
+      'X-API-KEY': token,
+    }),
+    body: JSON.stringify(publicationImageChangeRequest),
   });
 }

@@ -5,7 +5,6 @@ import HeaderAppbar from '../components/HeaderAppbar';
 import {modifyUserUsername} from '../client/UsersApi';
 import LoadingIndicator from '../components/LoadingIndicator';
 
-
 var SecurityUtils = require('../utils/SecurityUtils');
 
 export default class UsernameChangeScreen extends React.Component {

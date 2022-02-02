@@ -171,7 +171,7 @@ export default class MyAnimalsScreen extends React.Component {
                         color="#E67E00"
                         onPress={() =>
                           this.props.navigation.navigate('EditAnimalScreen', {
-                            animal: animal,
+                            id: animal.id,
                           })
                         }>
                         Editar

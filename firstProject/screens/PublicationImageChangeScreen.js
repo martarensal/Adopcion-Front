@@ -2,7 +2,7 @@ import React, {Fragment, useState} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import {TextInput, Button, HelperText} from 'react-native-paper';
 import Camera from '../components/Camera';
-import {modifyAnimalImage} from '../client/AnimalApi';
+import {modifyPublicationImage} from '../client/AnimalApi';
 import HeaderAppbar from '../components/HeaderAppbar';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -16,30 +16,29 @@ const launchCameraOptions = {
   includeBase64: true,
 };
 
-export default class AnimalImageChangeScreen extends React.Component {
+export default class PublicationImageChangeScreen extends React.Component {
  constructor(props) {
     super(props);
-    this.changeAnimalImage = this.changeAnimalImage.bind(this);
+    this.changePublicationImage = this.changePublicationImage.bind(this);
     this.render = this.render.bind(this);
   }
 
-  handleChangeAnimalImageResponse(response) {
-    console.log('Imagen del animal modificada');
+  handleChangePublicationImageResponse(response) {
+    console.log('Imagen de la publicacion modificada');
     console.log(JSON.stringify(response));
     this.props.navigation.navigate('Mis animales perdidos');
   }
 
-  changeAnimalImage(animalImageChangeRequest) {
+  changePublicationImage(publicationImageChangeRequest) {
     let body = {
-      newAnimalImage: animalImageChangeRequest,
+      newPublicationImage: publicationImageChangeRequest,
     };
     console.log(body);
-    SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi(
         [body, this.props.route.params.id],
-        modifyAnimalImage,
-      ).then(this.handleChangeAnimalImageResponse.bind(this));
-    });
+        modifyPublicationImage,
+      ).then(this.handleChangePublicationImageResponse.bind(this));
+ 
   }
 
 
@@ -54,7 +53,7 @@ export default class AnimalImageChangeScreen extends React.Component {
             onPress={() => {
               launchCamera(launchCameraOptions, response => {
                 if (!response.didCancel) {
-                  this.changeAnimalImage(response.assets[0].base64);
+                  this.changePublicationImage(response.assets[0].base64);
                 }
               });
             }}>
@@ -65,7 +64,7 @@ export default class AnimalImageChangeScreen extends React.Component {
             onPress={() => {
               launchImageLibrary(launchCameraOptions, response => {
                 if (!response.didCancel) {
-                  this.changeAnimalImage(response.assets[0].base64);
+                  this.changePublicationImage(response.assets[0].base64);
                 }
               });
             }}>

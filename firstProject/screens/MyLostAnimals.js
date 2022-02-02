@@ -128,7 +128,7 @@ export default class MyLostAnimals extends React.Component {
 
           <ScrollView style={styles.background}>
             <View style={styles.container}>
-              <Text style={styles.title}> Mis animales perdidos</Text>
+              <Text style={styles.titleText}> Mis animales perdidos</Text>
               {this.state.publications[0] === undefined ? (
                 <>
                   <View style={styles.container}>
@@ -271,6 +271,14 @@ const styles = StyleSheet.create({
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 15,
+  },
+  titleText:{
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+    fontSize: 22,
+    marginBottom: 15,
+    marginTop: 20,
+    alignSelf: 'center',
   },
   title: {
     fontFamily: 'RobotoSlab-Regular',

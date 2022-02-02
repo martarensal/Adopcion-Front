@@ -162,10 +162,12 @@ export default class MainScreen extends React.Component {
            <Drawer.Screen
             name="Lista animales perdidos"
             component={LostAnimalsListScreen}
+            options={{headerShown: false}}
           />
           <Drawer.Screen
             name="Buscar animal"
             component={NewSearchAnimalScreen}
+            options={{headerShown: false}}
           />
         </Drawer.Navigator>
       );

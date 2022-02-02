@@ -51,7 +51,7 @@ export default class EditPublicationScreen extends React.Component {
               onPress={() => {
                 this.props.navigation.navigate('PublicationDescriptionChangeScreen', {
                   id: this.props.route.params.publication.id,
-                  name: this.props.route.params.publication.description,
+                  description: this.props.route.params.publication.description,
                 });
               }}
             />

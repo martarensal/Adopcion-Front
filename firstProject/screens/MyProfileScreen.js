@@ -14,7 +14,6 @@ export default class MyProfileScreen extends Component {
       user: {},
       loading: true,
     };
-    this.fetchUserData = this.fetchUserData.bind(this);
   }
 
   handleGetUserResponse(response) {
