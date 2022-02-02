@@ -16,12 +16,12 @@ export default class PublicationDescriptionChangeScreen extends React.Component 
   handleChangeDescriptionResponse(response) {
     console.log('Descripcion modificada');
     console.log(JSON.stringify(response));
-    this.props.navigation.goBack();
+    this.props.navigation.navigate('Mis animales perdidos');
   }
 
   changeDescription(descriptionChangeRequest) {
     let body = {
-      newDescription: descriptionChangeRequest.newValue,
+      newPublicationDescription: descriptionChangeRequest.newValue,
     };
     SecurityUtils.authorizeApi(
       [body, this.props.route.params.id],
