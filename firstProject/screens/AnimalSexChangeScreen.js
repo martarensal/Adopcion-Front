@@ -5,6 +5,8 @@ import {StyleSheet, View, Text, Image, Alert} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {TextInput, Button, HelperText} from 'react-native-paper';
 import HeaderAppbar from '../components/HeaderAppbar';
+import AnimalSexPicker from '../components/AnimalSexPicker.js';
+
 
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
@@ -41,33 +43,16 @@ export default class AnimalSexChangeScreen extends React.Component {
     return (
       <>
         <HeaderAppbar />
-        <View style={styles.container}>
-          <Picker
-            selectedValue={this.props.route.params.sex}
-            onValueChange={this.changeAnimalSex}>
-            {sexOption.map(sex => {
-              return (
-                <Picker.Item
-                  key={sex.back_name + '_picker'}
-                  label={sex.name}
-                  value={sex.back_name}
-                />
-              );
-            })}
-          </Picker>
-
+        <AnimalSexPicker sex={this.props.sex}  onChange={newSex => this.changeAnimalSex(newSex)}/>
           <Button
             style={styles.button}
             color="#ABE009"
             mode="contained"
-            disabled={!this.state.newValue}
             dark={true}
-            onPress={() =>     this.props.navigation.goBack()
+            onPress={() => this.props.navigation.goBack()
             }>
-            {' '}
-            Enviar{' '}
+            Enviar
           </Button>
-        </View>
       </>
     );
   }

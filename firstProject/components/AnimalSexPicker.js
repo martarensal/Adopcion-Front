@@ -14,11 +14,13 @@ export default class AnimalSexPicker extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Picker selectedValue={this.props.sex} onValueChange={newAnimalSex => this.props.onChange(newAnimalSex)}>
+        <Picker
+          selectedValue={this.props.sex}
+          onValueChange={newAnimalSex => this.props.onChange(newAnimalSex)}>
           {sexOption.map(sex => {
             return (
               <Picker.Item
-                key={sex.back_name + '_picker'}
+                key={sex.name + '_picker'}
                 label={sex.name}
                 value={sex.back_name}
               />
@@ -34,5 +36,5 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     marginVertical: 12,
-  }
+  },
 });
