@@ -17,8 +17,7 @@ import AnimalSizePicker from '../components/AnimalSizePicker.js';
 import AnimalTypePicker from '../components/AnimalTypePicker.js';
 import AnimalCityPicker from '../components/AnimalCityPicker.js';
 import AnimalAgePicker from '../components/AnimalAgePicker.js';
-import {searchAnimals} from '../client/AnimalApi';
-import { DrawerActions } from '@react-navigation/native';
+import {DrawerActions} from '@react-navigation/native';
 import {getTypes} from '../client/TypeApi';
 import {
   getAC,
@@ -110,12 +109,10 @@ export default class NewSearchAnimalScreen extends Component {
       provinces: [],
       cities: [],
       types: [],
-      animalTypes:[],
-
+      animalTypes: [],
     };
 
     this.setSections = this.setSections.bind(this);
-    this.callSearchAnimals = this.callSearchAnimals.bind(this);
   }
   async handleGetAnimalTypeResponse(response) {
     var types = [];
@@ -176,8 +173,8 @@ export default class NewSearchAnimalScreen extends Component {
       ).then(this.handleGetCityResponse.bind(this));
     });
   };
- componentDidMount() {
-    this.getAnimalTypeFromAPI();   
+  componentDidMount() {
+    this.getAnimalTypeFromAPI();
     this.getACCall();
   }
 
@@ -211,31 +208,6 @@ export default class NewSearchAnimalScreen extends Component {
     );
   }
 
-  callSearchAnimals() {
-    let idCity = this.state.idCity;
-    let idType = this.state.idType;
-    let animalSize = this.state.animalSize;
-    let sex = this.state.sex;
-    let colour = this.state.colour;
-    let minAge = this.state.minAge;
-    let maxAge = this.state.maxAge;
-    let page = 0;
-    let size = 25;
-
-    SecurityUtils.tokenInfo().then(info => {
-      SecurityUtils.authorizeApi(
-        [animalSize, sex, colour, minAge, maxAge, idCity, idType, page, size],
-        searchAnimals,
-      )
-        .then(res => res.json())
-        .then(this.handleSearchAnimalsResponse.bind(this));
-    });
-  }
-
-  handleSearchAnimalsResponse(response) {
-    this.props.navigation.navigate('AnimalsFilterScreen', {response: response});
-  }
-
   render() {
     let filterComponents = [
       {
@@ -258,7 +230,7 @@ export default class NewSearchAnimalScreen extends Component {
             }}
             onCityChange={city => {
               this.setState({idCity: city});
-              console.log(city)
+              console.log(city);
             }}
           />
         ),
@@ -325,38 +297,51 @@ export default class NewSearchAnimalScreen extends Component {
     else
       return (
         <>
-         <HeaderAppbar/>
-        <View style={styles.container}>
-          <ScrollView contentContainerStyle={{paddingTop: 30}}>
-            <Text style={styles.title}>Filtros</Text>
+          <HeaderAppbar />
+          <View style={styles.container}>
+            <ScrollView contentContainerStyle={{paddingTop: 30}}>
+              <Text style={styles.title}>Filtros</Text>
 
-            <FilterHeaderComponent
-              selectors={SELECTORS}
-              setSections={this.setSections}
-              activeSections={this.state.activeSections}
-            />
-            <Accordion
-              activeSections={this.state.activeSections}
-              sections={filterComponents}
-              touchableComponent={TouchableOpacity}
-              expandMultiple={true}
-              renderHeader={this.renderHeader}
-              renderContent={this.renderContent}
-              duration={400}
-              onChange={this.setSections}
-              renderAsFlatList={false}
-            />
-            <Button
-            style={styles.button}
-               dark={true}
-                mode='contained'
-                color='#F5C401'
-
-              onPress={this.callSearchAnimals}>
-              Buscar
-            </Button>
-          </ScrollView>
-        </View>
+              <FilterHeaderComponent
+                selectors={SELECTORS}
+                setSections={this.setSections}
+                activeSections={this.state.activeSections}
+              />
+              <Accordion
+                activeSections={this.state.activeSections}
+                sections={filterComponents}
+                touchableComponent={TouchableOpacity}
+                expandMultiple={true}
+                renderHeader={this.renderHeader}
+                renderContent={this.renderContent}
+                duration={400}
+                onChange={this.setSections}
+                renderAsFlatList={false}
+              />
+              <Button
+                style={styles.button}
+                dark={true}
+                mode="contained"
+                color="#F5C401"
+                onPress={() => {
+                  this.props.navigation.navigate('AnimalsFilterScreen', {
+                    dataFilters: {
+                      idCity: this.state.idCity,
+                      idType: this.state.idType,
+                      animalSize: this.state.animalSize,
+                      sex: this.state.sex,
+                      colour: this.state.colour,
+                      minAge: this.state.minAge,
+                      maxAge: this.state.maxAge,
+                      page: 0,
+                      size: 5,
+                    },
+                  });
+                }}>
+                Buscar
+              </Button>
+            </ScrollView>
+          </View>
         </>
       );
   }
@@ -372,7 +357,7 @@ const styles = StyleSheet.create({
     //justifyContent: 'center',
     backgroundColor: '#FFFFFF',
   },
-  
+
   background: {
     flex: 1,
   },
@@ -404,13 +389,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
-  
+
   selectors: {
     marginBottom: 10,
     flexDirection: 'row',
     justifyContent: 'center',
     fontFamily: 'RobotoSlab-Regular',
-
   },
   selector: {
     padding: 10,
