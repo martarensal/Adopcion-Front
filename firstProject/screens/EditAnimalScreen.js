@@ -49,6 +49,7 @@ export default class EditAnimalScreen extends React.Component {
       },
     );
   }
+  
   fetchAnimalData() {
     this.setState({loading: true});
     SecurityUtils.authorizeApi(

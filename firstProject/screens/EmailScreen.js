@@ -79,7 +79,7 @@ export default class EmailScreen extends React.Component {
     let body = {
       endDate: this.state.startDate,
       startDate: this.state.endDate,
-      status: 'sent',
+      status: 'enviada',
       animal_id: this.props.route.params.animal.id,
       user_id: this.props.route.params.user,
       type: this.state.type,

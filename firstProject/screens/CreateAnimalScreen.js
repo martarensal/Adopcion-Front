@@ -129,7 +129,7 @@ export default class CreateAnimalScreen extends React.Component {
       name: name,
       sex: sex,
       size: size,
-      status: 'homeless',
+      status: 'sin hogar',
       type_id: idType,
     };
     console.log(JSON.stringify(body, null, 2));

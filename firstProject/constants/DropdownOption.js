@@ -5,17 +5,17 @@ export const statusOption = [
     name: '-- NO SELECCIONADO --',
   },
   { id: 2,
-    back_name: 'homeless',
+    back_name: 'sin hogar',
     name: 'Sin hogar',
   },
   {
     id: 3,
-    back_name: 'shelter',
+    back_name: 'acogido',
     name: 'En acogida',
   },
   {
     id: 4,
-    back_name: 'adopted',
+    back_name: 'adoptado',
     name: 'Adoptado',
   },
 ];
@@ -28,17 +28,17 @@ export const sizeOption = [
   },
   {
     id: 2,
-    back_name: 'small',
+    back_name: 'pequeño',
     name: 'Pequeño',
   },
   {
     id: 3,
-    back_name: 'medium',
+    back_name: 'mediano',
     name: 'Mediano',
   },
   {
     id: 4,
-    back_name: 'big',
+    back_name: 'grande',
     name: 'Grande',
   },
 
@@ -52,12 +52,12 @@ export const sexOption = [
   },
   {
     id: 2,
-    back_name: 'male',
+    back_name: 'macho',
     name: 'Macho',
   },
   {
     id: 3,
-    back_name: 'female',
+    back_name: 'hembra',
     name: 'Hembra',
   },
  
@@ -71,42 +71,42 @@ export const colourOption = [
   },
   {
     id: 2,
-    back_name: 'white',
+    back_name: 'blanco',
     name: 'Blanco',
   },
   {
     id: 3,
-    back_name: 'black',
+    back_name: 'negro',
     name: 'Negro',
   },
   {
     id: 4,
-    back_name: 'brown',
+    back_name: 'marron',
     name: 'Marrón',
   },
   {
     id: 5,
-    back_name: 'lightbrown',
+    back_name: 'canela',
     name: 'Canela',
   },
   {
     id: 6,
-    back_name: 'green',
+    back_name: 'verde',
     name: 'Verde',
   },
   {
     id: 7,
-    back_name: 'red',
+    back_name: 'rojo',
     name: 'Rojo',
   },
   {
     id: 8,
-    back_name: 'blue',
+    back_name: 'azul',
     name: 'Azul',
   },
   {
     id: 9,
-    back_name: 'orange',
+    back_name: 'naranja',
     name: 'Naranja',
   },
 ];
@@ -118,12 +118,12 @@ export const typeOption = [
   },
   {
     id: 2,
-    back_name: 'adoption',
+    back_name: 'adopcion',
     name: 'Adopción',
   },
   {
     id: 3,
-    back_name: 'shelter',
+    back_name: 'acogida',
     name: 'Casa de acogida',
   },
 ];
