@@ -37,6 +37,8 @@ import MyLostAnimals from './screens/MyLostAnimals.js';
 import EditPublicationScreen from './screens/EditPublicationScreen.js';
 import PublicationDescriptionChangeScreen from './screens/PublicationDescriptionChangeScreen.js'
 import PublicationImageChangeScreen from './screens/PublicationImageChangeScreen.js'
+import LostAnimalDetailScreen from './screens/LostAnimalDetailScreen.js'
+
 const Stack = createStackNavigator();
 export default class App extends Component {
   constructor(props) {
@@ -48,9 +50,6 @@ export default class App extends Component {
   }
 
   async findExistingToken() {
-    /*SecurityUtils.clearAll().then(
-      SecurityUtils.getToken().then(this.handleRecieveToken.bind(this)),
-    );*/
     SecurityUtils.getToken().then(token =>
       this.setState({isUserSignedIn: token, isLoading: false}),
     );
@@ -209,6 +208,11 @@ export default class App extends Component {
                 <Stack.Screen
                   name="PublicationImageChangeScreen"
                   component={PublicationImageChangeScreen}
+                  options={{headerShown: false}}
+                />
+                 <Stack.Screen
+                  name="LostAnimalDetailScreen"
+                  component={LostAnimalDetailScreen}
                   options={{headerShown: false}}
                 />
               </>

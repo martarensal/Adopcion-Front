@@ -11,7 +11,6 @@ import {Appbar, FAB, Card, Button, Divider} from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DrawerActions} from '@react-navigation/native';
-var SecurityUtils = require('../utils/SecurityUtils');
 import {getPaginatedPublications} from '../client/AnimalApi';
 
 var SecurityUtils = require('../utils/SecurityUtils');
@@ -99,6 +98,20 @@ export default class LostAnimalsListScreen extends React.Component {
                       />
                     )}
                   />
+                  <Card.Actions style={styles.button}>
+                    <Button
+                      color="#E67E00"
+                      onPress={() =>
+                        this.props.navigation.navigate(
+                          'LostAnimalDetailScreen',
+                          {
+                            publication: publication,
+                          },
+                        )
+                      }>
+                      Ver detalles
+                    </Button>
+                  </Card.Actions>
                 </Card>
               );
             })}
@@ -162,14 +175,13 @@ const styles = StyleSheet.create({
     color: '#575757',
     fontSize: 15,
   },
-  titleText:{
+  titleText: {
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 22,
-    alignSelf:'center',
+    alignSelf: 'center',
     marginBottom: 15,
     marginTop: 20,
-
   },
   title: {
     fontFamily: 'RobotoSlab-Regular',
