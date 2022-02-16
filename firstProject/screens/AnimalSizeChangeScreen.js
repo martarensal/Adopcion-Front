@@ -5,6 +5,7 @@ import {StyleSheet, View, Text, Image, Alert} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {TextInput, Button, HelperText} from 'react-native-paper';
 import HeaderAppbar from '../components/HeaderAppbar';
+import AnimalSizePicker from '../components/AnimalSizePicker'
 
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
@@ -13,7 +14,7 @@ export default class AnimalSizeChangeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newValue: '',
+      size: this.props.route.params.size,
     };
     this.changeAnimalSize = this.changeAnimalSize.bind(this);
   }
@@ -21,6 +22,7 @@ export default class AnimalSizeChangeScreen extends React.Component {
   handleChangeAnimalSizeResponse(response) {
     console.log('Estado animal modificado');
     console.log(JSON.stringify(response));
+    this.props.navigation.goBack()
   }
 
   changeAnimalSize(animalSizeChangeRequest) {
@@ -45,27 +47,18 @@ export default class AnimalSizeChangeScreen extends React.Component {
       <>
         <HeaderAppbar />
         <View style={styles.container}>
-          <Picker
-            selectedValue={this.props.route.params.size}
-            onValueChange={this.changeAnimalSize}>
-            {sizeOption.map(size => {
-              return (
-                <Picker.Item
-                  key={size.back_name + '_picker'}
-                  label={size.name}
-                  value={size.back_name}
-                />
-              );
-            })}
-          </Picker>
+        <AnimalSizePicker 
+          size={this.state.size}
+          onChange={(newSize) => {
+            this.setState({size: newSize})}}
+        />
+         
           <Button
             style={styles.button}
             color="#ABE009"
             mode="contained"
-            disabled={!this.state.newValue}
             dark={true}
-            onPress={() =>
-              this.props.navigation.goBack()
+            onPress={() => this.changeAnimalSize(this.state.size)
             }>
             {' '}
             Enviar{' '}

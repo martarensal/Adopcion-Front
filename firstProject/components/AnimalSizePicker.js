@@ -9,24 +9,28 @@ export default class AnimalSizePicker extends React.Component {
   constructor(props) {
     super(props);
   }
+  onChangeField(value) {
+    this.props.onChange(value);
+  }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Picker
-          selectedValue={this.props.animalSize}
-          onValueChange={newAnimalSize => this.props.onChange(newAnimalSize)}>
-          {sizeOption.map(size => {
-            return (
-              <Picker.Item
-                key={size.back_name + '_picker'}
-                label={size.name}
-                value={size.back_name}
-              />
-            );
-          })}
-        </Picker>
-      </View>
+      <View key={'Tamañano'}>
+            <Picker
+              selectedValue={this.props.size}
+              onValueChange={text => this.onChangeField(text)}>
+              {sizeOption.map(option => {
+                return (
+                  <Picker.Item
+                    key={option.back_name + '_picker'}
+                    label={option.name}
+                    value={option.back_name}
+                  />
+                );
+              })}
+            </Picker>
+          </View>
+     
     );
   }
 }

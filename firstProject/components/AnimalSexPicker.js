@@ -17,7 +17,6 @@ export default class AnimalSexPicker extends React.Component {
   render() {
     return (
       <View key={'Sexo'}>
-            <Text style={styles.text}>Sexo</Text>
             <Picker
               selectedValue={this.props.sex}
               onValueChange={text => this.onChangeField(text)}>
