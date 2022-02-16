@@ -13,12 +13,16 @@ var validate = require('validate.js');
 export default class AnimalColourChangeScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      colour: this.props.route.params.colour,
+    }
     this.changeAnimalColour = this.changeAnimalColour.bind(this);
   }
 
   handleChangeAnimalColourResponse(response) {
     console.log('Color del animal modificado');
     console.log(JSON.stringify(response));
+    this.props.navigation.goBack()
   }
 
   changeAnimalColour(animalColourChangeRequest) {
@@ -37,13 +41,13 @@ export default class AnimalColourChangeScreen extends React.Component {
     return (
       <>
         <HeaderAppbar />
-        <AnimalColourPicker colour = {this.props.route.params.colour}  onChange={newColour => this.changeAnimalColour(newColour)}/>
+        <AnimalColourPicker colour = {this.state.colour}  onChange={newColour => this.setState({colour: newColour})}/>
           <Button
             style={styles.button}
             color="#ABE009"
             mode="contained"
             dark={true}
-            onPress={() => this.props.navigation.goBack()
+            onPress={() => this.changeAnimalColour(this.state.colour)
             }>
             Enviar
           </Button>
