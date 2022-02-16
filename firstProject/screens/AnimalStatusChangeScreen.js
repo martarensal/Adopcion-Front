@@ -5,7 +5,7 @@ import {StyleSheet, View, Text, Image, Alert} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {TextInput, Button, HelperText} from 'react-native-paper';
 import HeaderAppbar from '../components/HeaderAppbar';
-
+import AnimalStatusPicker from '../components/AnimalStatusPicker';
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
 
@@ -13,7 +13,7 @@ export default class AnimalStatusChangeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newValue: '',
+      status: this.props.route.params.status,
     };
     this.changeAnimalStatus = this.changeAnimalStatus.bind(this);
   }
@@ -21,6 +21,7 @@ export default class AnimalStatusChangeScreen extends React.Component {
   handleChangeAnimalStatusResponse(response) {
     console.log('Estado animal modificado');
     console.log(JSON.stringify(response));
+    this.props.navigation.goBack();
   }
 
   changeAnimalStatus(animalStatusChangeRequest) {
@@ -45,29 +46,19 @@ export default class AnimalStatusChangeScreen extends React.Component {
       <>
         <HeaderAppbar />
         <View style={styles.container}>
-          <Picker
-            selectedValue={this.props.route.params.status}
-            onValueChange={this.changeAnimalStatus}>
-            {statusOption.map(status => {
-              return (
-                <Picker.Item
-                  key={status.back_name + '_picker'}
-                  label={status.name}
-                  value={status.back_name}
-                />
-              );
-            })}
-          </Picker>
-          
+          <AnimalStatusPicker
+            status={this.state.status}
+            onChange={newStatus => {
+              this.setState({status: newStatus});
+            }}
+          />
+
           <Button
             style={styles.button}
             color="#ABE009"
             mode="contained"
-            disabled={!this.state.newValue}
             dark={true}
-            onPress={() =>
-              this.props.navigation.goBack()
-            }>
+            onPress={() => this.changeAnimalStatus(this.state.status)}>
             {' '}
             Enviar{' '}
           </Button>
