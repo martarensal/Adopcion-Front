@@ -7,7 +7,6 @@ import {TextInput, Button, HelperText} from 'react-native-paper';
 import HeaderAppbar from '../components/HeaderAppbar';
 import AnimalSexPicker from '../components/AnimalSexPicker.js';
 
-
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
 
@@ -15,22 +14,22 @@ export default class AnimalSexChangeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newValue: '',
-    };
+      sex: this.props.route.params.sex,
+    }
     this.changeAnimalSex = this.changeAnimalSex.bind(this);
   }
 
   handleChangeAnimalSexResponse(response) {
     console.log('Sexo animal modificado');
     console.log(JSON.stringify(response));
+    this.props.navigation.goBack()
   }
 
   changeAnimalSex(animalSexChangeRequest) {
-    this.setState({newValue: animalSexChangeRequest});
     let body = {
       newAnimalSex: animalSexChangeRequest,
     };
-    console.log(body);
+  
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi(
         [body, this.props.route.params.id],
@@ -43,16 +42,19 @@ export default class AnimalSexChangeScreen extends React.Component {
     return (
       <>
         <HeaderAppbar />
-        <AnimalSexPicker sex={this.props.sex}  onChange={newSex => this.changeAnimalSex(newSex)}/>
-          <Button
-            style={styles.button}
-            color="#ABE009"
-            mode="contained"
-            dark={true}
-            onPress={() => this.props.navigation.goBack()
-            }>
-            Enviar
-          </Button>
+        <AnimalSexPicker
+          sex={this.state.sex}
+          onChange={(sex) => {
+            this.setState({sex: sex})}}
+        />
+        <Button
+          style={styles.button}
+          color="#ABE009"
+          mode="contained"
+          dark={true}
+          onPress={() => this.changeAnimalSex(this.state.sex) }>
+          Enviar
+        </Button>
       </>
     );
   }

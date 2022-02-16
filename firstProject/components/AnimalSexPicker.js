@@ -10,24 +10,29 @@ export default class AnimalSexPicker extends React.Component {
   constructor(props) {
     super(props);
   }
+  onChangeField(value) {
+    this.props.onChange(value);
+  }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Picker
-          selectedValue={this.props.sex}
-          onValueChange={newAnimalSex => this.props.onChange(newAnimalSex)}>
-          {sexOption.map(sex => {
-            return (
-              <Picker.Item
-                key={sex.name + '_picker'}
-                label={sex.name}
-                value={sex.back_name}
-              />
-            );
-          })}
-        </Picker>
-      </View>
+      <View key={'Sexo'}>
+            <Text style={styles.text}>Sexo</Text>
+            <Picker
+              selectedValue={this.props.sex}
+              onValueChange={text => this.onChangeField(text)}>
+              {sexOption.map(option => {
+                return (
+                  <Picker.Item
+                    key={option.back_name + '_picker'}
+                    label={option.name}
+                    value={option.back_name}
+                  />
+                );
+              })}
+            </Picker>
+          </View>
+     
     );
   }
 }
