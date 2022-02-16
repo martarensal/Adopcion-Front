@@ -5,13 +5,13 @@ export const statusOption = [
     name: '-- NO SELECCIONADO --',
   },
   { id: 2,
-    back_name: 'sin hogar',
+    back_name: 'SIN_HOGAR',
     name: 'Sin hogar',
   },
   {
     id: 3,
     back_name: 'acogido',
-    name: 'En acogida',
+    name: 'Acogido',
   },
   {
     id: 4,
