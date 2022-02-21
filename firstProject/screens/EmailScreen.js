@@ -218,7 +218,7 @@ export default class EmailScreen extends React.Component {
                 {cancelable: false},
               )*/
                 }>
-                Buscar
+                Enviar email
               </Button>
             </View>
           </View>

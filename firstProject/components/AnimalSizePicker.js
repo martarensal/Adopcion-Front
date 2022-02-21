@@ -15,7 +15,7 @@ export default class AnimalSizePicker extends React.Component {
 
   render() {
     return (
-      <View key={'Tamañano'}>
+      <View key={'Tamaño'}>
             <Picker
               selectedValue={this.props.size}
               onValueChange={text => this.onChangeField(text)}>

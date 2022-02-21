@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
 import {Appbar, Button, List} from 'react-native-paper';
 import {getUser} from '../client/UsersApi';
@@ -7,13 +7,15 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 var SecurityUtils = require('../utils/SecurityUtils.js');
 
-export default class MyProfileScreen extends Component {
+export default class MyProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       user: {},
       loading: true,
     };
+    this.fetchUserData = this.fetchUserData.bind(this)
+    this.handleGetUserResponse = this.handleGetUserResponse.bind(this)
   }
 
   handleGetUserResponse(response) {
@@ -32,6 +34,7 @@ export default class MyProfileScreen extends Component {
   }
 
   componentDidMount() {
+    console.log('me estoy montando')
     this._unsubscribe = this.props.navigation.addListener(
       'focus',
       this.fetchUserData.bind(this),
@@ -39,6 +42,7 @@ export default class MyProfileScreen extends Component {
   }
 
   componentWillUnmount() {
+    console.log('me desmonto')
     this._unsubscribe();
   }
 

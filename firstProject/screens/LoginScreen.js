@@ -91,10 +91,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#E67E00',
   },
-  text: {
-    fontFamily: 'OpenSans-Bold',
-    color: '#DE740B',
-    fontSize: 20,
-    marginTop: 5,
-  },
 });

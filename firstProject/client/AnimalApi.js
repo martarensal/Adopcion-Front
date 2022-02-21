@@ -267,3 +267,18 @@ export function modifyPublicationImage(publicationImageChangeRequest, idPublicat
     body: JSON.stringify(publicationImageChangeRequest),
   });
 }
+
+
+export function getAnimalRequests(idAnimal, page, size, token) {
+  return fetch(
+    `${BASE_URL}/animals/${idAnimal}/requests?page=${page}&size=${size}`,
+    {
+      method: 'GET',
+      headers: new Headers({
+        'content-type': 'application/json',
+        Accept: 'application/json',
+        'X-API-KEY': token,
+      }),
+    },
+  );
+}

@@ -221,7 +221,7 @@ export default class MyLostAnimals extends React.Component {
                 <Button
                   color="#F05524"
                   onPress={this.showMoreLostAnimals.bind(this)}>
-                  MOSTRAR MÁS
+                  VER MÁS
                 </Button>
               ) : undefined}
             </View>

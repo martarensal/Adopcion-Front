@@ -158,7 +158,7 @@ export default class AnimalsFilterScreen extends React.Component {
                 <Button
                   color="#F05524"
                   onPress={this.showMoreAnimals.bind(this)}>
-                  MOSTRAR MÁS
+                  VER MÁS
                 </Button>
               ) : undefined}
             </View>

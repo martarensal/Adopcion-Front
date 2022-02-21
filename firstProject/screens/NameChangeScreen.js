@@ -23,12 +23,13 @@ export default class NameChangeScreen extends React.Component {
       newName: userNameChangeRequest.newValue,
     };
     SecurityUtils.tokenInfo().then(info => {
-      console.log(body);
-      console.log(info);
       SecurityUtils.authorizeApi([body, info.sub], modifyUserName).then(
         this.handleChangenameResponse.bind(this),
       );
     });
+  }
+  componentDidMount(){
+    console.log(this.props.navigation.dangerouslyGetState())
   }
 
   render() {

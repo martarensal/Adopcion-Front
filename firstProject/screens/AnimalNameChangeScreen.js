@@ -29,7 +29,7 @@ export default class AnimalNameChangeScreen extends React.Component {
       ).then(this.handleChangeAnimalNameResponse.bind(this));
     });
   }
-
+  
   render() {
     return (
       <>

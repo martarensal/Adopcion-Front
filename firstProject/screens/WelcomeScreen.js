@@ -57,7 +57,7 @@ export default class WelcomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   button: {
-    marginTop: 15,
+    marginTop: 20,
     fontFamily: 'RobotoSlab-Regular',
   },
 });

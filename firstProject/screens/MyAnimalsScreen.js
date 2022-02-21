@@ -167,6 +167,16 @@ export default class MyAnimalsScreen extends React.Component {
                       />
 
                       <Card.Actions>
+                     
+                        <Button
+                          onPress={() =>
+                            this.props.navigation.navigate('AnimalRequestScreen', {
+                              idAnimal: animal.id,
+                            })
+                          }>
+                          Solicitudes
+                        </Button>
+
                         <Button
                           color="#E67E00"
                           onPress={() =>
@@ -208,7 +218,7 @@ export default class MyAnimalsScreen extends React.Component {
                       <Button
                         color="#F05524"
                         onPress={this.showMoreAnimals.bind(this)}>
-                        MOSTRAR MÁS
+                        VER MÁS
                       </Button>
                     ) : undefined;
                   }

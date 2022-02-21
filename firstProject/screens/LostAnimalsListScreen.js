@@ -26,8 +26,8 @@ export default class LostAnimalsListScreen extends React.Component {
       page: 0,
 
       base64: 'data:image/png;base64,',
-      width: 80,
-      height: 80,
+      width: 100,
+      height: 100,
     };
   }
   showMoreLostAnimals() {
@@ -120,7 +120,7 @@ export default class LostAnimalsListScreen extends React.Component {
               <Button
                 color="#F05524"
                 onPress={this.showMoreLostAnimals.bind(this)}>
-                MOSTRAR MÁS
+                VER MÁS
               </Button>
             ) : undefined}
           </View>
@@ -131,8 +131,12 @@ export default class LostAnimalsListScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    justifyContent: 'flex-end',
+  },
   cardStyle: {
-    marginBottom: 60,
+    marginLeft:10,
+    marginBottom: 40,
   },
   container: {
     flex: 1,
@@ -170,7 +174,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   subtitle: {
-    marginLeft: 50,
+    marginLeft: 60,
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 15,
@@ -187,7 +191,7 @@ const styles = StyleSheet.create({
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 22,
-    marginLeft: 40,
+    marginLeft: 60,
     marginBottom: 15,
     marginTop: 20,
   },

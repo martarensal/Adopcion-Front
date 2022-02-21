@@ -5,6 +5,9 @@ import {StyleSheet, View, Text, Image, Alert} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {getTypes} from '../client/TypeApi';
 import {TextInput, Button, HelperText} from 'react-native-paper';
+import AnimalTypePicker from '../components/AnimalTypePicker';
+import HeaderAppbar from '../components/HeaderAppbar';
+
 var SecurityUtils = require('../utils/SecurityUtils.js');
 var validate = require('validate.js');
 
@@ -15,7 +18,7 @@ export default class AnimalTypeChangeScreen extends React.Component {
       type: '',
       types: [],
       typeId: -1,
-      newValue: '',
+      newType: this.props.route.params.size,
     };
     this.changeAnimalType = this.changeAnimalType.bind(this);
     this.render = this.render.bind(this);
@@ -24,6 +27,7 @@ export default class AnimalTypeChangeScreen extends React.Component {
   handleChangeAnimalTypeResponse(response) {
     console.log('Tipo de animal modificado');
     console.log(JSON.stringify(response));
+    this.props.navigation.goBack();
   }
 
   changeAnimalType(animalTypeChangeRequest) {
@@ -31,7 +35,6 @@ export default class AnimalTypeChangeScreen extends React.Component {
     let body = {
       newAnimalType_id: animalTypeChangeRequest,
     };
-    console.log(body);
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi(
         [body, this.props.route.params.id],
@@ -56,44 +59,32 @@ export default class AnimalTypeChangeScreen extends React.Component {
     );
   }
 
-  updateType = (type, indexType) => {
-    this.setState({type: type});
-    this.changeAnimalType(this.state.types[indexType].id);
-  };
-
   componentDidMount() {
     this.getTypesCall();
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Picker
-          selectedValue={this.props.route.params.type}
-          onValueChange={this.updateType}>
-          {this.state.types.map(type => {
-            return (
-              <Picker.Item
-                key={type.name + '_picker'}
-                label={type.name}
-                value={type.name}
-              />
-            );
-          })}
-        </Picker>
-        <Button
-          style={styles.button}
-          color="#ABE009"
-          mode="contained"
-          disabled={!this.state.newValue}
-          dark={true}
-          onPress={() =>
-             this.props.navigation.goBack()
-          }>
-          {' '}
-          Enviar{' '}
-        </Button>
-      </View>
+      <>
+        <HeaderAppbar />
+        <View style={styles.container}>
+          <AnimalTypePicker
+            types={this.state.types}
+            type={this.state.newType}
+            onChange={newType => {
+              this.setState({newType: newType});
+            }}
+          />
+          <Button
+            style={styles.button}
+            color="#ABE009"
+            mode="contained"
+            dark={true}
+            onPress={() => this.changeAnimalType(this.state.newType)}>
+            Enviar
+          </Button>
+        </View>
+      </>
     );
   }
 }

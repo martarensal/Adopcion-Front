@@ -298,8 +298,7 @@ export default class NewSearchAnimalScreen extends Component {
       return (
         <>
           <HeaderAppbar />
-          <View style={styles.container}>
-            <ScrollView contentContainerStyle={{paddingTop: 30}}>
+            <ScrollView >
               <Text style={styles.title}>Filtros</Text>
 
               <FilterHeaderComponent
@@ -318,8 +317,8 @@ export default class NewSearchAnimalScreen extends Component {
                 onChange={this.setSections}
                 renderAsFlatList={false}
               />
+              <View style={styles.button} >
               <Button
-                style={styles.button}
                 dark={true}
                 mode="contained"
                 color="#F5C401"
@@ -340,28 +339,16 @@ export default class NewSearchAnimalScreen extends Component {
                 }}>
                 Buscar
               </Button>
+              </View>
             </ScrollView>
-          </View>
         </>
       );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    //padding: 20,
-    width: '100%',
-    alignSelf: 'center',
-    alignItems: 'center',
-    //justifyContent: 'center',
-    backgroundColor: '#FFFFFF',
-  },
-
-  background: {
-    flex: 1,
-  },
   button: {
+    marginTop: 15,
     justifyContent: 'flex-end',
   },
   barra: {
@@ -389,7 +376,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
-
   selectors: {
     marginBottom: 10,
     flexDirection: 'row',
@@ -401,11 +387,6 @@ const styles = StyleSheet.create({
   },
   activeSelector: {
     fontWeight: 'bold',
-  },
-  selectTitle: {
-    fontSize: 14,
-    fontWeight: '500',
-    padding: 10,
   },
   multipleToggle: {
     flexDirection: 'row',
