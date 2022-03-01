@@ -127,3 +127,25 @@ export const typeOption = [
     name: 'Casa de acogida',
   },
 ];
+export const requestStatusOption = [
+    {
+    id: 1,
+    back_name: undefined,
+    name: '-- NO SELECCIONADO --',
+  },
+  {
+    id: 2,
+    back_name: 'enviada',
+    name: 'Enviada',
+  },
+  {
+    id: 3,
+    back_name: 'aceptada',
+    name: 'Aceptada',
+  },
+  {
+    id: 3,
+    back_name: 'rechazada',
+    name: 'Rechazada',
+  },
+];

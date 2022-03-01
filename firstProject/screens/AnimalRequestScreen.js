@@ -12,6 +12,8 @@ import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DrawerActions} from '@react-navigation/native';
 import {getAnimalRequests} from '../client/AnimalApi';
+import {getUser} from '../client/UsersApi';
+import HeaderAppbar from '../components/HeaderAppbar';
 
 var SecurityUtils = require('../utils/SecurityUtils');
 
@@ -55,9 +57,24 @@ export default class AnimalRequestScreen extends React.Component {
       getAnimalRequests,
     ).then(this.handleGetAnimalRequestsResponse.bind(this));
   }
+  fetchUserData(){
+        SecurityUtils.authorizeApi([], getUser).then(
+        this.handleGetUserResponse.bind(this),
+      );
+  }
 
-  componentDidMount() {
-    this.fetchAnimalRequests();
+ componentDidMount() {
+    this._unsubscribe = this.props.navigation.addListener(
+      'focus',
+      this.fetchAnimalRequests.bind(this),
+    );
+
+    this._outOfFocus = this.props.navigation.addListener('blur', () =>
+      this.setState({animalRequests: [], page: 0}),
+    );
+  }
+  componentWillUnmount() {
+    this._unsubscribe();
   }
 
   getCurrentDate = () => {
@@ -70,15 +87,7 @@ export default class AnimalRequestScreen extends React.Component {
   render() {
     return (
       <>
-        <Appbar style={styles.barra}>
-          <Appbar.Action
-            icon="menu"
-            onPress={() =>
-              this.props.navigation.dispatch(DrawerActions.openDrawer())
-            }
-          />
-          <Text style={styles.logo}>SavePet</Text>
-        </Appbar>
+        <HeaderAppbar/>
         <ScrollView style={styles.background}>
           <View style={styles.container}>
             <Text style={styles.titleText}> Solicitudes</Text>   
@@ -95,6 +104,21 @@ export default class AnimalRequestScreen extends React.Component {
                     }
                     subtitleStyle={styles.subtitle}
                   />
+                  
+                      <Card.Actions>
+                     
+                        <Button
+                          color="#F5C401"
+                          onPress={() =>
+                            this.props.navigation.navigate('RequestStatusChangeScreen', {
+                              id: animalRequest.id,
+                              status: animalRequest.status,
+                            })
+                          }>
+                          Modificar
+                        </Button>
+                        </Card.Actions>
+
                 </Card>
               );
             })}
@@ -109,7 +133,7 @@ export default class AnimalRequestScreen extends React.Component {
             
           </View>
         </ScrollView>
-      </>
+    </>
     );
   }
 }

@@ -32,7 +32,6 @@ import AnimalDetailScreen from './screens/AnimalDetailScreen.js';
 import EmailScreen from './screens/EmailScreen.js';
 import LostAnimalScreen from './screens/LostAnimalScreen.js';
 import LostAnimalsListScreen from './screens/LostAnimalsListScreen.js';
-import EditRequestScreen from './screens/EditRequestScreen.js';
 import MyLostAnimals from './screens/MyLostAnimals.js';
 import EditPublicationScreen from './screens/EditPublicationScreen.js';
 import PublicationDescriptionChangeScreen from './screens/PublicationDescriptionChangeScreen.js'
@@ -40,6 +39,7 @@ import PublicationImageChangeScreen from './screens/PublicationImageChangeScreen
 import LostAnimalDetailScreen from './screens/LostAnimalDetailScreen.js'
 import ManageRequest from './screens/ManageRequest.js';
 import AnimalRequestScreen from './screens/AnimalRequestScreen.js'
+import RequestStatusChangeScreen from './screens/RequestStatusChangeScreen.js'
 
 const Stack = createStackNavigator();
 export default class App extends Component {
@@ -190,13 +190,6 @@ export default class App extends Component {
                   component={EmailScreen}
                   options={{headerShown: false}}
                 />
-
-                <Stack.Screen
-                  name="EditRequestScreen"
-                  component={EditRequestScreen}
-                  options={{headerShown: false}}
-                />
-
                 <Stack.Screen
                   name="EditPublicationScreen"
                   component={EditPublicationScreen}
@@ -225,6 +218,11 @@ export default class App extends Component {
                  <Stack.Screen
                   name="AnimalRequestScreen"
                   component={AnimalRequestScreen}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="RequestStatusChangeScreen"
+                  component={RequestStatusChangeScreen}
                   options={{headerShown: false}}
                 />
               </>
