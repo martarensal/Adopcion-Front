@@ -136,7 +136,7 @@ export default class EmailScreen extends React.Component {
   }
 
   componentDidMount() {
-  
+    
     this._unsubscribe = this.props.navigation.addListener(
       'focus',
       this.fetchUserDataOrigen.bind(this),

@@ -45,7 +45,7 @@ export default class AnimalRequestScreen extends React.Component {
         animalRequests: this.state.animalRequests.concat(data.pages),
         paginationInfo: data.paginationInfo,
         loading: false,
-      },  () => console.log( this.state.animalRequests[0].startDate +' EEEEEEE'))
+      })
     }
     );
   }
@@ -85,13 +85,25 @@ export default class AnimalRequestScreen extends React.Component {
   };
 
   render() {
+     if (this.state.loading) {
+      return <LoadingIndicator />;
+    } else {
     return (
       <>
         <HeaderAppbar/>
         <ScrollView style={styles.background}>
           <View style={styles.container}>
-            <Text style={styles.titleText}> Solicitudes</Text>   
-             {this.state.animalRequests.map(animalRequest => {
+            <Text style={styles.titleText}> Solicitudes</Text>  
+            {this.state.animalRequests[0] === undefined ? (
+                <>
+                  <View style={styles.container}>
+                    <Text style={styles.label}>
+                      Parece que no hay solicitudes aún.
+                    </Text>
+                  </View>
+                </>
+              ) : ( 
+             this.state.animalRequests.map(animalRequest => {
               return (
                 <Card key={animalRequest.id}>
                   <Divider style={styles.divider} />
@@ -113,6 +125,7 @@ export default class AnimalRequestScreen extends React.Component {
                             this.props.navigation.navigate('RequestStatusChangeScreen', {
                               id: animalRequest.id,
                               status: animalRequest.status,
+                              user: animalRequest.user,
                             })
                           }>
                           Modificar
@@ -121,7 +134,7 @@ export default class AnimalRequestScreen extends React.Component {
 
                 </Card>
               );
-            })}
+            }))}
             {this.state.page !== this.state.paginationInfo.totalPages - 1 &&
             this.state.paginationInfo.totalElements !== 0 ? (
               <Button
@@ -130,11 +143,12 @@ export default class AnimalRequestScreen extends React.Component {
                 VER MÁS
               </Button>
             ) : undefined}  
-            
+              
           </View>
         </ScrollView>
     </>
     );
+  }
   }
 }
 

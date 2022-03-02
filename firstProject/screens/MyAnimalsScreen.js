@@ -169,6 +169,7 @@ export default class MyAnimalsScreen extends React.Component {
                       <Card.Actions>
                      
                         <Button
+                          color="#F5C401"
                           onPress={() =>
                             this.props.navigation.navigate('AnimalRequestScreen', {
                               idAnimal: animal.id,
