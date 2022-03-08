@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import {modifyRequestStatus} from '../client/RequestApi';
+import {modifyRequestStatus, deleteRequest} from '../client/RequestApi';
 import {StyleSheet, View, Text, Image, Alert} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {TextInput, Button, HelperText} from 'react-native-paper';
@@ -27,6 +27,10 @@ export default class RequestStatusChangeScreen extends React.Component {
       status: this.props.route.params.status,
     }
     this.changeRequestStatus = this.changeRequestStatus.bind(this);
+    /*this.deleteRequest = this.deleteRequest.bind(this);
+    this.handleDeteleRequestResponse  = this.handleChangeRequestStatusResponse.bind(this);
+    */
+    this.handleChangeRequestStatusResponse = this.handleChangeRequestStatusResponse.bind(this);
   }
    async handleGetUserResponseDestination(response) {
     response.json().then(data => {
@@ -65,18 +69,33 @@ export default class RequestStatusChangeScreen extends React.Component {
       this.handleGetUserResponseDestination.bind(this),
     );
   }
+ /* handleDeteleRequestResponse(response) {
+    if (response.ok) {
+      console.log('Solicitud eliminada')
+      this.props.navigation.navigate('Inicio')
+    } else {
+      console.log(JSON.stringify(response));
+    }
+  }
 
+   deleteRequest(idRequest) {
+    this.setState({loading: true});
+    SecurityUtils.authorizeApi([idRequest], deleteRequest).then(
+      this.handleDeteleRequestResponse,
+    );
+  }*/
   handleChangeRequestStatusResponse(response) {
     console.log('Estado de la solicitud modificado');
     console.log(JSON.stringify(response));
     if (response.ok) {
       Alert.alert(
-        'Confirmación',
-        'La solicitud ha sido creada',
+        'Solicitud resuelta',
+        'La solicitud ha sido resuelta',
         [
           {
             text: 'Ok',
-            onPress: () => this.props.navigation.goBack(),
+            onPress: () => this.props.navigation.goBack()
+            /*this.deleteRequest(this.props.route.params.id)*/,
           },
         ],
         {cancelable: false},
@@ -119,7 +138,6 @@ export default class RequestStatusChangeScreen extends React.Component {
     });
   }
    componentDidMount() {
-    
     this._unsubscribe = this.props.navigation.addListener(
       'focus',
       this.fetchUserDataOrigen.bind(this),
@@ -137,6 +155,10 @@ export default class RequestStatusChangeScreen extends React.Component {
     return (
       <>
         <HeaderAppbar />
+        <Text style={styles.text}> El usuario {this.state.userDestination.username} ha solicitado la {this.props.route.params.type} del animal.</Text>
+        <Text> Los datos de contacto son:  </Text>
+        <Text> Teléfono: {this.state.userDestination.phone} </Text>
+        <Text> Email: {this.state.userDestination.email}. </Text>
         <RequestStatusPicker
           status={this.state.status}
           onChange={(newStatus) => {
@@ -156,6 +178,9 @@ export default class RequestStatusChangeScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  text: {
+    marginTop: 20,
+  },
   container: {
     width: '100%',
     marginVertical: 12,

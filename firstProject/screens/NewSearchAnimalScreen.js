@@ -317,8 +317,8 @@ export default class NewSearchAnimalScreen extends Component {
                 onChange={this.setSections}
                 renderAsFlatList={false}
               />
-              <View style={styles.button} >
               <Button
+               style={styles.button}
                 dark={true}
                 mode="contained"
                 color="#F5C401"
@@ -339,7 +339,6 @@ export default class NewSearchAnimalScreen extends Component {
                 }}>
                 Buscar
               </Button>
-              </View>
             </ScrollView>
         </>
       );
@@ -349,7 +348,9 @@ export default class NewSearchAnimalScreen extends Component {
 const styles = StyleSheet.create({
   button: {
     marginTop: 15,
-    justifyContent: 'flex-end',
+    width: 350,
+    alignSelf: 'center',
+
   },
   barra: {
     backgroundColor: '#E67E00',

@@ -114,13 +114,11 @@ export default class AnimalsFilterScreen extends React.Component {
                         title={animal.name}
                         titleStyle={styles.text}
                         subtitle={
-                          'Sexo: ' +
-                          animal.sex +
-                          '\n' +
-                          ' Edad: ' +
-                          animal.age +
-                          ' Ciudad: ' +
-                          animal.city
+                          <>
+                            <Text> {animal.name}</Text>
+                            <Text> {animal.sex}</Text>
+                            <Text> {animal.city}</Text>       
+                            </>                 
                         }
                         subtitleStyle={styles.subtitle}
                         left={() => (
@@ -134,6 +132,8 @@ export default class AnimalsFilterScreen extends React.Component {
                           />
                         )}
                       />
+                    
+
 
                       <Card.Actions style={styles.button}>
                         <Button

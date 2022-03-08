@@ -84,7 +84,6 @@ export default class EmailScreen extends React.Component {
       user_id: this.props.route.params.user,
       type: this.state.type,
     };
-    //console.log(body)
     SecurityUtils.authorizeApi([body], addRequest).then(
       this.handleCreateNewRequestResponse.bind(this),
     );
@@ -112,8 +111,6 @@ export default class EmailScreen extends React.Component {
         email: data.email,
         type: data.type,
         message: data.message,
-        startDate: data.startDate,
-        endDate: data.endDate,
         animalName: this.props.route.params.animal.name,
         animalAge: this.props.route.params.animal.age,
         animalType: this.props.route.params.animal.type,
@@ -165,17 +162,6 @@ export default class EmailScreen extends React.Component {
                 onChange={type => {
                   this.setState({type: type});
                 }}
-              />
-
-              <Text style={styles.text}> Fecha de inicio de acogida </Text>
-              <RequestForm
-                startDate={this.state.startDate}
-                onChange={startDate => this.setState({startDate: startDate})}
-              />
-              <Text style={styles.text}> Fecha fin de acogida </Text>
-              <RequestForm
-                endDate={this.state.endDate}
-                onChange={endDate => this.setState({endDate: endDate})}
               />
               <Text style={styles.informativeText}>
                 Los siguientes datos serán enviados por correo al usuario{' '}

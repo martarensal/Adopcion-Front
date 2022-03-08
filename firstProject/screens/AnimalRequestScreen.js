@@ -25,29 +25,29 @@ export default class AnimalRequestScreen extends React.Component {
       paginationInfo: {},
       loading: true,
       page: 0,
-    
     };
     this.fetchAnimalRequests = this.fetchAnimalRequests.bind(this);
   }
   showMoreAnimalRequests() {
-    this.setState({page: this.state.page + 1}, () => this.fetchAnimalRequests());
+    this.setState({page: this.state.page + 1}, () =>
+      this.fetchAnimalRequests(),
+    );
   }
 
   handleGetAnimalRequestsResponse(response) {
-    console.log(response)
+    console.log(response);
     response.json().then(data => {
-        console.log(typeof(data.pages) + ' TYPE OF')
-        console.log(data.pages)
-        console.log(typeof(data.paginationInfo) + ' TYPE OF')
-        console.log(data.paginationInfo)
+      console.log(typeof data.pages + ' TYPE OF');
+      console.log(data.pages);
+      console.log(typeof data.paginationInfo + ' TYPE OF');
+      console.log(data.paginationInfo);
 
-        this.setState({
+      this.setState({
         animalRequests: this.state.animalRequests.concat(data.pages),
         paginationInfo: data.paginationInfo,
         loading: false,
-      })
-    }
-    );
+      });
+    });
   }
 
   fetchAnimalRequests() {
@@ -57,13 +57,13 @@ export default class AnimalRequestScreen extends React.Component {
       getAnimalRequests,
     ).then(this.handleGetAnimalRequestsResponse.bind(this));
   }
-  fetchUserData(){
-        SecurityUtils.authorizeApi([], getUser).then(
-        this.handleGetUserResponse.bind(this),
-      );
+  fetchUserData() {
+    SecurityUtils.authorizeApi([], getUser).then(
+      this.handleGetUserResponse.bind(this),
+    );
   }
 
- componentDidMount() {
+  componentDidMount() {
     this._unsubscribe = this.props.navigation.addListener(
       'focus',
       this.fetchAnimalRequests.bind(this),
@@ -85,16 +85,16 @@ export default class AnimalRequestScreen extends React.Component {
   };
 
   render() {
-     if (this.state.loading) {
+    if (this.state.loading) {
       return <LoadingIndicator />;
     } else {
-    return (
-      <>
-        <HeaderAppbar/>
-        <ScrollView style={styles.background}>
-          <View style={styles.container}>
-            <Text style={styles.titleText}> Solicitudes</Text>  
-            {this.state.animalRequests[0] === undefined ? (
+      return (
+        <>
+          <HeaderAppbar />
+          <ScrollView style={styles.background}>
+            <View style={styles.container}>
+              <Text style={styles.titleText}> Solicitudes</Text>
+              {this.state.animalRequests[0] === undefined ? (
                 <>
                   <View style={styles.container}>
                     <Text style={styles.label}>
@@ -102,62 +102,73 @@ export default class AnimalRequestScreen extends React.Component {
                     </Text>
                   </View>
                 </>
-              ) : ( 
-             this.state.animalRequests.map(animalRequest => {
-              return (
-                <Card key={animalRequest.id}>
-                  <Divider style={styles.divider} />
-                  <Card.Title
-                    style={styles.cardStyle}
-                    title={animalRequest.status}
-                    titleStyle={styles.title}
-                    subtitle={this.getCurrentDate(animalRequest.startDate) + ' ' +
-                    this.getCurrentDate(animalRequest.endDate)
-                    }
-                    subtitleStyle={styles.subtitle}
-                  />
-                  
+              ) : (
+                this.state.animalRequests.map(animalRequest => {
+                  let detailsEnabled = false;
+                  if (animalRequest.status == 'enviada') {
+                    detailsEnabled = true;
+                  }
+                  return (
+                    <Card key={animalRequest.id}>
+                      <Divider style={styles.divider} />
+                      <Card.Title
+                        style={styles.cardStyle}
+                        title={animalRequest.status}
+                        titleStyle={styles.title}
+                        subtitle={
+                          this.getCurrentDate(animalRequest.startDate) +
+                          ' - ' +
+                          this.getCurrentDate(animalRequest.endDate)
+                        }
+                        subtitleStyle={styles.subtitle}
+                      />
                       <Card.Actions>
-                     
                         <Button
+                          disabled={!detailsEnabled}
                           color="#F5C401"
                           onPress={() =>
-                            this.props.navigation.navigate('RequestStatusChangeScreen', {
-                              id: animalRequest.id,
-                              status: animalRequest.status,
-                              user: animalRequest.user,
-                            })
+                            this.props.navigation.navigate(
+                              'RequestStatusChangeScreen',
+                              {
+                                id: animalRequest.id,
+                                type: animalRequest.type,
+                                status: animalRequest.status,
+                                user: animalRequest.user,
+                              },
+                            )
                           }>
-                          Modificar
+                          Ver detalles
                         </Button>
-                        </Card.Actions>
-
-                </Card>
-              );
-            }))}
-            {this.state.page !== this.state.paginationInfo.totalPages - 1 &&
-            this.state.paginationInfo.totalElements !== 0 ? (
-              <Button
-                color="#F05524"
-                onPress={this.showMoreAnimalRequests.bind(this)}>
-                VER MÁS
-              </Button>
-            ) : undefined}  
-              
-          </View>
-        </ScrollView>
-    </>
-    );
-  }
+                      </Card.Actions>
+                    </Card>
+                  );
+                })
+              )}
+              {this.state.page !== this.state.paginationInfo.totalPages - 1 &&
+              this.state.paginationInfo.totalElements !== 0 ? (
+                <Button
+                  color="#F05524"
+                  onPress={this.showMoreAnimalRequests.bind(this)}>
+                  VER MÁS
+                </Button>
+              ) : undefined}
+            </View>
+          </ScrollView>
+        </>
+      );
+    }
   }
 }
 
 const styles = StyleSheet.create({
+  label: {
+    marginLeft: 20,
+    marginVertical: 15,
+  },
   button: {
     justifyContent: 'flex-end',
   },
   cardStyle: {
-    marginLeft:10,
     marginBottom: 40,
   },
   container: {
@@ -196,10 +207,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   subtitle: {
-    marginLeft: 60,
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 15,
+    marginLeft: 30,
   },
   titleText: {
     fontFamily: 'RobotoSlab-Regular',
@@ -213,7 +224,7 @@ const styles = StyleSheet.create({
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
     fontSize: 22,
-    marginLeft: 60,
+    marginLeft: 30,
     marginBottom: 15,
     marginTop: 20,
   },
