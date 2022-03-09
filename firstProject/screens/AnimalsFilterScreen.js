@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {Appbar, FAB, Card, Button} from 'react-native-paper';
+import {Appbar, FAB, Card, Button, Title, Paragraph } from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DrawerActions} from '@react-navigation/native';
@@ -109,33 +109,16 @@ export default class AnimalsFilterScreen extends React.Component {
               ) : (
                 this.state.animals.map(animal => {
                   return (
-                    <Card style={styles.card} key={animal.id}>
-                      <Card.Title
-                        title={animal.name}
-                        titleStyle={styles.text}
-                        subtitle={
-                          <>
-                            <Text> {animal.name}</Text>
-                            <Text> {animal.sex}</Text>
-                            <Text> {animal.city}</Text>       
-                            </>                 
-                        }
-                        subtitleStyle={styles.subtitle}
-                        left={() => (
-                          <Image
-                            style={{
-                              width: this.state.width,
-                              height: this.state.height,
-                              borderRadius: 5,
-                            }}
-                            source={{uri: this.state.base64 + animal.image}}
-                          />
-                        )}
-                      />
-                    
-
-
-                      <Card.Actions style={styles.button}>
+                    <Card key={animal.id} >
+                      <Card.Cover style={styles.image} source={{ uri: this.state.base64 + animal.image }} />
+                       <Card.Content>     
+                         <View style={styles.textContent}>               
+                       <Title style={styles.textStyle}>{animal.name}</Title>
+                        <Paragraph style={styles.textStyle}>Ciudad: {animal.city}</Paragraph>
+                        <Paragraph style={styles.textStyle}>Especie: {animal.type}</Paragraph>
+                        </View>
+                        </Card.Content> 
+                        <Card.Actions style={styles.button}>
                         <Button
                           color="#E67E00"
                           onPress={() =>
@@ -149,7 +132,8 @@ export default class AnimalsFilterScreen extends React.Component {
                           Ver detalles
                         </Button>
                       </Card.Actions>
-                    </Card>
+                     
+                      </Card>
                   );
                 })
               )}
@@ -170,44 +154,23 @@ export default class AnimalsFilterScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    marginBottom: 20,
+  image: {
+    height:300,
+  },
+  textContent: {
+    marginLeft: 15,
+  },
+  textStyle: {
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
   },
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
   },
-  barra: {
-    backgroundColor: '#E67E00',
-  },
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-  },
-  logo: {
-    fontFamily: 'Butler_Light',
-    color: 'white',
-    fontSize: 25,
-    marginLeft: 14,
-    alignSelf: 'center',
-  },
   background: {
     flex: 1,
     backgroundColor: '#fafafa',
-  },
-  text: {
-    fontFamily: 'RobotoSlab-Regular',
-    color: '#575757',
-    fontSize: 20,
-    marginBottom: 15,
-    marginLeft: 40,
-  },
-  subtitle: {
-    marginLeft: 40,
-    fontSize: 15,
-    alignContent: 'center',
-    alignItems: 'center',
   },
   title: {
     fontFamily: 'RobotoSlab-Regular',
