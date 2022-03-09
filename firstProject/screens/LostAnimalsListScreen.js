@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {Appbar, FAB, Card, Button, Divider} from 'react-native-paper';
+import {Appbar, FAB, Card, Button, Divider, Title, Paragraph } from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DrawerActions} from '@react-navigation/native';
@@ -78,26 +78,14 @@ export default class LostAnimalsListScreen extends React.Component {
 
             {this.state.publications.map(publication => {
               return (
-                <Card key={publication.id}>
-                  <Divider style={styles.divider} />
-
-                  <Card.Title
-                    style={styles.cardStyle}
-                    title={this.getCurrentDate(publication.publicationDate)}
-                    titleStyle={styles.title}
-                    subtitle={publication.description}
-                    subtitleStyle={styles.subtitle}
-                    left={() => (
-                      <Image
-                        style={{
-                          width: this.state.width,
-                          height: this.state.height,
-                          borderRadius: 5,
-                        }}
-                        source={{uri: this.state.base64 + publication.image}}
-                      />
-                    )}
-                  />
+                <Card key={publication.id} >
+                      <Card.Cover style={styles.image} source={{ uri: this.state.base64 + publication.image }} />
+                       <Card.Content>     
+                         <View style={styles.textContent}>               
+                       <Title style={styles.textStyle}>{this.getCurrentDate(publication.publicationDate)}</Title>
+                        <Paragraph style={styles.textStyle}>{publication.description}</Paragraph>
+                        </View>
+                        </Card.Content> 
                   <Card.Actions style={styles.button}>
                     <Button
                       color="#E67E00"
@@ -196,9 +184,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   image: {
-    width: 30,
-    height: 30,
-    marginRight: 10,
-    marginTop: 30,
+    height: 300,
   },
 });

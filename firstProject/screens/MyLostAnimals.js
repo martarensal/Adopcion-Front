@@ -8,8 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import {getUser} from '../client/UsersApi';
-
-import {Appbar, FAB, Card, Button, Divider} from 'react-native-paper';
+import {Appbar, FAB, Card, Button, Divider, Title, Paragraph} from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DrawerActions} from '@react-navigation/native';
@@ -153,29 +152,15 @@ export default class MyLostAnimals extends React.Component {
               ) : (
                 this.state.publications.map(publication => {
                   return (
-                    <Card key={publication.id}>
-                      <Divider style={styles.divider} />
-
-                      <Card.Title
-                        style={styles.cardStyle}
-                        title={this.getCurrentDate(publication.publicationDate)}
-                        titleStyle={styles.title}
-                        subtitle={publication.description}
-                        subtitleStyle={styles.subtitle}
-                        left={() => (
-                          <Image
-                            style={{
-                              width: this.state.width,
-                              height: this.state.height,
-                              borderRadius: 5,
-                            }}
-                            source={{
-                              uri: this.state.base64 + publication.image,
-                            }}
-                          />
-                        )}
-                      />
-                      <Card.Actions>
+                      <Card key={publication.id} >
+                      <Card.Cover style={styles.image} source={{ uri: this.state.base64 + publication.image }} />
+                       <Card.Content>     
+                         <View style={styles.textContent}>               
+                       <Title style={styles.textStyle}>{this.getCurrentDate(publication.publicationDate)}</Title>
+                        <Paragraph style={styles.textStyle}>{publication.description}</Paragraph>
+                        </View>
+                        </Card.Content> 
+                        <Card.Actions style={styles.button}>
                         <Button
                           color="#E67E00"
                           onPress={() =>
@@ -211,7 +196,7 @@ export default class MyLostAnimals extends React.Component {
                           }>
                           Eliminar
                         </Button>
-                      </Card.Actions>
+                        </Card.Actions>
                     </Card>
                   );
                 })
@@ -266,12 +251,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 5,
   },
-  subtitle: {
-    marginLeft: 50,
-    fontFamily: 'RobotoSlab-Regular',
-    color: '#575757',
-    fontSize: 15,
-  },
   titleText:{
     fontFamily: 'RobotoSlab-Regular',
     color: '#575757',
@@ -289,10 +268,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
   },
   image: {
-    width: 30,
-    height: 30,
-    marginRight: 10,
-    marginTop: 30,
+    height:300,
   },
   label: {
     marginLeft: 25,

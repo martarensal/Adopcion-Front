@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {Appbar, FAB, Card, Button, Divider} from 'react-native-paper';
+import {Appbar, FAB, Card, Button, Divider,Title, Paragraph} from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DrawerActions} from '@react-navigation/native';
@@ -140,34 +140,16 @@ export default class MyAnimalsScreen extends React.Component {
               ) : (
                 this.state.animals.map(animal => {
                   return (
-                    <Card key={animal.id}>
-                      <Card.Title
-                        title={animal.name}
-                        titleStyle={styles.name}
-                        subtitle={
-                          'Sexo: ' +
-                          animal.sex +
-                          '\n' +
-                          ' Edad: ' +
-                          animal.age +
-                          ' Ciudad: ' +
-                          animal.city
-                        }
-                        subtitleStyle={styles.subtitle}
-                        left={() => (
-                          <Image
-                            style={{
-                              width: this.state.width,
-                              height: this.state.height,
-                              borderRadius: 5,
-                            }}
-                            source={{uri: this.state.base64 + animal.image}}
-                          />
-                        )}
-                      />
-
-                      <Card.Actions>
-                     
+                    <Card key={animal.id} >
+                      <Card.Cover style={styles.image} source={{ uri: this.state.base64 + animal.image }} />
+                       <Card.Content>     
+                         <View style={styles.textContent}>               
+                       <Title style={styles.textStyle}>{animal.name}</Title>
+                        <Paragraph style={styles.textStyle}>Ciudad: {animal.city}</Paragraph>
+                        <Paragraph style={styles.textStyle}>Especie: {animal.type}</Paragraph>
+                        </View>
+                        </Card.Content> 
+                        <Card.Actions style={styles.button}>
                         <Button
                           color="#F5C401"
                           onPress={() =>
@@ -177,7 +159,6 @@ export default class MyAnimalsScreen extends React.Component {
                           }>
                           Solicitudes
                         </Button>
-
                         <Button
                           color="#E67E00"
                           onPress={() =>
@@ -209,8 +190,8 @@ export default class MyAnimalsScreen extends React.Component {
                           }>
                           Eliminar
                         </Button>
-                      </Card.Actions>
-                    </Card>
+                      </Card.Actions>                    
+                      </Card>
                   );
                   {
                     this.state.page !==
@@ -234,6 +215,9 @@ export default class MyAnimalsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  image: {
+    height:300,
+  },
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -283,10 +267,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     marginLeft: 14,
     alignSelf: 'center',
-  },
-  image: {
-    borderRadius: 5,
-    marginTop: 30,
   },
   label: {
     marginLeft: 25,
