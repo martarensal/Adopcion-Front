@@ -15,7 +15,6 @@ import MyAnimalsScreen from './MyAnimalsScreen';
 import CreateAnimalScreen from './CreateAnimalScreen';
 import LostAnimalScreen from './LostAnimalScreen';
 import MyRequestScreen from './MyRequestScreen';
-import AnimalsRequestReceived from './AnimalsRequestReceived';
 import MyLostAnimals from './MyLostAnimals';
 import LostAnimalsListScreen from './LostAnimalsListScreen';
 import NewSearchAnimalScreen from './NewSearchAnimalScreen'
@@ -154,10 +153,6 @@ export default class MainScreen extends React.Component {
           <Drawer.Screen
             name="Añadir animal perdido"
             component={LostAnimalScreen}
-          />
-          <Drawer.Screen
-            name="Solicitudes recibidas"
-            component={AnimalsRequestReceived}
           />
            <Drawer.Screen
             name="Lista animales perdidos"

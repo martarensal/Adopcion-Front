@@ -119,6 +119,10 @@ export default class LostAnimalsListScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  textStyle: {
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+  },
   button: {
     justifyContent: 'flex-end',
   },

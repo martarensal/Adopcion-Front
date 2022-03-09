@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {Appbar, FAB, Card, Button, Divider} from 'react-native-paper';
+import {Appbar, FAB, Card, Button, Divider, Title, Paragraph} from 'react-native-paper';
 import LoadingIndicator from '../components/LoadingIndicator';
 import {ScrollView} from 'react-native-gesture-handler';
 import {DrawerActions} from '@react-navigation/native';
@@ -124,23 +124,14 @@ export default class MyRequestScreen extends React.Component {
             ) : (
               this.state.requests.map(request => {
                 return (
-                    <View style={styles.container}>
-                  <Card key={request.id}>
-                
-                    <Card.Title
-                      title={request.status}
-                      titleStyle={styles.name}
-                      subtitle={         
-                            'Solicitud ' + request.type +
-                         
-                            'Fecha' + request.startDate +
-                        
-                            '-' + request.endDate 
-                                                
-                        }
-                      subtitleStyle={styles.subtitle}
-                    />
-
+                  <Card key={request.id} >
+                   <Card.Content>     
+                     <View style={styles.textContent}>               
+                   <Title style={styles.textStyle}>{request.status}</Title>
+                    <Paragraph style={styles.textStyle}>Solicitud: {request.type}</Paragraph>
+                    <Paragraph style={styles.textStyle}>Fecha: {request.startDate}</Paragraph>
+                    </View>
+                    </Card.Content> 
                     <Card.Actions>
                       <Button
                         color="red"
@@ -166,8 +157,7 @@ export default class MyRequestScreen extends React.Component {
                       </Button>
                     </Card.Actions>
                   </Card>
-                  </View>
-                );
+               );
               })
             )}
           </View>

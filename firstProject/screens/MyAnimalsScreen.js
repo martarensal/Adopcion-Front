@@ -215,6 +215,10 @@ export default class MyAnimalsScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  textStyle: {
+    fontFamily: 'RobotoSlab-Regular',
+    color: '#575757',
+  },
   image: {
     height:300,
   },
