@@ -41,11 +41,9 @@ export default class AnimalsFilterScreen extends React.Component {
     let colour = this.props.route.params.dataFilters.colour;
     let minAge = this.props.route.params.dataFilters.minAge;
     let maxAge = this.props.route.params.dataFilters.maxAge;
-    let page = 0;
-    let size = 5;
     SecurityUtils.tokenInfo().then(info => {
       SecurityUtils.authorizeApi(
-        [animalSize, sex, colour, minAge, maxAge, idCity, idType, page, size],
+        [animalSize, sex, colour, minAge, maxAge, idCity, idType, this.state.page, 6],
         searchAnimals,
       ).then(this.handleSearchAnimalsResponse.bind(this));
     });
@@ -56,13 +54,13 @@ export default class AnimalsFilterScreen extends React.Component {
   }
 
   handleSearchAnimalsResponse(response) {
-    console.log(response);
     response.json().then(data =>
       this.setState({
         animals: this.state.animals.concat(data.pages),
         paginationInfo: data.paginationInfo,
         loading: false,
       }),
+
     );
   }
 
@@ -74,6 +72,7 @@ export default class AnimalsFilterScreen extends React.Component {
     this._outOfFocus = this.props.navigation.addListener('blur', () =>
       this.setState({animals: [], page: 0}),
     );
+    console.log(this.state.page)
   }
 
   componentWillUnmount() {

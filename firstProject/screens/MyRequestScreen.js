@@ -64,7 +64,7 @@ export default class MyRequestScreen extends React.Component {
     response.json().then(data => {
       this.setState({user: data});
       SecurityUtils.authorizeApi(
-        [this.state.page, 5, data.username],
+        [this.state.page, 20, data.username],
         getPaginatedRequestFromUser,
       ).then(this.handleGetRequestsResponse.bind(this));
     });

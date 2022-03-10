@@ -28,11 +28,6 @@ export default class AnimalRequestScreen extends React.Component {
     };
     this.fetchAnimalRequests = this.fetchAnimalRequests.bind(this);
   }
-  showMoreAnimalRequests() {
-    this.setState({page: this.state.page + 1}, () =>
-      this.fetchAnimalRequests(),
-    );
-  }
 
   handleGetAnimalRequestsResponse(response) {
     console.log(response);
@@ -53,7 +48,7 @@ export default class AnimalRequestScreen extends React.Component {
   fetchAnimalRequests() {
     if (this.state.page === 0) this.setState({loading: true});
     SecurityUtils.authorizeApi(
-      [this.props.route.params.idAnimal, this.state.page, 6],
+      [this.props.route.params.idAnimal, this.state.page, 20],
       getAnimalRequests,
     ).then(this.handleGetAnimalRequestsResponse.bind(this));
   }
@@ -144,14 +139,6 @@ export default class AnimalRequestScreen extends React.Component {
                   );
                 })
               )}
-              {this.state.page !== this.state.paginationInfo.totalPages - 1 &&
-              this.state.paginationInfo.totalElements !== 0 ? (
-                <Button
-                  color="#F05524"
-                  onPress={this.showMoreAnimalRequests.bind(this)}>
-                  VER MÁS
-                </Button>
-              ) : undefined}
             </View>
           </ScrollView>
         </>

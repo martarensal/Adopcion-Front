@@ -193,19 +193,16 @@ export default class MyAnimalsScreen extends React.Component {
                       </Card.Actions>                    
                       </Card>
                   );
-                  {
-                    this.state.page !==
-                      this.state.paginationInfo.totalPages - 1 &&
-                    this.state.paginationInfo.totalElements !== 0 ? (
-                      <Button
-                        color="#F05524"
-                        onPress={this.showMoreAnimals.bind(this)}>
-                        VER MÁS
-                      </Button>
-                    ) : undefined;
-                  }
                 })
               )}
+              {this.state.page !== this.state.paginationInfo.totalPages - 1 &&
+            this.state.paginationInfo.totalElements !== 0 ? (
+              <Button
+                color="#F05524"
+                onPress={this.showMoreAnimals.bind(this)}>
+                VER MÁS
+              </Button>
+            ) : undefined}
             </View>
           </ScrollView>
         </>
