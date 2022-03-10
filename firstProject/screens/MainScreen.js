@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E67E00',
   },
   logo: {
-    fontFamily: 'RobotoSlab-Regular',
+    fontFamily: 'Butler_Light',
     color: 'white',
     fontSize: 25,
     marginLeft: 14,
